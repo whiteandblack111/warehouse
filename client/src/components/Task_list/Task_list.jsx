@@ -17,7 +17,7 @@ const Task_list = (props) => {
         <div className={styles.container}>
             {
                 props.task_list.map(
-                    task => <Task_one></Task_one>)
+                    task => <Task_one key={task.id}></Task_one>)
             }
 
         </div>

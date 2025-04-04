@@ -1,12 +1,13 @@
-const Tovar_Nikita_Service = require('../services/tovar_nikita_Service');
+const Tovar_Service = require('../services/tovar_Service');
 const ApiError = require('../error/ApiError');
 const { createPath, uploadFile } = require('../services/FotoUploader');
 const PhotoService = require('../services/photo_Service');
 const { json } = require('sequelize');
 
-class tovar_nikita_Controller {
+class tovar_Controller {
     async create_tovar_for_warehouse(req, res, next) {
         try {
+            console.log("create_tovar_for_warehouse====>", req.body)
             const tovarData = {
                 manufacturer_ID: req.body.manufacturer_ID,
                 warehouse_ID: req.body.warehouse_ID,
@@ -14,15 +15,20 @@ class tovar_nikita_Controller {
                 name: req.body.name,
                 quantity: req.body.quantity
             }
-            const { tovar_img } = req.files
 
-            const tovar_nikita = await Tovar_Nikita_Service.create_for_warehouse(tovarData)
+            const { tovar_photo } = req.files
 
-            const filePath = createPath('tovar_nikita');
-            const fileName = uploadFile(filePath, tovar_img);
-            const tovar_photo = await PhotoService.create(filePath, fileName, tovar_nikita.id);
+            const tovar = await Tovar_Service.create_for_warehouse(tovarData)
 
-            const dataTovar = await Tovar_Nikita_Service.getOneFromWarehouseById(tovar_nikita.id);
+            const filePath = createPath();
+            const fileName = uploadFile(filePath, tovar_photo);
+            await PhotoService.create(filePath, fileName, tovar.barcode, tovar.id);
+        
+
+            const dataTovar = await Tovar_Service.getOneFromWarehouseById(tovar.id);
+            console.log("tovar>>>", tovar)
+            console.log("dataTovar>>>", dataTovar)
+
 
             return res.json(dataTovar);
 
@@ -48,7 +54,7 @@ class tovar_nikita_Controller {
                 taskNikitumId: req.body.taskId
             }
 
-            await Tovar_Nikita_Service.create_for_task(formData)
+            await Tovar_Service.create_for_task(formData)
             return tovarData
         }));
 
@@ -63,13 +69,14 @@ class tovar_nikita_Controller {
         }
 
 
-        const tovarData = await Tovar_Nikita_Service.update_quantity_tovar_for_task(formData)
+        const tovarData = await Tovar_Service.update_quantity_tovar_for_task(formData)
         return res.json(tovarData)
     }
 
 
     async getAll(req, res) {
-
+        const tovarData = await Tovar_Service.getAll()
+        return res.json(tovarData)
     }
 
 
@@ -78,4 +85,4 @@ class tovar_nikita_Controller {
     }
 }
 
-module.exports = new tovar_nikita_Controller()
+module.exports = new tovar_Controller()

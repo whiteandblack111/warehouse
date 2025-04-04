@@ -31,7 +31,7 @@ const User = sequelize.define(
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         firstname: { type: DataTypes.STRING, defaultValue: "Не указано" },
         twoname: { type: DataTypes.STRING, defaultValue: "Не указано" },
-        // phone:{type: DataTypes.STRING, allowNull:false, unique: true},  
+        phone:{type: DataTypes.STRING, defaultValue: "Не указано"},  
         email: { type: DataTypes.STRING, allowNull: false, unique: true },  // для подтверждения регистрации 
         password: { type: DataTypes.STRING, allowNull: false },
         isActivated: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
@@ -42,17 +42,19 @@ const User = sequelize.define(
 Role.belongsToMany(User, { through: Roles_User })
 User.belongsToMany(Role, { through: Roles_User })
 
-const Photo_For_Tovar_Nikita = sequelize.define(
-    'photo_for_tovar_nikita',
+const Photo_For_Tovar = sequelize.define(
+    'photo_for_tovar',
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         img_path: { type: DataTypes.STRING, allowNull: false },
         img_name: { type: DataTypes.STRING, allowNull: false },
+        barcode: { type: DataTypes.STRING, allowNull: false },
     }
 )
 
-const Task_Nikita = sequelize.define(
-    'task_nikita',
+
+const Task = sequelize.define(
+    'task',
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         shop_name: { type: DataTypes.STRING, defaultValue: "не назначен" },
@@ -60,12 +62,14 @@ const Task_Nikita = sequelize.define(
         marketplace_name: { type: DataTypes.STRING, allowNull: false },
         executor: { type: DataTypes.STRING, defaultValue: "не назначен" },
         statusWork: { type: DataTypes.STRING, defaultValue: "в очереди" },
-
-
+        
     }
 )
-const Tovar_For_Task_Nikita = sequelize.define(
-    'tovar_for_task_nikita',
+User.hasMany(Task)
+Task.belongsTo(User)
+
+const Tovar_For_Task = sequelize.define(
+    'tovar_for_task',
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         manufacturer_ID: { type: DataTypes.STRING },
@@ -77,63 +81,42 @@ const Tovar_For_Task_Nikita = sequelize.define(
         cartons_found: { type: DataTypes.STRING, defaultValue: 0 },
         additional_information: { type: DataTypes.STRING, },
 
-
         box_number: { type: DataTypes.STRING, defaultValue: "не определён" },
     }
 )
-Task_Nikita.hasMany(Tovar_For_Task_Nikita)
-Tovar_For_Task_Nikita.belongsTo(Task_Nikita)
+Task.hasMany(Tovar_For_Task)
+Tovar_For_Task.belongsTo(Task)
 
-Tovar_For_Task_Nikita.hasMany(Photo_For_Tovar_Nikita)
-Photo_For_Tovar_Nikita.belongsTo(Tovar_For_Task_Nikita)
 
-const Tovar_For_Warehouse_Nikita = sequelize.define(
-    'tovar_for_warehouse_nikita',
+const Tovar_For_Warehouse = sequelize.define(
+    'tovar_for_warehouse',
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+
         manufacturer_ID: { type: DataTypes.STRING, defaultValue: "не указан" },
-        warehouse_ID: { type: DataTypes.STRING, allowNull: false },
-        barcode: { type: DataTypes.STRING, unique: true, allowNull: false },
+        barcode: { type: DataTypes.STRING, allowNull: false },
         name: { type: DataTypes.STRING, allowNull: false },
         quantity: { type: DataTypes.STRING, defaultValue: 0 },
     }
 )
 
-Tovar_For_Warehouse_Nikita.hasMany(Photo_For_Tovar_Nikita);
-Photo_For_Tovar_Nikita.belongsTo(Tovar_For_Warehouse_Nikita)
+Tovar_For_Warehouse.hasMany(Photo_For_Tovar);
+Photo_For_Tovar.belongsTo(Tovar_For_Warehouse)
 
 
+const Photo_For_Box = sequelize.define(
+    'photo_for_box',
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        img_path: { type: DataTypes.STRING, allowNull: false },
+        img_name: { type: DataTypes.STRING, allowNull: false },
+        barcode: { type: DataTypes.STRING, allowNull: false },
+    }
+)
 
-// const Task_Dima = sequelize.define(
-//     'task_dima', 
-//     {
-//         id:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true},
-//         name:{type: DataTypes.STRING, unique: true, allowNull:false}, // название файла и расширение
-//     }
-// )
-// const Tovar_For_Task_Dima = sequelize.define(
-//     'tovar_for_task_dima', 
-//     {
-//         id:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true},
-//         manufacturer_ID:{type: DataTypes.STRING},
-//         warehouse_ID:{type: DataTypes.STRING, allowNull:false}, 
-//         barcode:{type: DataTypes.STRING, allowNull:false}, 
-//         name:{type: DataTypes.STRING, allowNull:false}, 
+Tovar_For_Warehouse.hasMany(Photo_For_Box);
+Photo_For_Box.belongsTo(Tovar_For_Warehouse)
 
-//         cartons_required:{type: DataTypes.STRING, allowNull:false}, 
-//         cartons_found:{type: DataTypes.STRING, allowNull:false},
-//         additional_information:{type: DataTypes.STRING,},
-
-
-//         box_number:{type: DataTypes.STRING, allowNull:false},
-//         task_nikita_id:{type: DataTypes.INTEGER,},
-//     }
-// )
-// Task_Dima.hasMany(Tovar_For_Task_Dima)
-// Tovar_For_Task_Dima.belongsTo(Task_Dima)
-
-// Photo_For_Tovar.hasMany(Tovar_For_Task_Dima)
-// Tovar_For_Task_Dima.belongsTo(Photo_For_Tovar)
 
 
 
@@ -143,10 +126,12 @@ module.exports = {
     Role,
     Roles_User,
 
-    Photo_For_Tovar_Nikita,
-    Tovar_For_Warehouse_Nikita,
-    Task_Nikita,
-    Tovar_For_Task_Nikita,
+    Photo_For_Tovar,
+    Tovar_For_Warehouse,
+    Task,
+    Tovar_For_Task,
+
+    Photo_For_Box
 
 
     // Task_Dima,

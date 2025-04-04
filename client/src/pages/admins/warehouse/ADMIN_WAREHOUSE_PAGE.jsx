@@ -6,19 +6,30 @@ import styles from './admin_warehouse_page.module.css'
 
 
 import CreateTovar_form from '../../../components/CreateTovar_form/CreateTovar_form';
-import Task_list from '../../../components/Task_list/Task_list';
+import List_warehouse from '../../../components/List_warehouse/List_warehouse';
+
 
 const ADMIN_WAREHOUSE_PAGE = () => {
 
-    const [task_name, setTask_name] = useState(null)
+    const [task_name, setTask_name] = useState(null);
+    const { tovar_store } = useContext(Context);
+
 
 
 
 
     return (
         <div className={styles.main}>
+            {tovar_store.isCreate && !tovar_store.isSearch ?
+                <CreateTovar_form></CreateTovar_form>
+                :
+                <List_warehouse></List_warehouse>
+            }
 
-            <CreateTovar_form></CreateTovar_form>
+            
+            
+
+
 
         </div>
     )

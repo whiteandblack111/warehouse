@@ -11,7 +11,7 @@ const Role_Service = require("./role_Service");
 
 class User_Service {
 
-    async registration(firstname, twoname, email, password, role_for_user = "USER") {
+    async registration(firstname, twoname, email, password, role_for_user = "USER", phone) {
 
         const candidate = await User.findOne({ where: { email: email } });
 
@@ -27,7 +27,8 @@ class User_Service {
             twoname,
             email,
             password: hashPassword,
-            activationLink
+            activationLink,
+            phone
         });
 
         const role = await Role_Service.getOne(role_for_user);

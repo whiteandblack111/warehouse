@@ -1,21 +1,22 @@
-const { Photo_For_Tovar_Nikita } = require("../models/models");
+const { Photo_For_Tovar } = require("../models/models");
 
 
 class PhotoService {
 
-    async create(filePath, fileName, tovarForWarehouseNikitumId) {
-        console.log("tovarForWarehouseNikitumId:::",tovarForWarehouseNikitumId)
-        const tovar_photo = await Photo_For_Tovar_Nikita.create({
+    async create(filePath, fileName, barcode, tovarForWarehouseId ) {
+
+        const tovar_photo = await Photo_For_Tovar.create({
             img_path: filePath,
             img_name: fileName,
-            tovarForWarehouseNikitumId:tovarForWarehouseNikitumId
-        });
+            barcode: barcode,
+            tovarForWarehouseId:tovarForWarehouseId
+        }); 
 
         return tovar_photo
     }
 
     async getOne(id){
-        const tovar_photo = await Photo_For_Tovar_Nikita.findOne()
+        const tovar_photo = await Photo_For_Tovar.findOne()
     }
 
 

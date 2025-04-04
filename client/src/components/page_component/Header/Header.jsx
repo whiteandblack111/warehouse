@@ -5,13 +5,10 @@ import styles from './header.module.css'
 import Header_btn from "../../UI/Header_btn/Header_btn";
 
 import { ADMIN_TASK_LIST_PATH, ADMIN_WAREHOUSE_PATH } from "../../../utils/routes_constants";
-import Submit_btn from "../../UI/Submit_btn/Submit_btn";
 import Login_btn from "../../UI/Login_btn/Login_btn";
 
 import { LOGIN_PATH } from "../../../utils/routes_constants";
-
 import { Context } from '../../../index';
-import Logout_btn from '../../UI/Logout_btn/Logout_btn';
 
 const Header = () => {
 
@@ -23,9 +20,11 @@ const Header = () => {
     const { pathname } = location;
     const splitLocation = pathname.split("/");
 
+    const { user_store } = useContext(Context);
+  
 
-    // console.log(pathname)
-    const { user_store } = useContext(Context)
+
+
 
     return (
         <header className={styles.header}>

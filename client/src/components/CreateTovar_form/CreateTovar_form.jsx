@@ -1,28 +1,44 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import styles from './createTovar_form.module.css'
 import { Context } from '../../index';
-
-
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { observer } from 'mobx-react-lite';
 
 
+
 const CreateTovar_form = () => {
 
-    const [manufacturer_ID, setManufacturer_ID] = useState('');
-    const [warehouse_ID, setWarehouse_ID] = useState('');
-    const [barcode, setBarcode] = useState('');
+    const [tovar_photo, setTovar_img] = useState('');
     const [name, setName] = useState('');
+    const [barcode, setBarcode] = useState('');
+    const [manufacturer_ID, setManufacturer_ID] = useState('');
     const [quantity, setQuantity] = useState('');
-    const [tovar_img, setTovar_img] = useState('');
 
 
-    const createFile_for_tovar = () => {
+    const { tovar_store } = useContext(Context);
 
+    const createFile_for_tovar = async (
+        tovar_photo,
+        name,
+        barcode,
+        manufacturer_ID,
+        quantity,
+    ) => {
+        let form_data = new FormData();
 
+        form_data.append("tovar_photo", tovar_photo);
+        form_data.append("name", name);
+        form_data.append("barcode", barcode);
+        form_data.append("manufacturer_ID", manufacturer_ID);
+        form_data.append("quantity", quantity);
+
+        await tovar_store.create_tovar_warehouse(form_data)
+
+    }
+
+    const handleFile = (e) => {
+        setTovar_img(e.target.files[0])
     }
 
 
@@ -31,14 +47,14 @@ const CreateTovar_form = () => {
             <Form className={styles.container}>
                 <div>
                     {/* ========== Изображение товара ============== */}
-                    <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} controlId="exampleForm.ControlInput1">
-                       
+                    <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
+
                         <div className={styles.formTitle}>Создать товар на складе</div>
 
-                        {!tovar_img ?
+                        {!tovar_photo ?
 
                             <Form.Label
-                                for="file"
+                            htmlFor="tovar_photo"
                                 className={`${styles.custom_file_inputLabelinput}`}
                             >
 
@@ -48,7 +64,7 @@ const CreateTovar_form = () => {
 
                             :
                             <Form.Label
-                                for="file"
+                            htmlFor="tovar_photo"
                                 className={`${styles.custom_file_inputLabelinput} ${styles.isGoLoadingFile}`}
                             >
 
@@ -59,20 +75,52 @@ const CreateTovar_form = () => {
                         }
                         <Form.Control
                             className={`${styles.custom_file_input} ${styles.file}`}
-                            name='file'
-                            id="file"
+                            name='tovar_photo'
+                            id="tovar_photo"
                             key="tovars_for_task"
                             type='file'
                             placeholder="Не менее 6 символов"
-                            onChange={(e) => createFile_for_tovar(e)}
+                            onChange={(e) => handleFile(e)}
                         />
                     </Form.Group>
-
                 </div>
 
 
+                {/* ==========  name  ============== */}
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+                    <Form.Label
+                        className={styles.inputLabel}
+                    >Название товара</Form.Label>
+                    <Form.Control
+                        className={styles.input}
+                        key="name"
+                        type="text"
+                        placeholder="Name"
+                        onChange={e => setName(e.target.value)}
+                        value={name}
+                    />
+                </Form.Group>
+
+                {/* ==========  Штрих-код  ============== */}
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+                    <Form.Label
+                        className={styles.inputLabel}
+                    >Штрих-код</Form.Label>
+                    <Form.Control
+                        className={styles.input}
+                        key="barcode"
+                        type="text"
+                        placeholder="Штрих-код"
+                        onChange={e => setBarcode(e.target.value)}
+                        value={barcode}
+                    />
+                </Form.Group>
+
+
+
+
                 {/* ==========  manufacturer_ID  ============== */}
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} controlId="exampleForm.ControlInput1">
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
                     <Form.Label
                         className={styles.inputLabel}
                     >Производитель ID</Form.Label>
@@ -87,22 +135,7 @@ const CreateTovar_form = () => {
                 </Form.Group>
 
                 {/* ==========  name  ============== */}
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} controlId="exampleForm.ControlInput1">
-                    <Form.Label
-                        className={styles.inputLabel}
-                    >Название товара</Form.Label>
-                    <Form.Control
-                        className={styles.input}
-                        key="name"
-                        type="text"
-                        placeholder="Name"
-                        onChange={e => setName(e.target.value)}
-                        value={name}
-                    />
-                </Form.Group>
-
-                {/* ==========  name  ============== */}
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} controlId="exampleForm.ControlInput1">
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`}>
                     <Form.Label
                         className={styles.inputLabel}
                     >Количество товара</Form.Label>
@@ -117,11 +150,23 @@ const CreateTovar_form = () => {
                 </Form.Group>
 
 
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+
+
+
+                {/* ==========  BUTTON  ============== */}
+                <Form.Group className="mb-3" >
 
                     <Button
                         className={styles.autx_btn}
-                        onClick={() => { }}
+                        onClick={() => {
+                            createFile_for_tovar(
+                                tovar_photo,
+                                name,
+                                barcode,
+                                manufacturer_ID,
+                                quantity,
+                            )
+                        }}
                         variant="outline-success">Создать
                     </Button>
                 </Form.Group>

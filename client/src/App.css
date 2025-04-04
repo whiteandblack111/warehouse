@@ -1,11 +1,12 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 
-   
+
 }
-body{
+
+body {
     background: url("./../public/img/fiol.jpg") no-repeat;
     background-position: 50% 50%;
     background-size: cover;
@@ -16,8 +17,75 @@ body{
     color: #fff;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     overflow: hidden;
+
+}
+
+
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+    width: 16px; /* ширина для вертикального скролла */
+    height: 8px; /* высота для горизонтального скролла */
+   
     
-  }
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+    background-color: #aa055a;
+    border-radius: 100%;
+    box-shadow: inset 1px 1px 10px #f3faf7;
+
+
+    cursor: pointer;
+    border-color: #7c7c7c;
+    background: linear-gradient(top, rgba(38, 38, 38, 0.8), #e6e6e6 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, rgba(38, 38, 38, 0.8));
+    background: -webkit-linear-gradient(top, rgba(38, 38, 38, 0.5), #e6e6e6 25%, #ffffff 38%, rgba(0, 0, 0, 0.25) 63%, #e6e6e6 87%, rgba(38, 38, 38, 0.4));
+    border: 2px solid #7c7c7c;
+
+    box-shadow: 1px 1px 1px 1px #000000, inset 1px 1px 1px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #52f6e2;
+}
+
+/* Стрелки */
+
+::-webkit-scrollbar-button:vertical:start:decrement {
+    background: linear-gradient(120deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(240deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(0deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+    background-color: #f6f8f4;
+    display: none;
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+    background:
+        linear-gradient(300deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(60deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(180deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+    background-color: #f6f8f4;
+    display: none;
+}
+
+::-webkit-scrollbar-button:horizontal:start:decrement {
+    background:
+        linear-gradient(30deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(150deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(270deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+    background-color: #f6f8f4;
+    display: none;
+}
+
+::-webkit-scrollbar-button:horizontal:end:increment {
+    background:
+        linear-gradient(210deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(330deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(90deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+    background-color: #f6f8f4;
+    display: none;
+}

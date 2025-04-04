@@ -22,12 +22,14 @@ const ADMIN_TASK_LIST_PAGE = () => {
 
     const taskList = [
         {
+            id: "1",
             barcode: "2041780466219",
             cartons_required: "6",
             name: "Электрическая мясорубка",
             warehouse_ID: "meatgrinder"
         },
         {
+            id: "2",
             barcode: "2040989560629",
             cartons_required: "12",
             name: "Мобиль музыкальный для новорожденных 0+",

@@ -1,23 +1,23 @@
-const jwt = require('jsonwebtoken');
-const { Task_Nikita, Tovar_For_Task_Nikita } = require('../models/models');
+
+const { Task, Tovar_For_Task } = require('../models/models');
 
 
-class Task_Nikita_Service {
+class Task_Service {
 
     async create(taskData) {
-        const task = await Task_Nikita.create(
+        const task = await Task.create(
             taskData
         )
         return task
     }
 
     async getOne_byId(id) {
-        const task = await Task_Nikita.findOne({
+        const task = await Task.findOne({
             where: { id: id },
 
             include: [
                 {
-                    model: Tovar_For_Task_Nikita, as: "tovar_for_task_nikita"
+                    model: Tovar_For_Task, as: "tovar_for_task"
 
                 }
             ]
@@ -27,12 +27,12 @@ class Task_Nikita_Service {
     }
 
     async getOne_byNumber(task_number) {
-        const task = await Task_Nikita.findOne({
+        const task = await Task.findOne({
             where: { task_number: task_number },
 
             include: [
                 {
-                    model: Tovar_For_Task_Nikita, as: "tovar_for_task_nikita"
+                    model: Tovar_For_Task, as: "tovar_for_task"
 
                 }
             ]
@@ -44,13 +44,13 @@ class Task_Nikita_Service {
 
     async getAll(limit, offset) {
 
-        const task = await Task_Nikita.findAndCountAll(
+        const task = await Task.findAndCountAll(
             {
                 limit,
                 offset,
                 include: [
                     {
-                        model: Tovar_For_Task_Nikita, as: "tovar_for_task_nikita"
+                        model: Tovar_For_Task, as: "tovar_for_task"
     
                     }
                 ]
@@ -61,14 +61,14 @@ class Task_Nikita_Service {
 
     async getAll_statusWork(statusWork, limit, offset) {
 
-        const task = await Task_Nikita.findAndCountAll(
+        const task = await Task.findAndCountAll(
             {
                 where: { statusWork: statusWork },
                 limit,
                 offset,
                 include: [
                     {
-                        model: Tovar_For_Task_Nikita, as: "tovar_for_task_nikita"
+                        model: Tovar_For_Task, as: "tovar_for_task"
     
                     }
                 ]
@@ -79,14 +79,14 @@ class Task_Nikita_Service {
 
     async getAll_executor(executor, limit, offset) {
 
-        const task = await Task_Nikita.findAndCountAll(
+        const task = await Task.findAndCountAll(
             {
                 where: { executor: executor },
                 limit,
                 offset,
                 include: [
                     {
-                        model: Tovar_For_Task_Nikita, as: "tovar_for_task_nikita"
+                        model: Tovar_For_Task, as: "tovar_for_task"
     
                     }
                 ]
@@ -97,14 +97,14 @@ class Task_Nikita_Service {
 
     async getAll_createAt(createAt, limit, offset) {
 
-        const task = await Task_Nikita.findAndCountAll(
+        const task = await Task.findAndCountAll(
             {
                 where: { createAt: createAt },
                 limit,
                 offset,
                 include: [
                     {
-                        model: Tovar_For_Task_Nikita, as: "tovar_for_task_nikita"
+                        model: Tovar_For_Task, as: "tovar_for_task"
     
                     }
                 ]
@@ -115,4 +115,4 @@ class Task_Nikita_Service {
 
 }
 
-module.exports = new Task_Nikita_Service()
+module.exports = new Task_Service()

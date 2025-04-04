@@ -5,7 +5,8 @@
     align-items: center;
 
     width: 700px;
-    height: 680px;
+    height: 100%;
+    max-height: 870px;
     padding: 30px 20px;
     background: rgb(114, 5, 105, 0.05);
 
@@ -24,6 +25,8 @@
     left: 0;
     margin: auto;
 }
+
+
 
 .formTitle{
     font-weight: 600;

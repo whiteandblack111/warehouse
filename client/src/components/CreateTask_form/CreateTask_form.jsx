@@ -44,7 +44,7 @@ const CreateTask_form = () => {
     return (
         <div>
             <Form className={styles.container}>
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} controlId="exampleForm.ControlInput1">
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
                     <Form.Label
                         className={styles.inputLabel}
                     >Регистрация новой поставки в системе</Form.Label>
@@ -57,11 +57,11 @@ const CreateTask_form = () => {
                         value={task_name}
                     />
                 </Form.Group>
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} controlId="exampleForm.ControlInput1">
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
 
                     {tovars_for_task.length === 0 ?
                         <Form.Label
-                            for="file"
+                            htmlFor="file"
                             className={`${styles.custom_file_inputLabelinput}`}
                         >
 
@@ -89,7 +89,7 @@ const CreateTask_form = () => {
                         onChange={(e) => handleFile(e)}
                     />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group className="mb-3">
                     <Button
                         className={styles.autx_btn}
                         // onClick={() => {}}
