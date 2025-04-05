@@ -2,6 +2,8 @@ require('dotenv').config();
 const path = require('path');
 const uuid = require('uuid');
 const fs = require('fs');
+const Help_Service = require('./Help_Service');
+
 
 const createPath = () => {
     // const today = new Date();
@@ -27,10 +29,14 @@ const createPath = () => {
     return filePath;
 };
 
-const uploadFile = (filePath, file) => {
+const uploadFile = (filePath, file, tratslit_name) => {
     
+    // console.log("file=======>", file);
 
-    let fileName = uuid.v4() + '.jpg';
+    let fileName = tratslit_name
+
+    console.log("fileName=======>", fileName);
+
     file.mv(path.resolve(filePath, fileName));
 
     return fileName

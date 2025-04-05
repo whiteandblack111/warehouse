@@ -23,6 +23,7 @@
     right: 0;
     left: 0;
     margin: auto;
+    z-index: 1;
 }
 
 .wrapperInput {
@@ -271,3 +272,6 @@ a {
   .custom_file_inputLabelinput:hover:before {
     left: 100%;
   }
+
+/* ==================== SELECT============= */
+

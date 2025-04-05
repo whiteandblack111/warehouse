@@ -13,11 +13,11 @@ const Role = sequelize.define(
     }
 )
 
+
 const Roles_User = sequelize.define(
     'roles_user',
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    
     },
     {
         createdAt:false,
@@ -38,9 +38,9 @@ const User = sequelize.define(
         activationLink: { type: DataTypes.STRING }
     }
 )
-
 Role.belongsToMany(User, { through: Roles_User })
 User.belongsToMany(Role, { through: Roles_User })
+
 
 const Photo_For_Tovar = sequelize.define(
     'photo_for_tovar',
@@ -57,9 +57,9 @@ const Task = sequelize.define(
     'task',
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-        shop_name: { type: DataTypes.STRING, defaultValue: "не назначен" },
-        task_number: { type: DataTypes.STRING, defaultValue: "не назначен"},
-        marketplace_name: { type: DataTypes.STRING, allowNull: false },
+        task_name: { type: DataTypes.STRING, allowNull: false },
+        shop_name: { type: DataTypes.STRING, allowNull: false },
+        
         executor: { type: DataTypes.STRING, defaultValue: "не назначен" },
         statusWork: { type: DataTypes.STRING, defaultValue: "в очереди" },
         
@@ -72,20 +72,34 @@ const Tovar_For_Task = sequelize.define(
     'tovar_for_task',
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-        manufacturer_ID: { type: DataTypes.STRING },
         warehouse_ID: { type: DataTypes.STRING, allowNull: false },
         barcode: { type: DataTypes.STRING, allowNull: false },
         name: { type: DataTypes.STRING, allowNull: false },
 
         cartons_required: { type: DataTypes.STRING, allowNull: false },
         cartons_found: { type: DataTypes.STRING, defaultValue: 0 },
-        additional_information: { type: DataTypes.STRING, },
+
+        // additional_information: { type: DataTypes.STRING, },
 
         box_number: { type: DataTypes.STRING, defaultValue: "не определён" },
     }
 )
 Task.hasMany(Tovar_For_Task)
 Tovar_For_Task.belongsTo(Task)
+
+const Sticker = sequelize.define(
+    "sticker",
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        img_path: { type: DataTypes.STRING, allowNull: false },
+        img_name: { type: DataTypes.STRING, allowNull: false },
+        barcode: { type: DataTypes.STRING, allowNull: false },
+        shop_name: { type: DataTypes.STRING, allowNull: false },
+        
+    }
+)
+Sticker.hasMany(Tovar_For_Task)
+Tovar_For_Task.belongsTo(Sticker)
 
 
 const Tovar_For_Warehouse = sequelize.define(
@@ -103,6 +117,8 @@ const Tovar_For_Warehouse = sequelize.define(
 Tovar_For_Warehouse.hasMany(Photo_For_Tovar);
 Photo_For_Tovar.belongsTo(Tovar_For_Warehouse)
 
+Tovar_For_Warehouse.hasMany(Sticker);
+Sticker.belongsTo(Tovar_For_Warehouse)
 
 const Photo_For_Box = sequelize.define(
     'photo_for_box',
@@ -131,11 +147,8 @@ module.exports = {
     Task,
     Tovar_For_Task,
 
-    Photo_For_Box
-
-
-    // Task_Dima,
-    // Tovar_For_Task_Dima,
+    Photo_For_Box,
+    Sticker
 
 
 }

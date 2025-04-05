@@ -4,6 +4,7 @@ import styles from './list_warehouse.module.css'
 import { Context } from '../../index';
 import Tovar_warehouse from '../Tovar_warehouse/Tovar_warehouse';
 import Tovar_Service from '../../services/Tovar_Service';
+import Stickers_form from '../FORMS/Stickers_form/Stickers_form';
 
 const List_warehouse = () => {
 
@@ -19,11 +20,29 @@ const List_warehouse = () => {
     }
 
 
+    const arrayTest = [1,1,1,1,1,1,1,1,1,1,1,1,,1,1,1,,1,1,1,,1,1,1,,1,1,1,1,,1,1,1,1,,]
+
+    const tovarTest = {
+        photo_for_tovars: [
+            {
+                img_name: "хуета"
+            }
+            
+        ]
+        ,
+        manufacturer_ID: "хз",
+        barcode: "хз",
+        name: "хз",
+        quantity: "х1000з"
+    }
+
     return (
         <div
             className={styles.container}
 
         >
+
+            <Stickers_form></Stickers_form>
             <div className={styles.heading}>
                 <div className={`${styles.headingItem} ${styles.id}`}>№</div>
                 <div className={styles.line} ></div>
@@ -44,13 +63,26 @@ const List_warehouse = () => {
                 <div className={`${styles.headingItem} ${styles.quantity}`}>Кол-во</div>
             </div>
             {
-                tovar_store.allTovars.map((tovar) => {
-                    return <Tovar_warehouse
-                        key={tovar.id}
-                        tovar={tovar}
-                    ></Tovar_warehouse>
-                })
+                // tovar_store.allTovars.map((tovar) => {
+                //     return <Tovar_warehouse
+                //         key={tovar.id}
+                //         tovar={tovar}
+                //     ></Tovar_warehouse>
+                // })
+
+                // arrayTest.map((tovar) => {
+                //     return <Tovar_warehouse
+                //     tovar={tovarTest}
+                //     ></Tovar_warehouse>
+                // })
+                <Tovar_warehouse
+                tovar={tovarTest}
+                ></Tovar_warehouse>
+
+                
             }
+            
+            
 
         </div>
     )

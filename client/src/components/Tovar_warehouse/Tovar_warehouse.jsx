@@ -27,7 +27,20 @@ const Tovar_warehouse = ({ tovar }) => {
             <div className={styles.line} ></div>
 
             <div className={`${styles.item} ${styles.barcode}`}>
-                {tovar.barcode}
+                <div className={styles.barcode_box}>
+                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
+                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
+                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
+                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
+                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
+                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
+                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
+                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
+                </div>
+                <div className={styles.line_mini} ></div>
+                <div className={styles.barcode_download_box}>
+                    <button className={styles.barcode_download_btn}>Загрузить</button>
+                </div>
             </div>
             <div className={styles.line} ></div>
 

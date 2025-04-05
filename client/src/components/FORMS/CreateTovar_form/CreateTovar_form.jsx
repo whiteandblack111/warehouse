@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styles from './createTovar_form.module.css'
-import { Context } from '../../index';
+import { Context } from '../../../index';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { observer } from 'mobx-react-lite';

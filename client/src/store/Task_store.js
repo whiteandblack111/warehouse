@@ -1,32 +1,73 @@
 import { makeAutoObservable } from "mobx";
-import Task_Nikita_Service from "../services/Task_Nikita_Service";
+import Task_Service from "../services/Task_Service";
 
 
 export default class Task_store {
 
+    _task = [];
+    _isCreate = false;
+    _isSearch = false;
+    _allTasks = [];
+
+
     constructor() {
-        this._tasks = []
-       
+
+
         makeAutoObservable(this);
     }
 
-    setTasks(tasks) {
-        this._tasks = tasks;
+    setTask(task) {
+        this._task = task;
     }
 
-    get Tasks() {
-        return this._tasks;
+    get Task() {
+        return this._task;
+    }
+
+    setAllTasks(tasks) {
+        this._allTasks = tasks;
+    }
+    get allTasks() {
+        return this._allTasks;
+    }
+
+    setIsCreate(bool) {
+        this._isCreate = bool;
+    }
+    get isCreate() {
+        return this._isCreate;
+    }
+
+    setIsSearch(bool) {
+        this._isSearch = bool;
+    }
+    get isSearch() {
+        return this._isSearch;
+    }
+
+    async create_task(taskData) {
+        try {
+
+            const response = await Task_Service.create_task(taskData);
+
+            const task = response.data
+            console.log("task====>", task)
+            this.setTask(task);
+
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
     }
 
 
     async getall() {
         try {
-            const response = await Task_Nikita_Service.getall();
-            this.setTasks(response.data);
+            const response = await Task_Service.getall();
+            this.setAllTasks(response.data);
 
             console.log(response.data)
 
-        }catch(e) {
+        } catch (e) {
             console.log(e.response?.data?.message);
         }
     }

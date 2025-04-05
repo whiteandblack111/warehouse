@@ -1,5 +1,5 @@
 
-const { Task, Tovar_For_Task } = require('../models/models');
+const { Task, Tovar_For_Task, Stiker } = require('../models/models');
 
 
 class Task_Service {
@@ -17,8 +17,10 @@ class Task_Service {
 
             include: [
                 {
-                    model: Tovar_For_Task, as: "tovar_for_task"
-
+                    model: Tovar_For_Task, as: "tovar_for_tasks",
+                    include: [
+                        {model: Stiker, as: "stikers"}
+                    ]
                 }
             ]
 

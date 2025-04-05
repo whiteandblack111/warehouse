@@ -5,7 +5,7 @@ import styles from './admin_warehouse_page.module.css'
 
 
 
-import CreateTovar_form from '../../../components/CreateTovar_form/CreateTovar_form';
+import CreateTovar_form from '../../../components/FORMS/CreateTovar_form/CreateTovar_form';
 import List_warehouse from '../../../components/List_warehouse/List_warehouse';
 
 

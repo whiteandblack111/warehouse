@@ -4,8 +4,7 @@ import { Context } from '../../../../index';
 
 import styles from './admin_task_list_page.module.css'
 
-import *  as  XLSX from "xlsx";
-import CreateTask_form from '../../../../components/CreateTask_form/CreateTask_form';
+import CreateTask_form from '../../../../components/FORMS/CreateTask_form/CreateTask_form';
 import Task_list from '../../../../components/Task_list/Task_list';
 
 const ADMIN_TASK_LIST_PAGE = () => {
@@ -21,44 +20,9 @@ const ADMIN_TASK_LIST_PAGE = () => {
     }, [tovars_for_task])
 
     const taskList = [
-        {
-            id: "1",
-            barcode: "2041780466219",
-            cartons_required: "6",
-            name: "Электрическая мясорубка",
-            warehouse_ID: "meatgrinder"
-        },
-        {
-            id: "2",
-            barcode: "2040989560629",
-            cartons_required: "12",
-            name: "Мобиль музыкальный для новорожденных 0+",
-            warehouse_ID:"25902",
-        }
 
     ]
 
-
-
-
-    const handleFile = async (e) => {
-        const file = e.target.files[0];
-        const data = await file.arrayBuffer();
-        const workbook = XLSX.read(data);
-
-        const worksheet = workbook.Sheets[workbook.SheetNames[0]]
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-        let mutateTovar = jsonData.map((tovar) => {
-            let newTovar = {
-                warehouse_ID: tovar["артикул"],
-                barcode: tovar["штрихкод"],
-                name: tovar["имя (необязательно)"],
-                cartons_required: tovar["количество"],
-            }
-            return newTovar
-        })
-        setTovars_from_task(mutateTovar)
-    }
 
 
 

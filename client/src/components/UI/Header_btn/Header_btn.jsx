@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from "./header_btn.module.css"
 import { Context } from '../../../index';
 import { observer } from 'mobx-react-lite';
@@ -12,6 +12,7 @@ const Header_btn = (props) => {
     const { task_store } = useContext(Context);
 
     let location = useLocation();
+    let navigate = useNavigate();
 
     useEffect(() => {
 
@@ -26,6 +27,25 @@ const Header_btn = (props) => {
     const isAll = () => {
         tovar_store.setIsCreate(false);
         tovar_store.setIsSearch(false);
+
+        navigator.bluetooth.requestDevice({ filters: [{ services: ['battery_service'] }] })
+            .then(device => device.gatt.connect())
+            .then(server => {
+                // Получаем службу аккумулятора…
+                return server.getPrimaryService('battery_service');
+            })
+            .then(service => {
+                // Получаем характеристику уровня заряда батареи…
+                return service.getCharacteristic('battery_level');
+            })
+            .then(characteristic => {
+                // Считываем заряд батареи…
+                return characteristic.readValue();
+            })
+            .then(value => {
+                console.log(`Уровень заряда: ${value.getUint8(0)}`);
+            })
+            .catch(error => { console.error(error); });
     }
 
     const isCreate = () => {
@@ -52,8 +72,9 @@ const Header_btn = (props) => {
     return (
         <div className={styles.container + " " + styles.dropdown}>
             <NavLink
-                // className={({isActive}) => setRoutActive(true)}
-                className={`${styles.link} `}
+
+                className={({ isActive }) => (isActive ? `${styles.link_active} ` : `${styles.link}`)}
+
 
                 to={props.path}>
 

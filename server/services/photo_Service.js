@@ -1,10 +1,9 @@
 const { Photo_For_Tovar } = require("../models/models");
 
 
-class PhotoService {
+class Photo_Service {
 
     async create(filePath, fileName, barcode, tovarForWarehouseId ) {
-
         const tovar_photo = await Photo_For_Tovar.create({
             img_path: filePath,
             img_name: fileName,
@@ -22,4 +21,4 @@ class PhotoService {
 
 }
 
-module.exports = new PhotoService()
+module.exports = new Photo_Service()
