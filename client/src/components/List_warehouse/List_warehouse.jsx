@@ -8,6 +8,8 @@ import Stickers_form from '../FORMS/Stickers_form/Stickers_form';
 
 const List_warehouse = () => {
 
+    const { sticker_store } = useContext(Context);
+
     useEffect(() => {
         getAll_tovars_warehouse();
     }, [])
@@ -20,14 +22,14 @@ const List_warehouse = () => {
     }
 
 
-    const arrayTest = [1,1,1,1,1,1,1,1,1,1,1,1,,1,1,1,,1,1,1,,1,1,1,,1,1,1,1,,1,1,1,1,,]
+    const arrayTest = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, , 1, 1, 1, , 1, 1, 1, , 1, 1, 1, , 1, 1, 1, 1, , 1, 1, 1, 1, ,]
 
     const tovarTest = {
         photo_for_tovars: [
             {
                 img_name: "хуета"
             }
-            
+
         ]
         ,
         manufacturer_ID: "хз",
@@ -36,13 +38,18 @@ const List_warehouse = () => {
         quantity: "х1000з"
     }
 
+
     return (
         <div
             className={styles.container}
 
         >
+            {sticker_store.isCreate
+                ? <Stickers_form></Stickers_form>
+                : <div></div>
+            }
 
-            <Stickers_form></Stickers_form>
+
             <div className={styles.heading}>
                 <div className={`${styles.headingItem} ${styles.id}`}>№</div>
                 <div className={styles.line} ></div>
@@ -76,13 +83,13 @@ const List_warehouse = () => {
                 //     ></Tovar_warehouse>
                 // })
                 <Tovar_warehouse
-                tovar={tovarTest}
+                    tovar={tovarTest}
                 ></Tovar_warehouse>
 
-                
+
             }
-            
-            
+
+
 
         </div>
     )

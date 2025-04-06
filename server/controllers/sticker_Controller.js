@@ -1,6 +1,6 @@
 
 const ApiError = require('../error/ApiError');
-const Sticker_Service = require('../services/Sticker_Service');
+const Sticker_Service = require('../services/sticker_Service');
 const { createPath, uploadFile } = require('../services/Sticker_Uploader');
 
 class Sticker_Controller {
@@ -10,7 +10,7 @@ class Sticker_Controller {
 
             const { sticker_file } = req.files
             const filePath = createPath();
-            const fileName = uploadFile(filePath, sticker_file, req.body.tratslit_name);
+            const fileName = uploadFile(filePath, sticker_file, req.body.translit_name);
 
             console.log("fileName================>", fileName)
 

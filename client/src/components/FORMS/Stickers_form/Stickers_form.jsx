@@ -21,7 +21,7 @@ const CreateTask_form = () => {
 
     const [barcode, setBarcode] = useState('');
     const [sticker_file, setSticker_file] = useState(null);
-    const [tratslit_name, setTratslit_name] = useState('');
+    const [translit_name, setTratslit_name] = useState('');
     const [shop_name, setShop_name] = useState('Установите магазин');
 
     // console.log("window.BtwJS=======>", BtwJS)
@@ -35,8 +35,8 @@ const CreateTask_form = () => {
 
     const handleFile = async (e) => {
         const file = e.target.files[0];
-        const tratslit_name = await Help_Service.translit_text(file.name);
-        setTratslit_name(tratslit_name)
+        const translit_name = await Help_Service.translit_text(file.name);
+        setTratslit_name(translit_name)
 
         console.log("file.name=====>", file.name)
 
@@ -62,7 +62,7 @@ const CreateTask_form = () => {
         form_data.append("barcode", barcode);
         form_data.append("shop_name", shop_name);
         form_data.append("sticker_file", sticker_file);
-        form_data.append("tratslit_name", tratslit_name);
+        form_data.append("translit_name", translit_name);
 
         // console.log("sticker_file.name====>", sticker_file.name)
 

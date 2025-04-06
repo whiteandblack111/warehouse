@@ -2,9 +2,25 @@ import React, { useContext, useEffect, useState } from 'react';
 import { observer } from "mobx-react-lite"
 import styles from './tovar_warehouse.module.css'
 import { Context } from '../../index';
+import { FaDownload } from "react-icons/fa";
 
 const Tovar_warehouse = ({ tovar }) => {
 
+    const { sticker_store } = useContext(Context);
+
+    const openCreate_form = () => {
+        if (sticker_store.isCreate) {
+            sticker_store.setIsCreate(false)
+            console.log("sticker_store.isCreate====>", sticker_store.isCreate)
+            return
+        }
+        if (!sticker_store.isCreate) {
+            sticker_store.setIsCreate(true)
+            console.log("sticker_store.isCreate====>", sticker_store.isCreate)
+            return
+        }
+
+    }
 
     return (
         <div className={styles.container}>
@@ -39,7 +55,11 @@ const Tovar_warehouse = ({ tovar }) => {
                 </div>
                 <div className={styles.line_mini} ></div>
                 <div className={styles.barcode_download_box}>
-                    <button className={styles.barcode_download_btn}>Загрузить</button>
+                    <button className={`${styles.barcode_download_btn} `}
+                    onClick={()=>openCreate_form()}
+                    >
+                        <FaDownload />
+                    </button>
                 </div>
             </div>
             <div className={styles.line} ></div>

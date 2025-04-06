@@ -50,11 +50,11 @@
 }
 
 .Manufacturer_ID {
-    width: 15%;
+    width: 17%;
 }
 
 .name {
-    width: 15%;
+    width: 17%;
     font-size: 22px;
     text-align: center;
 }
@@ -75,7 +75,7 @@
     width: 1px;
 }
 .barcode {
-    width: 30%;
+    width: 26%;
     height: 200px;
     overflow: hidden;
     position: relative 
@@ -89,6 +89,7 @@
     height: 200px;
     padding: 1px;
     width: 60%;
+
 
     overflow-x: scroll;
 }
@@ -105,9 +106,47 @@
 .barcode_box_item{
     /* width: 100%; */
     margin: 0 5%;
-    
+    font-size: 22px;
+    text-align: center;
 }
 
 .barcode_download_btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    border-color: #7c7c7c;
+    background: linear-gradient(top, rgba(38, 38, 38, 0.8), #e6e6e6 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, rgba(38, 38, 38, 0.8));
+    background: -webkit-linear-gradient(top, rgba(38, 38, 38, 0.5), #e6e6e6 25%, #ffffff 38%, rgba(0, 0, 0, 0.25) 63%, #e6e6e6 87%, rgba(38, 38, 38, 0.4));
+
+    box-sizing: border-box;
+
+    font-size: 26px;
+    font-weight: 400;
+
+    color: #08b5ff;
+    letter-spacing: 3px;
+    -webkit-text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+    -moz-text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+    text-shadow: 0px 0px 6px 08b5ff;
+
+    background: linear-gradient(top, rgba(38, 38, 38, 0.8), #e6e6e6 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, rgba(38, 38, 38, 0.8));
+    background: -webkit-linear-gradient(top, rgba(38, 38, 38, 0.5), #e6e6e6 25%, #ffffff 38%, rgba(0, 0, 0, 0.25) 63%, #e6e6e6 87%, rgba(38, 38, 38, 0.4));
+
+    /* text-shadow: -3px 1px 16px #000; */
+    /* border: 2px solid #7c7c7c; */
+    border: 1px solid #7c7c7c;
+    border-radius: 4px;
+    width: 60px;
+    height: 60px;
+    transition: all 0.2s;
+}
+.barcode_download_btn:hover{
+    color: #52f6e2;
+    font-size: 40px;
+    width: 64px;
+    height: 64px;
 
 }
