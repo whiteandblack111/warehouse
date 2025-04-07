@@ -28,24 +28,25 @@ const Header_btn = (props) => {
         tovar_store.setIsCreate(false);
         tovar_store.setIsSearch(false);
 
-        navigator.bluetooth.requestDevice({ filters: [{ services: ['battery_service'] }] })
-            .then(device => device.gatt.connect())
-            .then(server => {
-                // Получаем службу аккумулятора…
-                return server.getPrimaryService('battery_service');
-            })
-            .then(service => {
-                // Получаем характеристику уровня заряда батареи…
-                return service.getCharacteristic('battery_level');
-            })
-            .then(characteristic => {
-                // Считываем заряд батареи…
-                return characteristic.readValue();
-            })
-            .then(value => {
-                console.log(`Уровень заряда: ${value.getUint8(0)}`);
-            })
-            .catch(error => { console.error(error); });
+        // navigator.bluetooth.requestDevice({ filters: [{ services: ['battery_service'] }] })
+        //     .then(device => device.gatt.connect())
+        //     .then(server => {
+
+        //         // Получаем службу аккумулятора…
+        //         return server.getPrimaryService('battery_service');
+        //     })
+        //     .then(service => {
+        //         // Получаем характеристику уровня заряда батареи…
+        //         return service.getCharacteristic('battery_level');
+        //     })
+        //     .then(characteristic => {
+        //         // Считываем заряд батареи…
+        //         return characteristic.readValue();
+        //     })
+        //     .then(value => {
+        //         console.log(`Уровень заряда: ${value.getUint8(0)}`);
+        //     })
+        //     .catch(error => { console.error(error); });
     }
 
     const isCreate = () => {

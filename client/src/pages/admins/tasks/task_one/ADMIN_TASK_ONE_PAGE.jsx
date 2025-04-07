@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-
-const WORKER_TASK_ONE_PAGE =() => {
+const ADMIN_TASK_ONE_PAGE =() => {
+    const task = []
  
     return (
         <div>
-            WORKER_TASK_ONE_PAGE
+            "aa"
         </div>
     )
 };
 
-export default observer(WORKER_TASK_ONE_PAGE)
+export default observer(ADMIN_TASK_ONE_PAGE);

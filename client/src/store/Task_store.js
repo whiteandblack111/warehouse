@@ -60,15 +60,20 @@ export default class Task_store {
     }
 
 
-    async getall() {
+    async get_all_tasks() {
         try {
-            const response = await Task_Service.getall();
-            this.setAllTasks(response.data);
+            const response = await Task_Service.getall_tasks();
 
-            console.log(response.data)
+            const tasks = response.data
+            console.log("tasks====>", tasks)
+            this.setAllTasks(tasks);
+
+
 
         } catch (e) {
             console.log(e.response?.data?.message);
+        } finally {
+
         }
     }
 

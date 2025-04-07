@@ -53,6 +53,15 @@ export default class Tovar_store {
             const tovar = response.data
             console.log("tovar====>", tovar )
             this.setTovar(tovar);
+            this.allTovars = [
+                ...this._allTovars,
+                tovar
+            ]
+
+            this.setTovar(tovar)
+            this.isCreate(false);
+            this.isSearch(false);
+            return this.tovar
 
         } catch (e) {
             console.log(e.response?.data?.message);

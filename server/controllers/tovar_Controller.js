@@ -2,7 +2,6 @@ const Tovar_Service = require('../services/tovar_Service');
 const ApiError = require('../error/ApiError');
 const { createPath, uploadFile } = require('../services/FotoUploader');
 const PhotoService = require('../services/photo_Service');
-const { json } = require('sequelize');
 
 class tovar_Controller {
     async create_tovar_for_warehouse(req, res, next) {
@@ -10,8 +9,6 @@ class tovar_Controller {
             console.log("create_tovar_for_warehouse====>", req.body)
             const tovarData = {
                 manufacturer_ID: req.body.manufacturer_ID,
-                warehouse_ID: req.body.warehouse_ID,
-                barcode: req.body.barcode,
                 name: req.body.name,
                 quantity: req.body.quantity
             }
@@ -22,7 +19,7 @@ class tovar_Controller {
 
             const filePath = createPath();
             const fileName = uploadFile(filePath, tovar_photo);
-            await PhotoService.create(filePath, fileName, tovar.barcode, tovar.id);
+            await PhotoService.create(filePath, fileName, tovar.id);
         
 
             const dataTovar = await Tovar_Service.getOneFromWarehouseById(tovar.id);

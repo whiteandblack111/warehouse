@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 
 
 import BtwJS from 'btw-js';
-import styles from './stickers_form.module.css'
+import styles from './create_Stickers_form.module.css'
 import *  as  XLSX from "xlsx";
 import { Context } from '../../../index';
 
@@ -17,7 +17,7 @@ import Help_Service from '../../../services/Help_Service';
 
 
 
-const CreateTask_form = () => {
+const Create_Stickers_form = () => {
 
     const [barcode, setBarcode] = useState('');
     const [sticker_file, setSticker_file] = useState(null);
@@ -25,7 +25,7 @@ const CreateTask_form = () => {
     const [shop_name, setShop_name] = useState('Установите магазин');
 
     // console.log("window.BtwJS=======>", BtwJS)
-
+    const { tovar_store } = useContext(Context);
 
 
     useEffect(() => {
@@ -36,7 +36,9 @@ const CreateTask_form = () => {
     const handleFile = async (e) => {
         const file = e.target.files[0];
         const translit_name = await Help_Service.translit_text(file.name);
-        setTratslit_name(translit_name)
+        const trim_name = translit_name.trim()
+        setTratslit_name(trim_name)
+        
 
         console.log("file.name=====>", file.name)
 
@@ -53,7 +55,8 @@ const CreateTask_form = () => {
     const create_sticker = async (
         barcode,
         shop_name,
-        sticker_file
+        sticker_file,
+        tovar_id
 
     ) => {
 
@@ -63,10 +66,14 @@ const CreateTask_form = () => {
         form_data.append("shop_name", shop_name);
         form_data.append("sticker_file", sticker_file);
         form_data.append("translit_name", translit_name);
+        form_data.append("tovar_id", tovar_id);
 
         // console.log("sticker_file.name====>", sticker_file.name)
+        console.log("tovar_id===>", tovar_id)
 
         await sticker_store.create(form_data)
+
+         console.log("sticker_store.sticker=======>", )
     }
 
 
@@ -142,7 +149,8 @@ const CreateTask_form = () => {
                     onClick={() => create_sticker(
                         barcode,
                         shop_name,
-                        sticker_file
+                        sticker_file,
+                        tovar_store.tovar.id
                     )}
                     variant="outline-success">Создать
                 </Button>
@@ -153,4 +161,4 @@ const CreateTask_form = () => {
     );
 }
 
-export default observer(CreateTask_form);
+export default observer(Create_Stickers_form);

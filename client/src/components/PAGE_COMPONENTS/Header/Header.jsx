@@ -4,7 +4,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from './header.module.css'
 import Header_btn from "../../UI/Header_btn/Header_btn";
 
-import { ADMIN_TASK_LIST_PATH, ADMIN_WAREHOUSE_PATH } from "../../../utils/routes_constants";
+import { ADMIN_ORDERS_PATH, ADMIN_TASK_LIST_PATH, ADMIN_WAREHOUSE_PATH } from "../../../utils/routes_constants";
 import Login_btn from "../../UI/Login_btn/Login_btn";
 
 import { LOGIN_PATH } from "../../../utils/routes_constants";
@@ -49,7 +49,7 @@ const Header = () => {
             <nav className={`${styles.nav_panel}`}>
                 <Header_btn
                     className={splitLocation[1] === "" ? `${styles.routActive}` : ""}
-                    path={ADMIN_TASK_LIST_PATH}
+                    path={ADMIN_ORDERS_PATH}
                 >Заказы
                 </Header_btn>
 

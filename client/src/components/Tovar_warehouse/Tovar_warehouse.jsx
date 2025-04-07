@@ -3,29 +3,30 @@ import { observer } from "mobx-react-lite"
 import styles from './tovar_warehouse.module.css'
 import { Context } from '../../index';
 import { FaDownload } from "react-icons/fa";
+import Sticker_warehouse from '../UI/Sticker_warehouse/Sticker_warehouse';
 
 const Tovar_warehouse = ({ tovar }) => {
 
     const { sticker_store } = useContext(Context);
+    const { tovar_store } = useContext(Context);
 
-    const openCreate_form = () => {
+    const open_close_create_sticker = () => {
         if (sticker_store.isCreate) {
             sticker_store.setIsCreate(false)
             console.log("sticker_store.isCreate====>", sticker_store.isCreate)
             return
         }
-        if (!sticker_store.isCreate) {
-            sticker_store.setIsCreate(true)
-            console.log("sticker_store.isCreate====>", sticker_store.isCreate)
-            return
-        }
 
+        tovar_store.setTovar(tovar)
+        sticker_store.setIsCreate(true)
+        console.log("sticker_store.isCreate====>", sticker_store.isCreate)
+        return
     }
 
     return (
         <div className={styles.container}>
 
-            <div className={`${styles.item} ${styles.id}`}>{tovar.id}</div>
+            <div className={`${styles.item} ${styles.id} ${styles.clip_text}`}>{tovar.id}</div>
             <div className={styles.line} ></div>
 
             <div className={`${styles.item} ${styles.itemFoto}`}>
@@ -37,26 +38,27 @@ const Tovar_warehouse = ({ tovar }) => {
             </div>
             <div className={styles.line} ></div>
 
-            <div className={`${styles.item} ${styles.Manufacturer_ID}`}>
-                {tovar.manufacturer_ID}
+            <div className={`${styles.item} ${styles.Manufacturer_ID} ${styles.clip_text}`}>
+                {tovar.manufacturer_ID === ''
+                    ? "Не указан"
+                    : tovar.manufacturer_ID
+                }
             </div>
             <div className={styles.line} ></div>
 
             <div className={`${styles.item} ${styles.barcode}`}>
                 <div className={styles.barcode_box}>
-                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
-                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
-                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
-                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
-                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
-                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
-                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
-                    <div className={styles.barcode_box_item}><p>PG 2042930264167</p></div>
+                    {
+                        tovar.stickers.map((sticker) =>
+                            <Sticker_warehouse sticker={sticker} />)
+                    }
                 </div>
+
                 <div className={styles.line_mini} ></div>
+
                 <div className={styles.barcode_download_box}>
                     <button className={`${styles.barcode_download_btn} `}
-                    onClick={()=>openCreate_form()}
+                        onClick={() => open_close_create_sticker()}
                     >
                         <FaDownload />
                     </button>
@@ -64,12 +66,12 @@ const Tovar_warehouse = ({ tovar }) => {
             </div>
             <div className={styles.line} ></div>
 
-            <div className={`${styles.item} ${styles.name}`}>
+            <div className={`${styles.item} ${styles.name} ${styles.clip_text}`}>
                 {tovar.name}
             </div>
             <div className={styles.line} ></div>
 
-            <div className={`${styles.item} ${styles.quantity}`}>
+            <div className={`${styles.item} ${styles.quantity} ${styles.clip_text}`}>
                 {tovar.quantity}
             </div>
 

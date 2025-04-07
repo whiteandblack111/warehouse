@@ -1,7 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 
 
-export const WORKER_TASK_LIST_PAGE =() => {
+const WORKER_TASK_LIST_PAGE = () => {
  
     return (
         <div>
@@ -9,3 +10,5 @@ export const WORKER_TASK_LIST_PAGE =() => {
         </div>
     )
 };
+
+export default observer(WORKER_TASK_LIST_PAGE)

@@ -1,4 +1,3 @@
-
 const ApiError = require('../error/ApiError');
 const Task_Service = require('../services/task_Service');
 const Tovar_Service = require('./../services/tovar_Service');
@@ -11,15 +10,20 @@ class Task_Controller {
             shop_name: req.body.shop_name
         }
         const task = await Task_Service.create(taskData);
+        console.log("task.isNewRecord---------------------------> ", task.isNewRecord)
+        
 
         const tovars = req.body.tovars_for_task
 
         await tovars.map( async (tovar) => {
-            await Tovar_Service.create_for_task(tovar);
+            let mutateTovar = {
+                ...tovar,
+                taskId:task.id
+            }
+            await Tovar_Service.create_for_task(mutateTovar);
         })
 
-
-        const task_with_goods = await Task_Service.getOne_byId(task.id);
+        const task_with_goods = await Task_Service.getOne(task.id);
 
         return res.json(task_with_goods)
     }
@@ -47,8 +51,8 @@ class Task_Controller {
     async getAll(req, res) {
         let { statusWork, executor, createAt, from_and_to_number, limit, page } = req.body;
         
-        page = page || 3
-        limit = limit || 1
+        page = page || 1
+        limit = limit || 10
         let offset = page * limit - limit
 
         let tasks;

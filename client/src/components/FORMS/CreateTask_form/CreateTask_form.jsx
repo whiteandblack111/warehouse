@@ -22,9 +22,7 @@ const CreateTask_form = () => {
 
 
     useEffect(() => {
-        if (tovars_for_task.length !== 0) {
-            console.log("tovars_for_task====>", tovars_for_task);
-        }
+        
 
     }, [tovars_for_task])
 
@@ -59,15 +57,16 @@ const CreateTask_form = () => {
         let mutateTovar = tovars_for_task.map((tovar) => {
             let newTovar = {
                 ...tovar,
-                shop_name: shop_name
+                shop_name:shop_name
             }
             return newTovar
         })
 
         setTovars_from_task(mutateTovar)
         const dataTask = {
+            task_name,
             shop_name,
-            tovars_for_task
+            tovars_for_task:mutateTovar       
         }
         console.log("dataTask====>", dataTask);
         await task_store.create_task(dataTask)

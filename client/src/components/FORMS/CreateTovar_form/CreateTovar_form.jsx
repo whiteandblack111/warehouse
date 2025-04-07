@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import styles from './createTovar_form.module.css'
 import { Context } from '../../../index';
 import Form from 'react-bootstrap/Form';
@@ -11,17 +11,14 @@ const CreateTovar_form = () => {
 
     const [tovar_photo, setTovar_img] = useState('');
     const [name, setName] = useState('');
-    const [barcode, setBarcode] = useState('');
     const [manufacturer_ID, setManufacturer_ID] = useState('');
     const [quantity, setQuantity] = useState('');
-
 
     const { tovar_store } = useContext(Context);
 
     const createFile_for_tovar = async (
         tovar_photo,
         name,
-        barcode,
         manufacturer_ID,
         quantity,
     ) => {
@@ -29,18 +26,44 @@ const CreateTovar_form = () => {
 
         form_data.append("tovar_photo", tovar_photo);
         form_data.append("name", name);
-        form_data.append("barcode", barcode);
         form_data.append("manufacturer_ID", manufacturer_ID);
         form_data.append("quantity", quantity);
 
-        await tovar_store.create_tovar_warehouse(form_data)
+        const tovar = await tovar_store.create_tovar_warehouse(form_data);
+        tovar_store.setIsCreate(false)
+        console.log("CreateTovar_form tovar===>", tovar)
+
 
     }
+
+    const input_tovar_photo_ref = useRef()
+    const input_name_ref = useRef()
+    const input_manufacturer_ID_ref = useRef()
+    const input_quantity_ref = useRef()
+    const input_submit_ref = useRef()
 
     const handleFile = (e) => {
         setTovar_img(e.target.files[0])
+        input_name_ref.current.focus();
     }
 
+    const handler_keyUp_input_name = (e) => {
+        if (e.key === "Enter") {
+            input_manufacturer_ID_ref.current.focus();
+        }
+    }
+
+    const handler_keyUp_manufacturer_ID = (e) => {
+        if (e.key === "Enter") {
+            input_quantity_ref.current.focus();
+        }
+    }
+
+    const handler_keyUp_quantity = (e) => {
+        if (e.key === "Enter") {
+            input_submit_ref.current.focus();
+        }
+    }
 
     return (
         <div>
@@ -54,7 +77,7 @@ const CreateTovar_form = () => {
                         {!tovar_photo ?
 
                             <Form.Label
-                            htmlFor="tovar_photo"
+                                htmlFor="tovar_photo"
                                 className={`${styles.custom_file_inputLabelinput}`}
                             >
 
@@ -64,7 +87,7 @@ const CreateTovar_form = () => {
 
                             :
                             <Form.Label
-                            htmlFor="tovar_photo"
+                                htmlFor="tovar_photo"
                                 className={`${styles.custom_file_inputLabelinput} ${styles.isGoLoadingFile}`}
                             >
 
@@ -74,6 +97,7 @@ const CreateTovar_form = () => {
 
                         }
                         <Form.Control
+                            ref={input_tovar_photo_ref}
                             className={`${styles.custom_file_input} ${styles.file}`}
                             name='tovar_photo'
                             id="tovar_photo"
@@ -92,32 +116,17 @@ const CreateTovar_form = () => {
                         className={styles.inputLabel}
                     >Название товара</Form.Label>
                     <Form.Control
-                        className={styles.input}
+                        as="textarea" rows={4}
+                        ref={input_name_ref}
+                        className={`${styles.input} ${styles.textarea}`}
                         key="name"
                         type="text"
                         placeholder="Name"
                         onChange={e => setName(e.target.value)}
+                        onKeyUp={handler_keyUp_input_name}
                         value={name}
                     />
                 </Form.Group>
-
-                {/* ==========  Штрих-код  ============== */}
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
-                    <Form.Label
-                        className={styles.inputLabel}
-                    >Штрих-код</Form.Label>
-                    <Form.Control
-                        className={styles.input}
-                        key="barcode"
-                        type="text"
-                        placeholder="Штрих-код"
-                        onChange={e => setBarcode(e.target.value)}
-                        value={barcode}
-                    />
-                </Form.Group>
-
-
-
 
                 {/* ==========  manufacturer_ID  ============== */}
                 <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
@@ -125,26 +134,30 @@ const CreateTovar_form = () => {
                         className={styles.inputLabel}
                     >Производитель ID</Form.Label>
                     <Form.Control
-                        className={styles.input}
+                        ref={input_manufacturer_ID_ref}
+                        className={`${styles.input} ${styles.input_manufacturer_ID}`}
                         key="manufacturer_ID"
                         type="text"
                         placeholder="Manufacturer_ID"
                         onChange={e => setManufacturer_ID(e.target.value)}
+                        onKeyUp={handler_keyUp_manufacturer_ID}
                         value={manufacturer_ID}
                     />
                 </Form.Group>
 
-                {/* ==========  name  ============== */}
+                {/* ==========  quantity  ============== */}
                 <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`}>
                     <Form.Label
                         className={styles.inputLabel}
                     >Количество товара</Form.Label>
                     <Form.Control
-                        className={styles.input}
+                        ref={input_quantity_ref}
+                        className={`${styles.input} ${styles.input_quantity}`}
                         key="quantity"
                         type="text"
                         placeholder="Quantity"
                         onChange={e => setQuantity(e.target.value)}
+                        onKeyUp={handler_keyUp_quantity}
                         value={quantity}
                     />
                 </Form.Group>
@@ -157,12 +170,12 @@ const CreateTovar_form = () => {
                 <Form.Group className="mb-3" >
 
                     <Button
-                        className={styles.autx_btn}
+                    ref={input_submit_ref}
+                        className={styles.submit_btn}
                         onClick={() => {
                             createFile_for_tovar(
                                 tovar_photo,
                                 name,
-                                barcode,
                                 manufacturer_ID,
                                 quantity,
                             )

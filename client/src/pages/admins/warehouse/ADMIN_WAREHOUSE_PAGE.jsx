@@ -20,14 +20,17 @@ const ADMIN_WAREHOUSE_PAGE = () => {
 
     return (
         <div className={styles.main}>
-            {tovar_store.isCreate && !tovar_store.isSearch ?
-                <CreateTovar_form></CreateTovar_form>
-                :
-                <List_warehouse></List_warehouse>
+
+            <List_warehouse></List_warehouse>
+
+            {
+                tovar_store.isCreate && !tovar_store.isSearch ?
+                    <CreateTovar_form></CreateTovar_form>
+                    :
+                    <></>
+                // <List_warehouse></List_warehouse>
             }
 
-            
-            
 
 
 

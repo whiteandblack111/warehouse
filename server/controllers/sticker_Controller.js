@@ -19,7 +19,8 @@ class Sticker_Controller {
                 filePath,
                 fileName,
                 req.body.barcode,
-                req.body.shop_name
+                req.body.shop_name,
+                req.body.tovar_id
             );
 
             return res.json(sticker)

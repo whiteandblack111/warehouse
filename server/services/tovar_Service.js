@@ -1,5 +1,5 @@
 
-const { Tovar_For_Warehouse, Photo_For_Tovar, Tovar_For_Task } = require('../models/models');
+const { Tovar_For_Warehouse, Photo_For_Tovar, Tovar_For_Task ,Sticker} = require('../models/models');
 
 
 class Tovar_Service {
@@ -28,7 +28,8 @@ class Tovar_Service {
         const tovar = await Tovar_For_Warehouse.findOne({
             where: id,
             include: [
-                { model: Photo_For_Tovar, as: 'photo_for_tovars' }
+                { model: Photo_For_Tovar, as: 'photo_for_tovars' },
+                { model: Sticker, as: 'stickers' }
             ]
 
         })
@@ -56,10 +57,8 @@ class Tovar_Service {
         const tovars = await Tovar_For_Warehouse.findAll(
             {
                 include: [
-                    {
-                        model: Photo_For_Tovar,
-                        as: 'photo_for_tovars',
-                    }
+                    { model: Photo_For_Tovar, as: 'photo_for_tovars' },
+                    { model: Sticker, as: 'stickers' }
                 ]
             }
         )

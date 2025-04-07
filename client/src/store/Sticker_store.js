@@ -4,7 +4,7 @@ import Sticker_Service from "../services/Sticker_Service";
 
 export default class Sticker_store {
 
-    _sticker = [];
+    _sticker = null;
     _isCreate = false;
     _isSearch = false;
     _allStickers = [];
@@ -17,7 +17,7 @@ export default class Sticker_store {
     setSticker(sticker) {
         this._sticker = sticker;
     }
-    get Sticker() {
+    get sticker() {
         return this._sticker;
     }
 

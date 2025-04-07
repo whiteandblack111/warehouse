@@ -11,20 +11,19 @@ class Task_Service {
         return task
     }
 
-    async getOne_byId(id) {
+    async getOne(id) {
         const task = await Task.findOne({
-            where: { id: id },
-
+            id,
             include: [
                 {
-                    model: Tovar_For_Task, as: "tovar_for_tasks",
-                    include: [
-                        {model: Stiker, as: "stikers"}
-                    ]
+                    model: Tovar_For_Task, as: "tovar_for_tasks"
+
                 }
             ]
+            
 
         })
+        console.log("getOne_byId+++====++++====> ", task)
         return task
     }
 
@@ -34,7 +33,7 @@ class Task_Service {
 
             include: [
                 {
-                    model: Tovar_For_Task, as: "tovar_for_task"
+                    model: Tovar_For_Task, as: "tovar_for_tasks"
 
                 }
             ]
@@ -52,8 +51,8 @@ class Task_Service {
                 offset,
                 include: [
                     {
-                        model: Tovar_For_Task, as: "tovar_for_task"
-    
+                        model: Tovar_For_Task, as: "tovar_for_tasks"
+
                     }
                 ]
             }
@@ -71,7 +70,7 @@ class Task_Service {
                 include: [
                     {
                         model: Tovar_For_Task, as: "tovar_for_task"
-    
+
                     }
                 ]
             }
@@ -89,7 +88,7 @@ class Task_Service {
                 include: [
                     {
                         model: Tovar_For_Task, as: "tovar_for_task"
-    
+
                     }
                 ]
             }
@@ -107,7 +106,7 @@ class Task_Service {
                 include: [
                     {
                         model: Tovar_For_Task, as: "tovar_for_task"
-    
+
                     }
                 ]
             }

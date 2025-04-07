@@ -7,6 +7,8 @@ export const LOGIN_PATH = '/login'
 // admin_routes
 export const ADMIN_WAREHOUSE_PATH = '/admin/warehouse'
 export const ADMIN_TASK_LIST_PATH = '/admin/taskslist'
+export const ADMIN_ORDERS_PATH = '/admin/orders'
+
 export const ADMIN_TASK_ONE_PATH = '/admin/tasksone'
 
 

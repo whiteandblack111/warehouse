@@ -4,7 +4,7 @@
     justify-content: space-around;
     align-items: center;
 
-    width: 100%;
+    width: 99%;
     height: 200px;
     /* padding: 30px 20px; */
     background: rgb(114, 5, 105, 0.05);
@@ -16,7 +16,7 @@
 
     -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
     box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
-    margin: 4px 0;
+    margin: 6px 2px;
 }
 
 .item {
@@ -24,20 +24,28 @@
     font-weight: 400;
     font-size: 30px;
     color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    background-image: linear-gradient(180deg, #FFFFFF 21.75%, #1A3031 100%);
-
+    /* -webkit-background-clip: text; */
+    /* background-clip: text; */
+   
     display: flex;
     justify-content: center;
     align-items: center;
 
     padding: 5px 0;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .id {
     width: 10%;
+
+    
+}
+.clip_text{
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(180deg, #FFFFFF 21.75%, #1A3031 100%);
+    display: flex
+;
 }
 
 .itemFoto {
@@ -50,11 +58,11 @@
 }
 
 .Manufacturer_ID {
-    width: 17%;
+    width: 19%;
 }
 
 .name {
-    width: 17%;
+    width: 19%;
     font-size: 22px;
     text-align: center;
 }
@@ -71,27 +79,34 @@
 
 .line_mini {
     border: 1px solid #7c7c7c;
-    height: 70%;
+    height: 84%;
     width: 1px;
 }
 .barcode {
-    width: 26%;
+    width: 22%;
     height: 200px;
     overflow: hidden;
     position: relative 
 }
 
 .barcode_box {
-    border: 1px solid red;
-    /* width: 100%; */
+    /* border: 1px solid red; */
+    width: 100%;
     display: flex;
     flex-direction: column;
+    /* align-items: center;
+    justify-content: center; */
     height: 200px;
     padding: 1px;
-    width: 60%;
+    width: 70%;
 
 
+    overflow-y: scroll;
     overflow-x: scroll;
+
+
+
+ 
 }
 
 .barcode_download_box {
@@ -99,15 +114,12 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 40%;
+    width: 30%;
 
 }
 
 .barcode_box_item{
-    /* width: 100%; */
-    margin: 0 5%;
-    font-size: 22px;
-    text-align: center;
+
 }
 
 .barcode_download_btn {

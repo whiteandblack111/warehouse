@@ -4,13 +4,14 @@ const { Sticker } = require('../models/models');
 
 class Sticker_Service {
 
-    async create(filePath, fileName, barcode, shop_name) {
+    async create(filePath, fileName, barcode, shop_name, tovar_id) {
         const sticker = await Sticker.create(
             {
                 img_path: filePath,
                 img_name: fileName,
                 barcode: barcode,
-                shop_name: shop_name
+                shop_name: shop_name,
+                tovarForWarehouseId: tovar_id
             }
         )
         return sticker
