@@ -73,7 +73,7 @@ export default class Tovar_store {
             const response = await Tovar_Service.getAll_tovars_warehouse();
             
             const tovars = response.data
-            console.log("tovars====>", tovars )
+            // console.log("tovars====>", tovars )
              this.setAllTovars(tovars);
 
 

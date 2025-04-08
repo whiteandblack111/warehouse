@@ -11,12 +11,10 @@ import List_warehouse from '../../../components/List_warehouse/List_warehouse';
 
 const ADMIN_WAREHOUSE_PAGE = () => {
 
-    const [task_name, setTask_name] = useState(null);
     const { tovar_store } = useContext(Context);
 
-
-
-
+    const screenHeight = window.screen.height
+    // console.log("screenHeight---->>>>>> ", screenHeight)
 
     return (
         <div className={styles.main}>
@@ -28,11 +26,7 @@ const ADMIN_WAREHOUSE_PAGE = () => {
                     <CreateTovar_form></CreateTovar_form>
                     :
                     <></>
-                // <List_warehouse></List_warehouse>
             }
-
-
-
 
         </div>
     )

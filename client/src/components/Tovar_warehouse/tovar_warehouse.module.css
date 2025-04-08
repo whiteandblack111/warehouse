@@ -26,10 +26,10 @@
     color: transparent;
     /* -webkit-background-clip: text; */
     /* background-clip: text; */
-   
+
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
 
     padding: 5px 0;
     /* overflow: hidden; */
@@ -38,14 +38,14 @@
 .id {
     width: 10%;
 
-    
+
 }
-.clip_text{
+
+.clip_text {
     -webkit-background-clip: text;
     background-clip: text;
     background-image: linear-gradient(180deg, #FFFFFF 21.75%, #1A3031 100%);
-    display: flex
-;
+    display: flex;
 }
 
 .itemFoto {
@@ -67,8 +67,29 @@
     text-align: center;
 }
 
-.quantity {
+.quantity_good {
     width: 10%;
+    font-family: MOSCOW, Arial, serif;
+    color: #3ef979;
+    -webkit-text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+    -moz-text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+    text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+}
+.quantity_warning {
+    width: 10%;
+    font-family: MOSCOW, Arial, serif;
+    color: #dfff0f;
+    -webkit-text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+    -moz-text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+    text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+}
+.quantity_danger {
+    width: 10%;
+    font-family: MOSCOW, Arial, serif;
+    color: #b70e3b;
+    -webkit-text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+    -moz-text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+    text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
 }
 
 .line {
@@ -82,11 +103,12 @@
     height: 84%;
     width: 1px;
 }
+
 .barcode {
     width: 22%;
     height: 200px;
     overflow: hidden;
-    position: relative 
+    position: relative
 }
 
 .barcode_box {
@@ -106,7 +128,7 @@
 
 
 
- 
+
 }
 
 .barcode_download_box {
@@ -118,9 +140,7 @@
 
 }
 
-.barcode_box_item{
-
-}
+.barcode_box_item {}
 
 .barcode_download_btn {
     display: flex;
@@ -155,7 +175,8 @@
     height: 60px;
     transition: all 0.2s;
 }
-.barcode_download_btn:hover{
+
+.barcode_download_btn:hover {
     color: #52f6e2;
     font-size: 40px;
     width: 64px;

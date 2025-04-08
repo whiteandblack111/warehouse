@@ -7,32 +7,34 @@ import styles from './admin_task_list_page.module.css'
 import CreateTask_form from '../../../components/FORMS/CreateTask_form/CreateTask_form';
 import Task_list from '../../../components/Task_list/Task_list';
 
+
+
 const ADMIN_TASK_LIST_PAGE = () => {
 
-    const [task_name, setTask_name] = useState(null)
-    const [tovars_for_task, setTovars_from_task] = useState([])
-
-    useEffect(() => {
-        if (tovars_for_task.length !== 0) {
-            console.log("tovars_for_task====>", tovars_for_task);
-        }
-
-    }, [tovars_for_task])
-
-    const taskList = [
-
-    ]
+  
+    const {task_store} = useContext(Context)
 
 
+    const screenHeight = window.screen.height
+    console.log("ADMIN_TASK_LIST_PAGE screenHeight---->>>>>> ", screenHeight)
 
+    // console.log("task_store.isCreate===  ", task_store.isCreate)
+    // console.log("task_store.isSearch===  ", task_store.isSearch)
 
 
 
     return (
         <div className={styles.main}>
+ 
+            <Task_list></Task_list>
 
-            <CreateTask_form></CreateTask_form>
-            <Task_list task_list={taskList}></Task_list>
+            {
+                task_store.isCreate && !task_store.isSearch ?
+                <CreateTask_form></CreateTask_form>
+                    :
+                    <></>
+            }
+
 
         </div>
     )

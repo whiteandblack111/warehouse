@@ -20,7 +20,7 @@ export default class Task_store {
         this._task = task;
     }
 
-    get task() {
+    get Task() {
         return this._task;
     }
 
@@ -51,7 +51,7 @@ export default class Task_store {
             const response = await Task_Service.create_task(taskData);
 
             const task = response.data
-            // console.log("task====>", task)
+            console.log("task====>", task)
             this.setTask(task);
 
         } catch (e) {
@@ -65,9 +65,9 @@ export default class Task_store {
             const response = await Task_Service.getall_tasks();
 
             const tasks = response.data
-            // console.log("tasks====>", tasks)
-            this.setAllTasks(tasks.rows);
-            // console.log("get_all_tasks allTasks====>", this.allTasks)
+            console.log("tasks====>", tasks)
+            this.setAllTasks(tasks);
+
 
 
         } catch (e) {

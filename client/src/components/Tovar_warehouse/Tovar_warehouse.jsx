@@ -71,9 +71,14 @@ const Tovar_warehouse = ({ tovar }) => {
             </div>
             <div className={styles.line} ></div>
 
-            <div className={`${styles.item} ${styles.quantity} ${styles.clip_text}`}>
-                {tovar.quantity}
-            </div>
+            {
+                tovar.quantity < 20 ?
+                    <div className={`${styles.item} ${styles.quantity_danger} ${styles.clip_text}`}>{tovar.quantity}</div>
+                    : tovar.quantity >= 20 && tovar.quantity <= 50 ?
+                        <div className={`${styles.item} ${styles.quantity_warning} ${styles.clip_text}`}>{tovar.quantity}</div>
+                        : <div className={`${styles.item} ${styles.quantity_good} ${styles.clip_text}`}>{tovar.quantity}</div>
+            }
+
 
         </div>
     )

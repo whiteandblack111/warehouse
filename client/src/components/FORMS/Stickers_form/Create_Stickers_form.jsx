@@ -29,7 +29,6 @@ const Create_Stickers_form = () => {
 
 
     useEffect(() => {
-        console.log("sticker_file====>", sticker_file);
 
     }, [sticker_file])
 
@@ -38,9 +37,6 @@ const Create_Stickers_form = () => {
         const translit_name = await Help_Service.translit_text(file.name);
         const trim_name = translit_name.trim()
         setTratslit_name(trim_name)
-        
-
-        console.log("file.name=====>", file.name)
 
         setSticker_file(file)
     }
@@ -68,12 +64,10 @@ const Create_Stickers_form = () => {
         form_data.append("translit_name", translit_name);
         form_data.append("tovar_id", tovar_id);
 
-        // console.log("sticker_file.name====>", sticker_file.name)
-        console.log("tovar_id===>", tovar_id)
+        // console.log("sticker_file.name====>", sticker_file.name) 
 
         await sticker_store.create(form_data)
 
-         console.log("sticker_store.sticker=======>", )
     }
 
 
