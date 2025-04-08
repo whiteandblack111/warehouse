@@ -11,7 +11,7 @@
 
     border: 2px solid #7c7c7c;
     border-radius: 20px;
-    backdrop-filter: blur(80px);
+    /* backdrop-filter: blur(80px); */
     cursor: pointer;
 
     /* -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
@@ -60,7 +60,8 @@
 
     height: 80px;
     border-bottom: 2px solid #7c7c7c;
-
+    border-radius: 20px 20px 0 0;
+    
     -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
     box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
 
@@ -76,6 +77,8 @@
     color: transparent;
     /* -webkit-background-clip: text; */
     /* background-clip: text; */
+
+   
 
     display: flex;
     flex-direction: row;
@@ -132,6 +135,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    
 
     font-family: MARSKE;
     font-size: 36px;
@@ -143,6 +147,8 @@
 .task_id_head {
     width: 7%;
 
+    /* border: 2px solid #7c7c7c; */
+    border-radius: 20px 0 0 0;
 }
 
 .task_id {
@@ -150,6 +156,8 @@
     font-family: MOSCOW, Arial, serif;
     color: #08b5ff;
     font-size: 32px;
+
+    
 }
 
 .task_name {
@@ -197,6 +205,8 @@
 .quantity_head {
     width: 8%;
     font-size: 16px;
+    border: 1px solid #7c7c7c;
+    border-radius: 0px 20px 0 0;
 }
 
 .quantity {
@@ -204,6 +214,9 @@
     font-family: MOSCOW, Arial, serif;
     color: #08b5ff;
     font-size: 32px;
+
+    border: 1px solid #7c7c7c;
+
 }
 
 .line {
@@ -330,11 +343,10 @@
 .cartons_required_box {
     display: flex;
     justify-content: space-around;
-    /* text-align: center; */
     font-size: 20px;
-    /* padding: 10px; */
     box-sizing: border-box;
     width: 20%;
+    position: relative;
 }
 
 .box_number {

@@ -12,6 +12,7 @@ import Sticker_warehouse from '../UI/Sticker_warehouse/Sticker_warehouse';
 import { TiPrinter } from "react-icons/ti";
 
 import { BsFillBoxSeamFill } from "react-icons/bs";
+import Update_popup from '../POPup/Update_popup';
 
 
 const Task_one = ({ task }) => {
@@ -32,6 +33,9 @@ const Task_one = ({ task }) => {
     return (
 
         <div className={styles.container}>
+
+            
+
             <div className={styles.heading}
             >
                 <div className={`${styles.headingItem} ${styles.task_id_head}`}>№</div>
@@ -169,6 +173,7 @@ const Task_one = ({ task }) => {
                                         {tovar_task.cartons_found}
                                     </p>
                                 </div>
+                                <Update_popup></Update_popup>
                             </div>
 
 
@@ -185,8 +190,6 @@ const Task_one = ({ task }) => {
 
                 }
             </div>
-
-
         </div>
     )
 }

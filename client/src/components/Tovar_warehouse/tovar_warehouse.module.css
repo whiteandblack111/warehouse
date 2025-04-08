@@ -24,15 +24,15 @@
     font-weight: 400;
     font-size: 30px;
     color: transparent;
-    /* -webkit-background-clip: text; */
-    /* background-clip: text; */
+    -webkit-background-clip: text;
+    background-clip: text;
 
     display: flex;
-    /* justify-content: center; */
-    /* align-items: center; */
+    justify-content: center;
+    align-items: center;
 
     padding: 5px 0;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .id {
