@@ -9,11 +9,15 @@ import APP_ROUTER from './components/appRouter/APP_ROUTER';
 
 import Header from './components/PAGE_COMPONENTS/Header/Header';
 import './App.css'
-import Login_form from './components/Login_form/Login_form';
+import Login_form from './components/FORMS/Login_form/Login_form';
 import LOGIN_PAGE from './pages/guests/login/LOGIN_PAGE';
+import Loader from "./components/PAGE_COMPONENTS/Loader/Loader";
 
 const App = () => {
-  const { user_store } = useContext(Context)
+  const { user_store } = useContext(Context);
+  const { task_store } = useContext(Context);
+  const { tovar_store } = useContext(Context);
+  const { tovar_forTask_store } = useContext(Context);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -23,17 +27,19 @@ const App = () => {
 
 
 
-  if (user_store.is) {
-    return (
-      <div>Загрузка . . . </div>
-    )
-  }
+  // if (user_store.isLoading 
+  //   || task_store.isLoading 
+  //   || tovar_store.isLoading 
+  //   || tovar_forTask_store.isLoading ) {
+
+  //   return (
+  //      <Loader></Loader>
+  //   )
+  // }
 
   if (!user_store.isAuth) {
     return (
       <BrowserRouter>
-      
-        <Header><div>Нетюзера</div></Header>
         <LOGIN_PAGE></LOGIN_PAGE>
       </BrowserRouter>
     )

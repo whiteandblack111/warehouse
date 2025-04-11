@@ -4,9 +4,9 @@ import styles from "./header_btn.module.css"
 import { Context } from '../../../index';
 import { observer } from 'mobx-react-lite';
 import { 
-    ADMIN_ORDERS_PATH, 
-    ADMIN_TASK_LIST_PATH, 
-    ADMIN_WAREHOUSE_PATH 
+    ORDERS_PATH, 
+    TASKS_PATH, 
+    WAREHOUSE_PATH 
 
 } from '../../../utils/routes_constants';
 
@@ -32,17 +32,17 @@ const Header_btn = (props) => {
 
     const isAll = () => {
 
-        if (location.pathname === ADMIN_ORDERS_PATH) {
+        if (location.pathname === ORDERS_PATH) {
             order_store.setIsCreate(false);
             order_store.setIsSearch(false);
         }
 
-        if (location.pathname === ADMIN_TASK_LIST_PATH) {
+        if (location.pathname === TASKS_PATH) {
             task_store.setIsCreate(false);
             task_store.setIsSearch(false);
         }
 
-        if (location.pathname === ADMIN_WAREHOUSE_PATH) {
+        if (location.pathname === WAREHOUSE_PATH) {
             tovar_store.setIsCreate(false);
             tovar_store.setIsSearch(false);
         }
@@ -70,17 +70,17 @@ const Header_btn = (props) => {
     }
 
     const isCreate = () => {
-        if (location.pathname === ADMIN_ORDERS_PATH) {
+        if (location.pathname === ORDERS_PATH) {
             order_store.setIsCreate(true);
             order_store.setIsSearch(false);
         }
 
-        if (location.pathname === ADMIN_TASK_LIST_PATH) {
+        if (location.pathname === TASKS_PATH) {
             task_store.setIsCreate(true);
             task_store.setIsSearch(false);
         }
 
-        if (location.pathname === ADMIN_WAREHOUSE_PATH) {
+        if (location.pathname === WAREHOUSE_PATH) {
             tovar_store.setIsCreate(true);
             tovar_store.setIsSearch(false);
         }
@@ -88,17 +88,17 @@ const Header_btn = (props) => {
     }
 
     const isSearch = () => {
-        if (location.pathname === ADMIN_ORDERS_PATH) {
+        if (location.pathname === ORDERS_PATH) {
             order_store.setIsCreate(false);
             order_store.setIsSearch(true);
         }
 
-        if (location.pathname === ADMIN_TASK_LIST_PATH) {
+        if (location.pathname === TASKS_PATH) {
             task_store.setIsCreate(false);
             task_store.setIsSearch(true);
         }
 
-        if (location.pathname === ADMIN_WAREHOUSE_PATH) {
+        if (location.pathname === WAREHOUSE_PATH) {
             tovar_store.setIsCreate(false);
             tovar_store.setIsSearch(true);
         }

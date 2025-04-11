@@ -4,6 +4,7 @@ import styles from './list_warehouse.module.css'
 import { Context } from '../../index';
 import Tovar_warehouse from '../Tovar_warehouse/Tovar_warehouse';
 import Create_Stickers_form from '../FORMS/Stickers_form/Create_Stickers_form';
+import Loader from '../PAGE_COMPONENTS/Loader/Loader';
 
 const List_warehouse = () => {
 
@@ -15,10 +16,15 @@ const List_warehouse = () => {
 
     useEffect(() => {
         getAll_tovars_warehouse();
+
+        tovar_store.setIsLoading(true)
+        setTimeout(() => {
+            tovar_store.setIsLoading(false)
+        }, 500);
     }, [])
 
     useEffect(() => {
-        getAll_tovars_warehouse();
+
     }, [tovar_store._tovar])
 
     async function getAll_tovars_warehouse() {
@@ -27,11 +33,13 @@ const List_warehouse = () => {
 
     const list_container_ref = useRef()
 
-
+    if (tovar_store.isLoading) {
+        return <Loader></Loader>
+    }
 
     return (
         <div>
-            {/* <div className={styles.head}> */}
+           
             <div className={styles.heading}
                 ref={list_container_ref}
             >
@@ -79,6 +87,7 @@ const List_warehouse = () => {
 
 
             </div>
+            
         </div>
 
     )

@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './login_form.module.css'
-import { Context } from '../../index';
+import { Context } from '../../../index';
 
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { ADMIN_TASK_LIST_PATH, WORKER_TASK_LIST_PATH } from '../../utils/routes_constants';
+import { TASKS_PATH } from '../../../utils/routes_constants';
 import { observer } from 'mobx-react-lite';
 
 
@@ -28,17 +28,8 @@ const Login_form = () => {
 
         if (user_store.isAuth) {
 
-            await roles.map(async (role) => {
+            await navigate(TASKS_PATH)
 
-                console.log(role)
-                if (role.name === "SUPERADMIN" || role.name === "ADMIN") {
-
-                    await navigate(ADMIN_TASK_LIST_PATH)
-                }
-                if (role.name === "WORKER" || role.name === "USER") {
-                    await navigate(WORKER_TASK_LIST_PATH)
-                }
-            })
         }
 
     }
@@ -59,7 +50,7 @@ const Login_form = () => {
                         value={email}
                     />
                 </Form.Group>
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} controlId="exampleForm.ControlInput1">
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} controlId="exampleForm.ControlInput2">
                     <Form.Label
                         className={styles.inputLabel}
                     >Your password</Form.Label>
@@ -72,7 +63,7 @@ const Login_form = () => {
                         value={password}
                     />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
                     {/* <Button
                         onClick={() => user_store.registration(email, password)}
                         variant="outline-success">Регистрация

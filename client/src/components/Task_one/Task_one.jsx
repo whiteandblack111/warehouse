@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './task_one.module.css'
@@ -13,35 +13,33 @@ import { TiPrinter } from "react-icons/ti";
 
 import { BsFillBoxSeamFill } from "react-icons/bs";
 import Update_popup from '../POPup/Update_popup';
+import Open_close_btn from '../UI/BUTTONS/Open_close_btn/Open_close_btn';
+import Cartons_required_box from '../PAGE_COMPONENTS/Cartons_required_box/Cartons_required_box';
+
+
 
 
 const Task_one = ({ task }) => {
+    const [taskSort_tovars, setTaskSort_tovars] = useState([])
 
     const { sticker_store } = useContext(Context);
     const { task_store } = useContext(Context);
 
-
+    useEffect(() => {
+     
+    }, [])
 
     const print_sticker = () => {
-
     }
-
-    console.log("Task_one task=========>>> ", task)
-
 
 
     return (
 
         <div className={styles.container}>
 
-            
-
             <div className={styles.heading}
             >
                 <div className={`${styles.headingItem} ${styles.task_id_head}`}>№</div>
-                <div className={styles.line} ></div>
-
-                <div className={`${styles.headingItem} ${styles.task_name}`}>Название</div>
                 <div className={styles.line} ></div>
 
                 <div className={`${styles.headingItem} ${styles.shop_name}`}>Магазин</div>
@@ -49,6 +47,9 @@ const Task_one = ({ task }) => {
 
                 <div className={`${styles.headingItem} ${styles.author_build}`}>Автор сборки</div>
                 <div className={styles.line}></div>
+
+                <div className={`${styles.headingItem} ${styles.task_time}`}>Дата сборки</div>
+                <div className={styles.line} ></div>
 
                 <div className={`${styles.headingItem} ${styles.executor_head}`}>Сборщик</div>
                 <div className={styles.line} ></div>
@@ -61,10 +62,7 @@ const Task_one = ({ task }) => {
 
             <div className={styles.heading}
             >
-                <div className={`${styles.headingItem_value} ${styles.task_id}`}>{task.id}</div>
-                <div className={styles.line} ></div>
-
-                <div className={`${styles.headingItem_value} ${styles.task_name}`}>{task.task_name}</div>
+                <div className={`${styles.headingItem_value} ${styles.task_id_value}`}>{task.id}</div>
                 <div className={styles.line} ></div>
 
                 <div className={`${styles.headingItem_value} ${styles.shop_name}`}>{task.shop_name}</div>
@@ -74,9 +72,14 @@ const Task_one = ({ task }) => {
                     ? <div className={`${styles.headingItem_value} ${styles.author_warning}`}>{"не определён"}</div>
                     : <div className={`${styles.headingItem_value} ${styles.author_build}`}>{task.userId}</div>
                 }
-
-
                 <div className={styles.line}></div>
+
+                <div className={`${styles.headingItem} ${styles.task_time_value}`}>
+                    {task.start_build}
+                    <div className={styles.line}></div>
+                    {task.end_build}
+                </div>
+                <div className={styles.line} ></div>
 
                 {
                     task.executor === "не назначен" ?
@@ -100,11 +103,28 @@ const Task_one = ({ task }) => {
             </div>
 
             <div className={styles.container_tasks}>
-                {
-                    task.tovar_for_tasks.map((tovar_task) => {
-                        return <div className={styles.task_container}>
 
-                            <div className={`${styles.item} ${styles.task_id} ${styles.clip_text}`}>{tovar_task.id}</div>
+                <div className={styles.task_name_container}>
+
+                    <div className={`${styles.headingItem} ${styles.task_name}`}>
+                        Название поставки
+                    </div>
+                    <div className={`${styles.headingItem_value} ${styles.task_name_value}`}>
+                        {task.task_name}
+                    </div>
+                </div>
+                {
+                    task.tovar_for_tasks.map((tovar_task, index) => {
+                        return <div
+                            key={tovar_task.id}
+                            className={
+                                tovar_task.status === 'changed'
+                                    ? `${styles.task_container} ${styles.task_container_changed}`
+                                    : styles.task_container
+
+                            }>
+
+                            <div className={`${styles.item} ${styles.task_id_value} ${styles.clip_text}`}>{index + 1}</div>
                             <div className={styles.line} ></div>
 
                             <div className={`${styles.item} ${styles.itemFoto}`}>
@@ -140,6 +160,10 @@ const Task_one = ({ task }) => {
                                         src={`http://localhost:7000/barcode.png `}
                                         alt="стикер"
                                     />
+                                    <div className={`${styles.item} ${styles.barcode_text} ${styles.clip_text}`}>
+                                        {tovar_task.barcode}
+                                    </div>
+
                                 </div>
 
                                 <div className={styles.line_mini} ></div>
@@ -154,27 +178,11 @@ const Task_one = ({ task }) => {
                             </div>
 
                             <div className={styles.line} ></div>
-                            <div className={`${styles.item} ${styles.cartons_required_box} ${styles.clip_text}`}>
-                                <div className={styles.column}>
-                                    <p>
-                                        требуется
-                                    </p>
-                                    <p>
-                                        {tovar_task.cartons_required}
-                                    </p>
-                                </div>
 
-                                <div className={styles.line_mini} ></div>
-                                <div className={styles.column}>
-                                    <p>
-                                        имеется
-                                    </p>
-                                    <p>
-                                        {tovar_task.cartons_found}
-                                    </p>
-                                </div>
-                                <Update_popup></Update_popup>
-                            </div>
+                            <Cartons_required_box
+                                task_id={task.id}
+                                tovar_task={tovar_task}
+                            ></Cartons_required_box>
 
 
                             <div className={styles.line} ></div>

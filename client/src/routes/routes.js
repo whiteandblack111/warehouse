@@ -2,27 +2,21 @@ import {
     LOGIN_PATH,
     REGISTRATION_PATH,
 
-    ADMIN_WAREHOUSE_PATH,
-    ADMIN_TASK_LIST_PATH,
-    ADMIN_ORDERS_PATH,
+    WAREHOUSE_PATH,
+    TASKS_PATH,
+    ORDERS_PATH,
 
-    ADMIN_TASK_ONE_PATH,
-
-    WORKER_TASK_LIST_PATH,
-    WORKER_TASK_ONE_PATH
+    TASK_ONE_PATH
 } from "../utils/routes_constants"
 
 import REGISTRATION_PAGE from "../pages/guests/registration/REGISTRATION_PAGE"
 import LOGIN_PAGE from "../pages/guests/login/LOGIN_PAGE"
 
-import WORKER_TASK_LIST_PAGE from "../pages/workers/task_list/WORKER_TASK_LIST_PAGE"
-import WORKER_TASK_ONE_PAGE from "../pages/workers/task_one/WORKER_TASK_ONE_PAGE"
 
-
-import ADMIN_WAREHOUSE_PAGE from "../pages/admins/warehouse/ADMIN_WAREHOUSE_PAGE"
-import ADMIN_TASK_LIST_PAGE from "../pages/admins/tasks/ADMIN_TASK_LIST_PAGE"
-import ADMIN_TASK_ONE from "../pages/admins/tasks/task_one/ADMIN_TASK_ONE_PAGE"
-import ADMIN_ORDERS_PAGE from "../pages/admins/orders/ADMIN_ORDERS_PAGE"
+import WAREHOUSE_PAGE from "../pages/warehouse/WAREHOUSE_PAGE"
+import TASKS_PAGE from "../pages/tasks/TASKS_PAGE"
+import TASK_ONE_PAGE from "../pages/task_one/TASK_ONE_PAGE"
+import ORDERS_PAGE from "../pages/orders/ORDERS_PAGE"
 
 export const guest_routes = [
     {
@@ -36,35 +30,25 @@ export const guest_routes = [
 
 ]
 
-export const worker_routes = [
-    {
-        path: WORKER_TASK_LIST_PATH,
-        Component: WORKER_TASK_LIST_PAGE
-    },
-    {
-        path: WORKER_TASK_ONE_PATH,
-        Component: WORKER_TASK_ONE_PAGE
-    },
 
-]
 
-export const admin_routes = [
+export const auth_routes = [
     {
-        path: ADMIN_WAREHOUSE_PATH,
-        Component: ADMIN_WAREHOUSE_PAGE
+        path: WAREHOUSE_PATH,
+        Component: WAREHOUSE_PAGE
     },
     {
-        path: ADMIN_TASK_LIST_PATH,
-        Component: ADMIN_TASK_LIST_PAGE
+        path: TASKS_PATH,
+        Component: TASKS_PAGE
     },
     {
-        path: ADMIN_ORDERS_PATH,
-        Component: ADMIN_ORDERS_PAGE
+        path: ORDERS_PATH,
+        Component: ORDERS_PAGE
     },
 
     {
-        path: ADMIN_TASK_ONE_PATH + '/:id',
-        Component: ADMIN_TASK_ONE
+        path: TASK_ONE_PATH + '/:id',
+        Component: TASK_ONE_PAGE
     },
 
 ]

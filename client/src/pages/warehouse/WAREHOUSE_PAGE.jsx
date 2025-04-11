@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../../../index';
-import styles from './admin_warehouse_page.module.css'
+import { Context } from '../../index';
+import styles from './warehouse_page.module.css'
 
 
 
-import CreateTovar_form from '../../../components/FORMS/CreateTovar_form/CreateTovar_form';
-import List_warehouse from '../../../components/List_warehouse/List_warehouse';
+import CreateTovar_form from '../../components/FORMS/CreateTovar_form/CreateTovar_form';
+import List_warehouse from '../../components/List_warehouse/List_warehouse';
 
 
 const ADMIN_WAREHOUSE_PAGE = () => {

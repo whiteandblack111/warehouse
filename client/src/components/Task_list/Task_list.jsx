@@ -3,38 +3,33 @@ import styles from './task_list.module.css'
 import { Context } from '../../index';
 import { observer } from 'mobx-react-lite';
 import Task_one from '../Task_one/Task_one';
-
+import Loader from '../PAGE_COMPONENTS/Loader/Loader';
 
 const Task_list = () => {
     const [task_list, setTask_list] = useState([])
 
-    // const { user_store } = useContext(Context)
-    // const { sticker_store } = useContext(Context);
     const { task_store } = useContext(Context);
 
 
     useEffect(() => {
         get_all_tasks();
-
-        console.log("task_list ===+++===> ", task_store.allTasks)
     }, [])
 
-    useEffect(() => {
-        get_all_tasks();
-        setTask_list(task_store._allTasks)
-        // console.log("allTasks ===+++===> ", task_store.allTasks)
-    }, [task_store._task])
 
     async function get_all_tasks() {
         await task_store.get_all_tasks();
 
-
+        task_store.setIsLoading(true)
+        setTimeout(()=>{
+            task_store.setIsLoading(false)
+        },500);
     }
 
 
 
-
-
+    if(task_store.isLoading){
+        return <Loader></Loader>
+    }
 
 
     return (

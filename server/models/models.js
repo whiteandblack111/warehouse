@@ -60,6 +60,8 @@ const Task = sequelize.define(
         shop_name: { type: DataTypes.STRING, allowNull: false },
         executor: { type: DataTypes.STRING, defaultValue: "не назначен" },
         statusWork: { type: DataTypes.STRING, defaultValue: "в очереди" },
+        start_build: { type: DataTypes.STRING, defaultValue: "12.04.2025" },
+        end_build: { type: DataTypes.STRING, defaultValue: "15.04.2025" },
         
     }
 )
@@ -75,6 +77,7 @@ const Tovar_For_Task = sequelize.define(
         cartons_found: { type: DataTypes.STRING, defaultValue: 0 },
         // additional_information: { type: DataTypes.STRING, },
         box_number: { type: DataTypes.STRING, defaultValue: "не определён" },
+        status: { type: DataTypes.STRING, defaultValue: "default" },
     }
 )
 

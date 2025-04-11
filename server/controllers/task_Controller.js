@@ -55,10 +55,11 @@ class Task_Controller {
         limit = limit || 10
         let offset = page * limit - limit
 
-        let tasks;
+        let tasks;  
 
         if (!statusWork && !executor && !createAt) {
             tasks = await Task_Service.getAll(limit, offset);
+           
         }
         if (statusWork) {
             tasks = await Task_Service.getAll_statusWork(statusWork, limit, offset);
@@ -69,6 +70,7 @@ class Task_Controller {
         if (createAt) {
             tasks = await Task_Service.getAll_createAt(createAt, limit, offset);
         }
+
 
         return res.json(tasks)
 

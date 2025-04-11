@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../../../index';
-import styles from './admin_orders_page.module.css'
+import { Context } from '../../index';
+import styles from './orders_page.module.css'
 
 
 

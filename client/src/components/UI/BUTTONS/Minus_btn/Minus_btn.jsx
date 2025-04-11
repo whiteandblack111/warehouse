@@ -8,7 +8,7 @@ const Minus_btn = ({minus_quantity}) => {
 
     return (
         <div>
-            <div onClick={minus_quantity} class={styles.button4} >
+            <div onClick={minus_quantity} className={styles.button4} >
                 <LuPackageMinus className={styles.text_color}/>
             </div>
         </div>

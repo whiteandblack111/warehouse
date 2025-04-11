@@ -7,8 +7,8 @@ export default class Task_Service {
         
     }
 
-    static async getone(id) {
-        return $api.post('/tasks/getetone/', {id});
+    static async get_one(id) {
+        return $api.post('/tasks/getone/', {id});
         
     }
 

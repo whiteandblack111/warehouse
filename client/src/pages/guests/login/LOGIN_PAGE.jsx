@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../../index';
-import Login_form from '../../../components/Login_form/Login_form';
+import Login_form from '../../../components/FORMS/Login_form/Login_form';
 import styles from './login_page.module.css'
 
 const LOGIN_PAGE = () => {

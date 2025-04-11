@@ -5,41 +5,6 @@ const Role_Service = require('../services/role_Service');
 
 class automatic_Controller {
 
-    async setStartUsers() {
-        try {
-
-            const formData = {
-                firstname: "Evgeniy",
-                twoname: "Freelancer",
-                email: "ztavruz@yandex.ru",
-                password: "123123",
-                role: "SUPERADMIN"
-            }
-
-            const isUser = await UserService.check_exist_registration_byEmail(formData.email);
-          
-            if (!isUser) {
-                const newUser = await UserService.registration(
-                    formData.firstname,
-                    formData.twoname,
-                    formData.email,
-                    formData.password,
-                    formData.role,
-                );
-                const user = newUser.user
-                await UserService.auto_activate(user.email);
-                
-                // return user
-            }
-
- 
-            
-
-        } catch (e) {
-            ApiError.bad_Request(e.message);
-        }
-    }
-
     async setStartRoles() {
         try {
             const startRoles = {
@@ -59,6 +24,127 @@ class automatic_Controller {
 
         } catch (e) {
 
+        }
+    }
+
+    async setStartUsers() {
+        try {
+
+            let formData = {
+                firstname: "Евгений",
+                twoname: "Freelancer",
+                email: "ztavruz@yandex.ru",
+                password: "123123",
+                role: "SUPERADMIN"
+            }
+
+            let isUser = await UserService.check_exist_registration_byEmail(formData.email);
+            let newUser;
+            let user
+
+            if (!isUser) {
+                newUser = await UserService.registration(
+                    formData.firstname,
+                    formData.twoname,
+                    formData.email,
+                    formData.password,
+                    formData.role,
+                );
+                 user = newUser.user
+                await UserService.auto_activate(user.email);
+
+            }
+
+
+            formData = {
+                firstname: "Висдом",
+                twoname: "Worker",
+                email: "worker1@yandex.ru",
+                password: "123123",
+                role: "WORKER"
+            }
+            isUser = await UserService.check_exist_registration_byEmail(formData.email);
+            if (!isUser) {
+                newUser = await UserService.registration(
+                    formData.firstname,
+                    formData.twoname,
+                    formData.email,
+                    formData.password,
+                    formData.role,
+                );
+                user = newUser.user
+                await UserService.auto_activate(user.email);
+
+            }
+
+            
+            formData = {
+                firstname: "Шавкат",
+                twoname: "Worker",
+                email: "worker2@yandex.ru",
+                password: "123123",
+                role: "WORKER"
+            }
+            isUser = await UserService.check_exist_registration_byEmail(formData.email);
+            if (!isUser) {
+                newUser = await UserService.registration(
+                    formData.firstname,
+                    formData.twoname,
+                    formData.email,
+                    formData.password,
+                    formData.role,
+                );
+                user = newUser.user
+                await UserService.auto_activate(user.email);
+
+            }
+
+            formData = {
+                firstname: "Hикита",
+                twoname: "Admin",
+                email: "admin1@yandex.ru",
+                password: "123123",
+                role: "ADMIN"
+            }
+            isUser = await UserService.check_exist_registration_byEmail(formData.email);
+            if (!isUser) {
+                newUser = await UserService.registration(
+                    formData.firstname,
+                    formData.twoname,
+                    formData.email,
+                    formData.password,
+                    formData.role,
+                );
+                user = newUser.user
+                await UserService.auto_activate(user.email);
+            }
+
+            formData = {
+                firstname: "Дима",
+                twoname: "Admin",
+                email: "admin2@yandex.ru",
+                password: "123123",
+                role: "ADMIN"
+            }
+
+            isUser = await UserService.check_exist_registration_byEmail(formData.email);
+            if (!isUser) {
+                newUser = await UserService.registration(
+                    formData.firstname,
+                    formData.twoname,
+                    formData.email,
+                    formData.password,
+                    formData.role,
+                );
+                user = newUser.user
+                await UserService.auto_activate(user.email);
+
+            }
+
+
+
+        } catch (e) {
+            ApiError.bad_Request(e.message);
         }
     }
 }

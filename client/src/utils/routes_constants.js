@@ -4,14 +4,9 @@ export const REGISTRATION_PATH = '/registration'
 export const LOGIN_PATH = '/login'
 
 
-// admin_routes
-export const ADMIN_WAREHOUSE_PATH = '/admin/warehouse'
-export const ADMIN_TASK_LIST_PATH = '/admin/taskslist'
-export const ADMIN_ORDERS_PATH = '/admin/orders'
+// auth_routes
+export const WAREHOUSE_PATH = '/warehouse'
+export const TASKS_PATH = '/tasks'
+export const ORDERS_PATH = '/orders'
 
-export const ADMIN_TASK_ONE_PATH = '/admin/tasksone'
-
-
-// worker_routes 
-export const WORKER_TASK_LIST_PATH = '/worker/taskslist'
-export const WORKER_TASK_ONE_PATH = '/worker/tasksone'
+export const TASK_ONE_PATH = '/tasksone'

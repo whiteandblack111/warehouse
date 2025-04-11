@@ -20,7 +20,7 @@ class Task_Service {
 
                 }
             ]
-            
+
 
         })
         console.log("getOne_byId+++====++++====> ", task)
@@ -45,7 +45,7 @@ class Task_Service {
 
     async getAll(limit, offset) {
 
-        const task = await Task.findAndCountAll(
+        const tasks = await Task.findAndCountAll(
             {
                 limit,
                 offset,
@@ -57,7 +57,9 @@ class Task_Service {
                 ]
             }
         )
-        return task
+
+
+        return tasks
     }
 
     async getAll_statusWork(statusWork, limit, offset) {
@@ -75,6 +77,11 @@ class Task_Service {
                 ]
             }
         )
+
+
+       
+
+
         return task
     }
 

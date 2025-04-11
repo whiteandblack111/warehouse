@@ -6,7 +6,6 @@ import { FaDownload } from "react-icons/fa";
 
 const Sticker_warehouse = ({ sticker }) => {
 
-    console.log("sticker=====>",sticker )
     return(
         <div className={styles.barcode_box_item}>
           <div>{`${sticker.shop_name}`}</div>

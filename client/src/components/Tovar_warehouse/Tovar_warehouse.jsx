@@ -13,13 +13,13 @@ const Tovar_warehouse = ({ tovar }) => {
     const open_close_create_sticker = () => {
         if (sticker_store.isCreate) {
             sticker_store.setIsCreate(false)
-            console.log("sticker_store.isCreate====>", sticker_store.isCreate)
+            
             return
         }
 
         tovar_store.setTovar(tovar)
         sticker_store.setIsCreate(true)
-        console.log("sticker_store.isCreate====>", sticker_store.isCreate)
+
         return
     }
 

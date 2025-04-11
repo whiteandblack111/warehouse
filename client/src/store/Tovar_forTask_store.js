@@ -1,8 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import Tovar_Service from "../services/Tovar_Service";
+import Tovar_forTask_Service from "../services/Tovar_forTask_Service";
 import axios from "axios";
 import { API_URL } from "../http";
-import Help_Service from "../services/Help_Service";
 
 
 export default class Tovar_store {
@@ -11,19 +10,12 @@ export default class Tovar_store {
     _isCreate = false;
     _isSearch = false;
     _allTovars = [];
-    _isLoading = false;
 
 
     constructor() {
         makeAutoObservable(this);
     }
-    setIsLoading(bool) {
-        this._isLoading = bool;
-    }
 
-    get isLoading() {
-        return this._isLoading;
-    }
 
     setTovar(tovar) {
         this._tovar = tovar;
@@ -53,22 +45,15 @@ export default class Tovar_store {
         return this._isSearch;
     }
 
-    async create_tovar_warehouse(formData) {
+    async update_tovar_forTask(formData) {
         try {
             
-            const response = await Tovar_Service.create_tovar_warehouse(formData);
-
+            const response = await Tovar_forTask_Service.update_tovar_forTask(formData);
+            console.log("formData====>", formData )
             const tovar = response.data
-            console.log("tovar====>", tovar )
             this.setTovar(tovar);
-            this.allTovars = [
-                ...this._allTovars,
-                tovar
-            ]
+          
 
-            this.setTovar(tovar)
-            this.isCreate(false);
-            this.isSearch(false);
             return this.tovar
 
         } catch (e) {
@@ -76,15 +61,12 @@ export default class Tovar_store {
         }
     }
 
-    async getAll_tovars_warehouse() {
+    async getAll() {
         try {
-            const response = await Tovar_Service.getAll_tovars_warehouse();
+            const response = await Tovar_forTask_Service.getAll();
             
             const tovars = response.data
             // console.log("tovars====>", tovars )
-
-            await Help_Service.sortData_for_upDown(tovars, "id")
-
              this.setAllTovars(tovars);
 
 

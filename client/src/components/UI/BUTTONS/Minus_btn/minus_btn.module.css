@@ -35,6 +35,7 @@ div.button4:hover {
   border: 1px solid #cf00cf;
   box-shadow: 0px 1px 4px 3px #FF0000;
   animation: pulsate2 0.5s linear infinite;
+  border-radius: 3px;
 }
 
 div.button4:active {
