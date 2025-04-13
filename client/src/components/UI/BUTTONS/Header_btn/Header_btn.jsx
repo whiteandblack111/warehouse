@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from "./header_btn.module.css"
-import { Context } from '../../../index';
+import { Context } from './../../../../index';
 import { observer } from 'mobx-react-lite';
-import { 
-    ORDERS_PATH, 
-    TASKS_PATH, 
-    WAREHOUSE_PATH 
+import {
+    ORDERS_PATH,
+    TASKS_PATH,
+    WAREHOUSE_PATH
 
-} from '../../../utils/routes_constants';
+} from './../../../../utils/routes_constants';
 
 const Header_btn = (props) => {
     const [routActive, setRoutActive] = useState(false)
@@ -47,7 +47,7 @@ const Header_btn = (props) => {
             tovar_store.setIsSearch(false);
         }
 
-        
+
         // navigator.bluetooth.requestDevice({ filters: [{ services: ['battery_service'] }] })
         //     .then(device => device.gatt.connect())
         //     .then(server => {

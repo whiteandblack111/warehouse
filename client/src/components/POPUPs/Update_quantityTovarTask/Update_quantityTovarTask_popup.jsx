@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { observer } from "mobx-react-lite"
-import styles from './update_popup.module.css'
-import Plus_btn from "../UI/BUTTONS/Plus_btn/Plus_btn"
-import Minus_btn from "../UI/BUTTONS/Minus_btn/Minus_btn"
+import styles from './update_quantityTovarTask_popup.module.css'
+import Plus_btn from "../../UI/BUTTONS/Plus_btn/Plus_btn"
+import Minus_btn from "../../UI/BUTTONS/Minus_btn/Minus_btn"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Fiolet_border_btn from '../UI/BUTTONS/Fiolet_border_btn/Fiolet_border_btn';
-import { Context } from '../..';
+import Fiolet_border_btn from '../../UI/BUTTONS/Fiolet_border_btn/Fiolet_border_btn';
+import { Context } from '../../..';
 
 
 
@@ -17,8 +17,8 @@ import { Context } from '../..';
 const Update_popup = (props) => {
 
     const [quantity, setQuantity] = useState(0);
-    const {tovar_forTask_store} = useContext(Context)
-    const {task_store} = useContext(Context);
+    const { tovar_forTask_store } = useContext(Context)
+    const { task_store } = useContext(Context);
 
 
     useEffect(() => {
@@ -45,13 +45,13 @@ const Update_popup = (props) => {
 
     }
 
-    const close_popup = (e) =>{
+    const close_popup = (e) => {
         props.callback_active_func(false)
     }
 
-    const update_quantity_tovar_for_task =  async () => {
+    const update_quantity_tovar_for_task = async () => {
         const formData = {
-            task_id : props.task_id,
+            task_id: props.task_id,
             tovar_task_id: props.tovar_task.id,
             quantity: quantity
         }
@@ -62,9 +62,9 @@ const Update_popup = (props) => {
 
 
     return (
-        <div 
-        className={props.isOpenPopup ? styles.update_popup : styles.update_popup_close}
-        onMouseLeave={(e)=>{close_popup()}}
+        <div
+            className={props.isOpenPopup ? styles.update_popup : styles.update_popup_close}
+            onMouseLeave={(e) => { close_popup() }}
         >
             <Form >
                 <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
@@ -89,8 +89,8 @@ const Update_popup = (props) => {
                 <Plus_btn plus_quantity={plus_quantity} ></Plus_btn>
             </div>
 
-            <Fiolet_border_btn 
-            btn_click_callbackFunction={update_quantity_tovar_for_task}
+            <Fiolet_border_btn
+                btn_click_callbackFunction={update_quantity_tovar_for_task}
             >отправить</Fiolet_border_btn>
 
 

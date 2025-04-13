@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import styles from './createTovar_form.module.css'
 import { Context } from '../../../index';
 import Form from 'react-bootstrap/Form';
@@ -13,8 +13,16 @@ const CreateTovar_form = () => {
     const [name, setName] = useState('');
     const [manufacturer_ID, setManufacturer_ID] = useState('');
     const [quantity, setQuantity] = useState('');
-
     const { tovar_store } = useContext(Context);
+
+
+    useEffect(() => {
+        window.addEventListener("keydown", handler_keyUp_form);
+        return () => {
+            window.removeEventListener("keydown", handler_keyUp_form);
+        };
+    }, []);
+
 
     const createFile_for_tovar = async (
         tovar_photo,
@@ -62,6 +70,13 @@ const CreateTovar_form = () => {
     const handler_keyUp_quantity = (e) => {
         if (e.key === "Enter") {
             input_submit_ref.current.focus();
+        }
+    }
+
+    const handler_keyUp_form = (e) => {
+        if (e.keyCode === 27) {
+            console.log('Close')
+            tovar_store.setIsCreate(false)
         }
     }
 
@@ -170,7 +185,7 @@ const CreateTovar_form = () => {
                 <Form.Group className="mb-3" >
 
                     <Button
-                    ref={input_submit_ref}
+                        ref={input_submit_ref}
                         className={styles.submit_btn}
                         onClick={() => {
                             createFile_for_tovar(

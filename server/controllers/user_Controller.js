@@ -101,6 +101,7 @@ class User_Controller {
 
 
     }
+    
 
 
     async getOne(req, res, next) {

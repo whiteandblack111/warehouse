@@ -12,22 +12,49 @@ import Sticker_warehouse from '../UI/Sticker_warehouse/Sticker_warehouse';
 import { TiPrinter } from "react-icons/ti";
 
 import { BsFillBoxSeamFill } from "react-icons/bs";
-import Update_popup from '../POPup/Update_popup';
-import Open_close_btn from '../UI/BUTTONS/Open_close_btn/Open_close_btn';
 import Cartons_required_box from '../PAGE_COMPONENTS/Cartons_required_box/Cartons_required_box';
+import Update_executor_popup from '../POPUPs/Update_executor/Update_executor_popup';
 
 
 
 
 const Task_one = ({ task }) => {
     const [taskSort_tovars, setTaskSort_tovars] = useState([])
+    const [executor, setExecutor] = useState("")
+    const [isOpen_update_executor_popup, setIsOpen_update_executor_popup] = useState(false)
 
     const { sticker_store } = useContext(Context);
     const { task_store } = useContext(Context);
+    const { user_store } = useContext(Context);
+
+
+    const executor_ref = useRef(null);
+    const executor_popup_ref = useRef(null);
 
     useEffect(() => {
-     
+        setExecutor(task.executor)
+
     }, [])
+
+    const handler_hover_executorStatus = (e) => {
+        const executor_field = executor_ref.current;
+        // setExecutor("назначить")
+
+
+        executor_field.classList.add('headingItem_value_hover');
+    }
+
+    const handler_leave_executorStatus = (e) => {
+        const executor_field = executor_ref.current;
+        setExecutor(task.executor)
+        executor_field.classList.remove('headingItem_value_hover');
+    }
+
+    const update_executor_popup_open = async (e) => {
+        await user_store.get_all_workers();
+
+        setIsOpen_update_executor_popup(true)
+    }
 
     const print_sticker = () => {
     }
@@ -69,8 +96,8 @@ const Task_one = ({ task }) => {
                 <div className={styles.line}></div>
 
                 {task.userId === "не определён" || task.userId === null
-                    ? <div className={`${styles.headingItem_value} ${styles.author_warning}`}>{"не определён"}</div>
-                    : <div className={`${styles.headingItem_value} ${styles.author_build}`}>{task.userId}</div>
+                    ? <div className={`${styles.headingItem_value} ${styles.author_warning} .no-select`}>{"не определён"}</div>
+                    : <div className={`${styles.headingItem_value} ${styles.author_build} .no-select`}>{task.userId}</div>
                 }
                 <div className={styles.line}></div>
 
@@ -81,12 +108,56 @@ const Task_one = ({ task }) => {
                 </div>
                 <div className={styles.line} ></div>
 
-                {
-                    task.executor === "не назначен" ?
-                        <div className={`${styles.headingItem_value} ${styles.executor_warning}`}>{task.executor}</div>
-                        : <div className={`${styles.headingItem_value} ${styles.executor}`}>{task.executor}</div>
 
+
+                {   user_store.isAdmin?
+                    <div
+                        onMouseEnter={(e) => { handler_hover_executorStatus(e) }}
+                        onMouseLeave={(e) => { handler_leave_executorStatus(e) }}
+                        onClick={(e) => { update_executor_popup_open() }}
+                        ref={executor_ref}
+                        className={executor === "не назначен" || executor === "назначить"
+                            ? `${styles.headingItem_value} ${styles.executor_warning_text}  `
+                            : `${styles.headingItem_value} ${styles.executor_value}`
+                        }
+
+                        // className={
+                        //     `${styles.headingItem_value} ${styles.executor_value}`
+                        // }
+                    >
+                        {executor}
+
+
+                        <Update_executor_popup
+                            ref={executor_popup_ref}
+                            task_id={task.id}
+                            isOpen_update_executor_popup={isOpen_update_executor_popup}
+                            setIsOpen_update_executor_popup={setIsOpen_update_executor_popup}
+
+                        ></Update_executor_popup>
+                    </div>
+                    :
+                    <div
+                        className={executor === "не назначен"
+                            ? `${styles.headingItem_value} ${styles.executor_warning_text}`
+                            : `${styles.headingItem_value} ${styles.executor_value}`
+                        }
+                    >
+                        {executor}
+
+
+                        <Update_executor_popup
+                            ref={executor_popup_ref}
+                            task_id={task.id}
+                            isOpen_update_executor_popup={isOpen_update_executor_popup}
+                            setIsOpen_update_executor_popup={setIsOpen_update_executor_popup}
+
+                        ></Update_executor_popup>
+                    </div>
                 }
+
+
+
 
                 <div className={styles.line} ></div>
 
@@ -99,7 +170,14 @@ const Task_one = ({ task }) => {
 
                 <div className={styles.line} ></div>
 
-                <div className={`${styles.headingItem_value} ${styles.quantity}`}>{task.tovar_for_tasks.length}</div>
+                < div className={`${styles.headingItem_value} ${styles.quantity}`}>
+                    {task.tovar_for_tasks.length
+                        ?
+                        task.tovar_for_tasks.length
+                        :
+                        0
+                    }
+                </div>
             </div>
 
             <div className={styles.container_tasks}>

@@ -3,33 +3,10 @@ import styles from './task_list.module.css'
 import { Context } from '../../index';
 import { observer } from 'mobx-react-lite';
 import Task_one from '../Task_one/Task_one';
-import Loader from '../PAGE_COMPONENTS/Loader/Loader';
-
-const Task_list = () => {
-    const [task_list, setTask_list] = useState([])
-
-    const { task_store } = useContext(Context);
 
 
-    useEffect(() => {
-        get_all_tasks();
-    }, [])
+const Task_list = ({task_list}) => {
 
-
-    async function get_all_tasks() {
-        await task_store.get_all_tasks();
-
-        task_store.setIsLoading(true)
-        setTimeout(()=>{
-            task_store.setIsLoading(false)
-        },500);
-    }
-
-
-
-    if(task_store.isLoading){
-        return <Loader></Loader>
-    }
 
 
     return (
@@ -58,7 +35,7 @@ const Task_list = () => {
 
             <div className={styles.task_box}>
                 {
-                    task_store.allTasks.map((task) => {
+                    task_list.map((task) => {
 
 
                         return <Task_one

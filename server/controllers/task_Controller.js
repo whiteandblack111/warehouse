@@ -1,4 +1,6 @@
+const { default: User_Service } = require('../../client/src/services/User_Service');
 const ApiError = require('../error/ApiError');
+const { User } = require('../models/models');
 const Task_Service = require('../services/task_Service');
 const Tovar_Service = require('./../services/tovar_Service');
 
@@ -7,18 +9,20 @@ class Task_Controller {
         console.log("req.body=========>", req.body)
         const taskData = {
             task_name: req.body.task_name,
-            shop_name: req.body.shop_name
+            shop_name: req.body.shop_name,
+            userId: req.body.userId
         }
+        // const user = await User_Service.getOne(req.body.userId);
         const task = await Task_Service.create(taskData);
         console.log("task.isNewRecord---------------------------> ", task.isNewRecord)
-        
+
 
         const tovars = req.body.tovars_for_task
 
-        await tovars.map( async (tovar) => {
+        await tovars.map(async (tovar) => {
             let mutateTovar = {
                 ...tovar,
-                taskId:task.id
+                taskId: task.id
             }
             await Tovar_Service.create_for_task(mutateTovar);
         })
@@ -28,7 +32,7 @@ class Task_Controller {
         return res.json(task_with_goods)
     }
 
-    
+
     async getOne(req, res) {
         const { id, task_number } = req.body;
         let task;
@@ -48,18 +52,28 @@ class Task_Controller {
         return res.json(task)
     }
 
+    async set_executor(req, res) {
+        const { task_id, worker_id } = req.body;
+
+        let task = await Task_Service.set_executor(task_id, worker_id);
+
+
+
+        return res.json(task)
+    }
+
     async getAll(req, res) {
         let { statusWork, executor, createAt, from_and_to_number, limit, page } = req.body;
-        
+
         page = page || 1
         limit = limit || 10
         let offset = page * limit - limit
 
-        let tasks;  
+        let tasks;
 
         if (!statusWork && !executor && !createAt) {
             tasks = await Task_Service.getAll(limit, offset);
-           
+
         }
         if (statusWork) {
             tasks = await Task_Service.getAll_statusWork(statusWork, limit, offset);

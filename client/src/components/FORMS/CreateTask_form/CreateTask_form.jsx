@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef  } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 
 import styles from './createTask_form.module.css'
 import *  as  XLSX from "xlsx";
@@ -13,17 +13,21 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
 const CreateTask_form = () => {
+    const { user_store } = useContext(Context);
+    console.log("user_store>>>> ", user_store.user)
 
     const [task_name, setTask_name] = useState('');
     const [tovars_for_task, setTovars_from_task] = useState([]);
-
     const [shop_name, setShop_name] = useState('Магазин получатель');
 
-
+    useEffect(() => {
+        window.addEventListener("keydown", handler_keyUp_form);
+        return () => {
+            window.removeEventListener("keydown", handler_keyUp_form);
+        };
+    }, []);
 
     useEffect(() => {
-        
-
     }, [tovars_for_task])
 
     const handleFile = async (e) => {
@@ -46,7 +50,7 @@ const CreateTask_form = () => {
         setTovars_from_task(mutateTovar)
     }
 
-    const handleSelect =  (evt) => {
+    const handleSelect = (evt) => {
         setShop_name(evt)
         console.log(evt)
     }
@@ -54,99 +58,110 @@ const CreateTask_form = () => {
 
     const { task_store } = useContext(Context);
     const create_task = async () => {
+        const creator_id = user_store.user.id;
         let mutateTovar = tovars_for_task.map((tovar) => {
             let newTovar = {
                 ...tovar,
-                shop_name:shop_name
+                shop_name: shop_name
             }
             return newTovar
         })
 
+
         setTovars_from_task(mutateTovar)
         const dataTask = {
+            // userId: creator_id,
             task_name,
             shop_name,
-            tovars_for_task:mutateTovar       
+            tovars_for_task: mutateTovar
         }
         console.log("dataTask====>", dataTask);
         await task_store.create_task(dataTask)
+        task_store.setIsCreate(false);
+    }
+
+    const handler_keyUp_form = (e) => {
+        if (e.keyCode === 27) {
+            console.log('Close')
+            task_store.setIsCreate(false)
+        }
     }
 
 
     return (
-            <Form className={styles.container}>
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
-                    <Form.Label
-                        className={styles.inputLabel}
-                    >Регистрация новой поставки в системе</Form.Label>
-                    <Form.Control
-                        className={styles.input}
-                        key="task_name"
-                        type='text'
-                        placeholder="Введите название поставки"
-                        onChange = {
-                            (e)=> setTask_name(e.target.value)
-                        }
-                        value={task_name}
-                    />
-                </Form.Group>
-
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
-
-                    {tovars_for_task.length === 0 ?
-                        <Form.Label
-                            htmlFor="file"
-                            className={`${styles.custom_file_inputLabelinput}`}
-                        >
-
-                            Выберите файл с данными
-
-                        </Form.Label>
-                        :
-                        <Form.Label
-                            htmlFor="file"
-                            className={`${styles.custom_file_inputLabelinput} ${styles.isGoLoadingFile}`}
-                        >
-
-                            Файл подготовлен к загрузке
-
-                        </Form.Label>
-
+        <Form className={styles.container}>
+            <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+                <Form.Label
+                    className={styles.inputLabel}
+                >Регистрация новой поставки в системе</Form.Label>
+                <Form.Control
+                    className={styles.input}
+                    key="task_name"
+                    type='text'
+                    placeholder="Введите название поставки"
+                    onChange={
+                        (e) => setTask_name(e.target.value)
                     }
-                    <Form.Control
-                        className={`${styles.custom_file_input} ${styles.file}`}
-                        name='file'
-                        id="file"
-                        key="tovars_for_task"
-                        type='file'
-                        placeholder="Не менее 6 символов"
-                        onChange={(e) => handleFile(e)}
-                    />
-                </Form.Group>
+                    value={task_name}
+                />
+            </Form.Group>
 
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
-                    <DropdownButton
+            <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
 
-                    onSelect={ (eventKey)=> handleSelect(eventKey)} 
-                    
-                     className="btn_glass" 
-                     id="dropdown-basic-button" 
-                     title={shop_name}
-                     >
-                        <Dropdown.Item eventKey="PUGGY">PUGGY</Dropdown.Item>
-                        <Dropdown.Item eventKey="TODDY TOY">TODDY TOY</Dropdown.Item>
-                        <Dropdown.Item eventKey="WHOLLAJOY">WHOLLAJOY</Dropdown.Item>
-                    </DropdownButton>
-                </Form.Group>
+                {tovars_for_task.length === 0 ?
+                    <Form.Label
+                        htmlFor="file"
+                        className={`${styles.custom_file_inputLabelinput}`}
+                    >
 
-                <Form.Group className="mb-3">
-                    <Button
-                        className={styles.autx_btn}
-                        onClick={() => create_task()}
-                        variant="outline-success">Создать
-                    </Button>
-                </Form.Group>
-            </Form>
+                        Выберите файл с данными
+
+                    </Form.Label>
+                    :
+                    <Form.Label
+                        htmlFor="file"
+                        className={`${styles.custom_file_inputLabelinput} ${styles.isGoLoadingFile}`}
+                    >
+
+                        Файл подготовлен к загрузке
+
+                    </Form.Label>
+
+                }
+                <Form.Control
+                    className={`${styles.custom_file_input} ${styles.file}`}
+                    name='file'
+                    id="file"
+                    key="tovars_for_task"
+                    type='file'
+                    placeholder="Не менее 6 символов"
+                    onChange={(e) => handleFile(e)}
+                />
+            </Form.Group>
+
+            <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
+                <DropdownButton
+
+                    onSelect={(eventKey) => handleSelect(eventKey)}
+
+                    className="btn_glass"
+                    id="dropdown-basic-button"
+                    title={shop_name}
+                >
+                    <Dropdown.Item eventKey="PUGGY">PUGGY</Dropdown.Item>
+                    <Dropdown.Item eventKey="TODDY TOY">TODDY TOY</Dropdown.Item>
+                    <Dropdown.Item eventKey="WHOLLAJOY">WHOLLAJOY</Dropdown.Item>
+                </DropdownButton>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+                <Button
+                    className={styles.autx_btn}
+                    onClick={() => create_task()}
+                    variant="outline-success">Создать
+                </Button>
+            </Form.Group>
+        </Form>
 
 
     );

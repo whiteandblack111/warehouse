@@ -13,9 +13,13 @@
     border-radius: 20px;
     backdrop-filter: blur(80px);
 
-    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
-    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
+    -webkit-box-shadow: 5px 5px 5px 0px #000000, 
+    inset 4px 4px 15px 0px #000000, 
+    8px 31px 13px 23px rgba(124, 124, 124, 0);
 
+    box-shadow: 5px 5px 5px 0px #000000, 
+    inset 4px 4px 15px 0px #000000, 
+    8px 31px 13px 23px rgba(124, 124, 124, 0);
 
     position: absolute;
     top: 0;
@@ -23,6 +27,7 @@
     right: 0;
     left: 0;
     margin: auto;
+    z-index: 100;
 }
 
 .wrapperInput {

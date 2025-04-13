@@ -2,6 +2,8 @@ import { makeAutoObservable } from "mobx";
 import AuthService from "../services/Auth_Service";
 import axios from "axios";
 import { API_URL } from "../http";
+import User_Service from "../services/User_Service";
+import Task_Service from "../services/Task_Service";
 
 
 export default class Store {
@@ -10,9 +12,17 @@ export default class Store {
     _isLoading = false;
     _isAdmin = false;
     _isWorker = false;
+    _allWorkers = [];
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setAllWorkers(users) {
+        this._allWorkers = users;
+    }
+    get allWorkers(){
+        return this._allWorkers
     }
 
     setIsAuth(bool) {
@@ -51,7 +61,7 @@ export default class Store {
         return this._isWorker;
     }
 
-    get userData() {
+    get user() {
         return this._user;
     }
 
@@ -82,8 +92,6 @@ export default class Store {
         console.log("перезагрузка авторизации браузера")
         const token = localStorage.getItem('token');
         const response = await AuthService.isReloadBrowser(token);
-
-
 
     }
 
@@ -135,13 +143,13 @@ export default class Store {
                 if (role.name === "SUPERADMIN" || role.name === "ADMIN") {
                     this.setIsAuth(true);
                     this.setIsAdmin(true)
-                    
+
                     return
                 }
                 if (role.name === "WORKER") {
                     this.setIsAuth(true);
                     this.setIsWorker(true)
-                    return 
+                    return
                 }
             })
 
@@ -152,6 +160,65 @@ export default class Store {
             console.log(e.response?.data?.message);
         } finally {
             this.setIsLoading(false);
+        }
+    }
+
+    async checkAuth() {
+        this.setIsLoading(true)
+        try {
+            const response = await axios.get(`${API_URL}/users/refresh`, { withCredentials: true });
+
+            localStorage.setItem('token', response.data.accessToken);
+            this.setIsAuth(true);
+            this.setUser(response.data.user);
+
+            // console.log("response.data.user=====>>>", response.data.user)
+
+            await response.data.user.roles.map((role) => {
+
+                if (role.name === "SUPERADMIN" || role.name === "ADMIN") {
+                    this.setIsAuth(true);
+                    this.setIsAdmin(true)
+
+                    return
+                }
+                if (role.name === "WORKER") {
+                    this.setIsAuth(true);
+                    this.setIsWorker(true)
+                    return
+                }
+            })
+
+
+
+
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        } finally {
+            this.setIsLoading(false);
+        }
+    }
+
+    async get_all_workers() {
+        try {
+            this.setIsLoading(true)
+            const response = await User_Service.getUsers();
+
+            const users = response.data
+            let workers = []
+            await users.map((user) => {
+                user.roles.map((role) => {
+                    if(role.name === "WORKER"){
+                        workers.push(user)
+                    }
+                })
+            })
+
+            this.setAllWorkers(workers);
+            this.setIsLoading(false);
+
+        } catch (error) {
+
         }
     }
 

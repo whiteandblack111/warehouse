@@ -1,0 +1,37 @@
+.main_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: rgb(114, 5, 105, 0.05);
+    border: 2px solid #7c7c7c;
+    border-radius: 20px;
+    /* backdrop-filter: blur(80px); */
+    cursor: pointer;
+    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
+    
+    position: absolute;
+    background: rgba(102, 39, 113, 0.97);
+    margin: 6px 2px;
+    margin: 0 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    transition: all 0.5s;
+    padding-bottom: 15px;
+
+    height: 200px;
+    bottom: -200px;
+    box-sizing: border-box;
+
+  
+}
+
+.popup_close{
+    display: none;
+}
+
+.dropdown_btn{
+    padding: 5px 20px;
+    margin-bottom: 20px;
+}

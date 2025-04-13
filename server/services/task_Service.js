@@ -1,5 +1,5 @@
 
-const { Task, Tovar_For_Task, Stiker } = require('../models/models');
+const { Task, Tovar_For_Task, Stiker, User } = require('../models/models');
 
 
 class Task_Service {
@@ -17,13 +17,39 @@ class Task_Service {
             include: [
                 {
                     model: Tovar_For_Task, as: "tovar_for_tasks"
-
                 }
             ]
 
 
         })
         console.log("getOne_byId+++====++++====> ", task)
+        return task
+    }
+
+
+    async set_executor(task_id, worker_id) {
+        const task = await Task.findOne({
+            where:{ id: task_id },
+            include: [
+                {
+                    model: Tovar_For_Task, as: "tovar_for_tasks"
+                }
+            ]
+        })
+
+        const user = await User.findOne({
+            where:{ id: worker_id }
+        })
+        console.log("getOne_byId+++====++++====> ", task)
+
+        await task.update(
+            {
+               executor: user.firstname,
+            
+            }
+        )
+
+
         return task
     }
 
@@ -79,7 +105,7 @@ class Task_Service {
         )
 
 
-       
+
 
 
         return task

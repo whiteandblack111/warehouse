@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from './header.module.css'
-import Header_btn from "../../UI/Header_btn/Header_btn";
+import Header_btn from "./../../../components/UI/BUTTONS/Header_btn/Header_btn"
 
-import { LOGIN_PATH, TASKS_PATH, WAREHOUSE_PATH, ORDERS_PATH } from "../../../utils/routes_constants";
+import { LOGIN_PATH, TASKS_PATH, WAREHOUSE_PATH, ORDERS_PATH, WORKERS_PATH } from "../../../utils/routes_constants";
 import Login_btn from "../../UI/Login_btn/Login_btn";
 
-import { Context } from '../../../index';
+import { Context } from './../../../index';
 
 const Header = () => {
 
@@ -20,7 +20,7 @@ const Header = () => {
     const splitLocation = pathname.split("/");
 
     const { user_store } = useContext(Context);
-  
+
 
 
 
@@ -46,6 +46,11 @@ const Header = () => {
 
 
             <nav className={`${styles.nav_panel}`}>
+
+                <Header_btn path={WORKERS_PATH}>
+                    Сборка
+                </Header_btn>
+
                 <Header_btn
                     className={splitLocation[1] === "" ? `${styles.routActive}` : ""}
                     path={ORDERS_PATH}

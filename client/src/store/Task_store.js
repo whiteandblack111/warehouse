@@ -10,6 +10,7 @@ export default class Task_store {
     _isSearch = false;
     _allTasks = [];
     _isLoading = false;
+    // _executor = "не назначен"
 
     constructor() {
         makeAutoObservable(this);
@@ -22,6 +23,15 @@ export default class Task_store {
     get isLoading() {
         return this._isLoading;
     }
+
+    setExecutor(str) {
+        this._executor = str;
+    }
+
+    get executor() {
+        return this._executor;
+    }
+
 
     setTask(task) {
         this._task = task;
@@ -78,7 +88,6 @@ export default class Task_store {
         
             await Help_Service.sortData_for_upDown(tasks.rows, "id")
 
-
             this.setAllTasks(tasks.rows);
             this.setIsLoading(false);
 
@@ -95,7 +104,7 @@ export default class Task_store {
            
             const task = response.data
 
-            console.log("get_one===================================> ", task)
+            // console.log("get_one===================================> ", task)
 
             this.setTask(task)
 
@@ -114,6 +123,36 @@ export default class Task_store {
         } catch (e) {
             console.log(e.response?.data?.message);
         }
+    }
+
+    async set_executor(task_id, worker_id){
+        try {
+            this.setIsLoading(true)
+        
+            const response = await Task_Service.set_executor(task_id, worker_id);
+            
+            const updated_task = response.data
+
+            let arrForMutate = [... this._allTasks]
+    
+            arrForMutate.map((task, index) => {
+                if(task.id === updated_task.id){
+                    arrForMutate[index] = updated_task
+                }
+            })
+
+            this.setAllTasks(arrForMutate)
+    
+            this.setIsLoading(false)
+            
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }finally{
+            this.setIsLoading(false)
+        }
+       
+
+
     }
 
 

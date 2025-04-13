@@ -23,7 +23,7 @@ const Login_form = () => {
     const login = async (email, password) => {
 
         await user_store.login(email, password);
-        let roles = user_store.userData.roles
+        let roles = user_store.user.roles
         console.log(roles)
 
         if (user_store.isAuth) {

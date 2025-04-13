@@ -1,7 +1,7 @@
 .fiolet_border_btn {
     position: relative;
     transform: translate(0%, 0%);
-    width: 180px;
+    width: fit-content;
     height: 50px;
     background: #232323;
     text-decoration: none;
@@ -12,6 +12,8 @@
     font-size: 20px;
     font-family: verdana;
     letter-spacing: 4px;
+    padding: 0 2px;
+    box-sizing: border-box;
     
 }
 
@@ -52,6 +54,6 @@ span:after {
 .fiolet_border_btn:hover:after,
 .fiolet_border_btn:hover span:before,
 .fiolet_border_btn:hover span:after {
-    width: calc(180px/2);
-    height: calc(50px/2)
+    width: calc(100%/2);
+    height: calc(100%/2)
 }

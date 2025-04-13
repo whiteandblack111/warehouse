@@ -1,8 +1,11 @@
 import { observer } from "mobx-react-lite"
 import styles from './cartons_required_box.module.css';
-import Update_popup from "../../POPup/Update_popup";
+import Update_quantityTovarTask_popup from "../../POPUPs/Update_quantityTovarTask/Update_quantityTovarTask_popup";
 import Open_close_btn from "../../UI/BUTTONS/Open_close_btn/Open_close_btn";
 import { useEffect, useState } from "react";
+import User_controller from "../../../controllers/User_controller";
+import { useContext } from "react";
+import { Context } from "../../../index";
 
 
 
@@ -11,21 +14,23 @@ import { useEffect, useState } from "react";
 const Cartons_required_box = (props) => {
 
     const [tovar_task, setTovar_task] = useState({})
-    
+
+    const { user_store } = useContext(Context)
+
     useEffect(() => {
         setTovar_task(props.tovar_task)
     }, [])
 
 
 
-    const [isOpen_update_quantity_popup, setIsOpen_update_quantity_popu] = useState(false);
+    const [isOpen_update_quantity_popup, setIsOpen_update_quantity_popup] = useState(false);
     const open_close_quantity_update_popup = () => {
 
         if (isOpen_update_quantity_popup) {
-            setIsOpen_update_quantity_popu(false);
+            setIsOpen_update_quantity_popup(false);
             return
         }
-        setIsOpen_update_quantity_popu(true)
+        setIsOpen_update_quantity_popup(true)
 
     }
 
@@ -58,22 +63,32 @@ const Cartons_required_box = (props) => {
                     имеется
                 </p>
                 <p
-                className={styles.cartons_found}
+                    className={styles.cartons_found}
                 >
                     {tovar_task.cartons_found}
                 </p>
             </div>
-            <Update_popup
-                task_id={props.task_id}
-                tovar_task={tovar_task}
-                isOpenPopup={isOpen_update_quantity_popup}
-                callback_active_func={open_close_quantity_update_popup}
-            ></Update_popup>
+            {user_store.isAdmin
+                ?
+                <>
+                    <Update_quantityTovarTask_popup
+                        task_id={props.task_id}
+                        tovar_task={tovar_task}
+                        isOpenPopup={isOpen_update_quantity_popup}
+                        callback_active_func={open_close_quantity_update_popup}
+                    ></Update_quantityTovarTask_popup>
 
-            <Open_close_btn
-                key={tovar_task.id}
-                callback_active_func={open_close_quantity_update_popup}
-            ></Open_close_btn>
+                    <Open_close_btn
+                        key={tovar_task.id}
+                        callback_active_func={open_close_quantity_update_popup}
+                    ></Open_close_btn>
+
+                </>
+                : 
+                <></>
+
+            }
+
 
         </div>
     )

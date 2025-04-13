@@ -17,6 +17,7 @@ import WAREHOUSE_PAGE from "../pages/warehouse/WAREHOUSE_PAGE"
 import TASKS_PAGE from "../pages/tasks/TASKS_PAGE"
 import TASK_ONE_PAGE from "../pages/task_one/TASK_ONE_PAGE"
 import ORDERS_PAGE from "../pages/orders/ORDERS_PAGE"
+import WORKERS_PAGE from "../pages/workers/WORKERS_PAGE"
 
 export const guest_routes = [
     {
