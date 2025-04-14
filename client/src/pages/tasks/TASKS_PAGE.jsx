@@ -12,49 +12,39 @@ import Loader from './../../components/PAGE_COMPONENTS/Loader/Loader';
 
 const TASKS_PAGE = () => {
 
-    const [task_list, setTask_list] = useState([])
-    
-        const { task_store } = useContext(Context);
-    
-    
-        useEffect(() => {
-            get_all_tasks();
-        }, [])
-    
-    
-        async function get_all_tasks() {
-            await task_store.get_all_tasks();
-    
-            task_store.setIsLoading(true)
-            setTimeout(()=>{
-                task_store.setIsLoading(false)
-            },500);
-        }
+    const { task_store } = useContext(Context);
 
 
-    const screenHeight = window.screen.height
+    useEffect(() => {
+        get_all_tasks();
+    }, [])
 
-    // console.log("task_store.isCreate===  ", task_store.isCreate)
-    // console.log("task_store.isSearch===  ", task_store.isSearch)
+
+    async function get_all_tasks() {
+        await task_store.get_all_tasks();
+
+        task_store.setIsLoading(true)
+        setTimeout(() => {
+            task_store.setIsLoading(false)
+        }, 500);
+    }
 
 
-       if(task_store.isLoading){
-            return <Loader></Loader>
-        }
+    if (task_store.isLoading) {
+        return <Loader></Loader>
+    }
 
 
     return (
         <div className={styles.main}>
- 
-            <Task_list
-            task_list={task_store.allTasks}
-            ></Task_list>
+
+            <Task_list ></Task_list>
 
             {
                 task_store.isCreate && !task_store.isSearch ?
-                <CreateTask_form
-                
-                ></CreateTask_form>
+                    <CreateTask_form
+
+                    ></CreateTask_form>
                     :
                     <></>
             }

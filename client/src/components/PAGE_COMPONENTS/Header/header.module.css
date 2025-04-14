@@ -2,8 +2,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
-    height: 140px;
+    height: 10vh;
     backdrop-filter: blur(50px);
     border-bottom: 1px solid #720074;
 

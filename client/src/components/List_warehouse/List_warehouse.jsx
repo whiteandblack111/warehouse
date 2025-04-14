@@ -12,37 +12,11 @@ const List_warehouse = () => {
     const { tovar_store } = useContext(Context);
 
 
-
-
-    useEffect(() => {
-        getAll_tovars_warehouse();
-
-        tovar_store.setIsLoading(true)
-        setTimeout(() => {
-            tovar_store.setIsLoading(false)
-        }, 500);
-    }, [])
-
-    useEffect(() => {
-
-    }, [tovar_store._tovar])
-
-    async function getAll_tovars_warehouse() {
-        await tovar_store.getAll_tovars_warehouse();
-    }
-
-    const list_container_ref = useRef()
-
-    if (tovar_store.isLoading) {
-        return <Loader></Loader>
-    }
+    
 
     return (
         <div>
-           
-            <div className={styles.heading}
-                ref={list_container_ref}
-            >
+            <div className={styles.heading}>
                 <div className={`${styles.headingItem} ${styles.id}`}>№</div>
                 <div className={styles.line} ></div>
 
@@ -61,7 +35,6 @@ const List_warehouse = () => {
 
                 <div className={`${styles.headingItem} ${styles.quantity}`}>Кол-во</div>
             </div>
-            {/* </div> */}
             <div
                 className={styles.container}
             >
@@ -71,25 +44,18 @@ const List_warehouse = () => {
                     : <div></div>
                 }
 
-
-
                 {
-                    tovar_store.allTovars.map((tovar) => {
+                    tovar_store._allTovars.map((tovar) => {
                         return <Tovar_warehouse
                             key={tovar.id}
                             tovar={tovar}
                         ></Tovar_warehouse>
                     })
 
-
                 }
 
-
-
             </div>
-            
         </div>
-
     )
 
 

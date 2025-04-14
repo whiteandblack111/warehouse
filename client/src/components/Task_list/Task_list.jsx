@@ -5,7 +5,9 @@ import { observer } from 'mobx-react-lite';
 import Task_one from '../Task_one/Task_one';
 
 
-const Task_list = ({task_list}) => {
+const Task_list = () => {
+
+    const { task_store } = useContext(Context)
 
 
 
@@ -13,36 +15,15 @@ const Task_list = ({task_list}) => {
         <div
             className={styles.container}>
 
-            {/* <div className={styles.heading}>
-                <div className={`${styles.headingItem} ${styles.id}`}>№</div>
-                <div className={styles.line} ></div>
-
-                <div className={`${styles.headingItem} ${styles.itemFoto}`}>Фото</div>
-                <div className={styles.line} ></div>
-
-                <div className={`${styles.headingItem} ${styles.Manufacturer_ID}`}>Manufacturer_ID</div>
-                <div className={styles.line} ></div>
-
-
-                <div className={`${styles.headingItem} ${styles.barcode}`}>Стикеры</div>
-                <div className={styles.line} ></div>
-
-                <div className={`${styles.headingItem} ${styles.name}`}>Название</div>
-                <div className={styles.line}></div>
-
-                <div className={`${styles.headingItem} ${styles.quantity}`}>Кол-во</div>
-            </div> */}
-
             <div className={styles.task_box}>
                 {
-                    task_list.map((task) => {
+                    task_store.allTasks.map((task) => {
 
 
                         return <Task_one
                             key={task.id}
                             task={task}
                         ></Task_one>
-
 
                     })
                 }

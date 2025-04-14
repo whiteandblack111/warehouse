@@ -4,7 +4,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from './header.module.css'
 import Header_btn from "./../../../components/UI/BUTTONS/Header_btn/Header_btn"
 
-import { LOGIN_PATH, TASKS_PATH, WAREHOUSE_PATH, ORDERS_PATH, WORKERS_PATH } from "../../../utils/routes_constants";
+import { LOGIN_PATH, TASKS_PATH, WAREHOUSE_PATH, ORDERS_PATH } from "../../../utils/routes_constants";
 import Login_btn from "../../UI/Login_btn/Login_btn";
 
 import { Context } from './../../../index';
@@ -27,7 +27,7 @@ const Header = () => {
 
     return (
         <header className={styles.header}>
-            <NavLink to="/" style={{ textDecoration: 'none', display: "flex", alignItems: "center" }}>
+            <NavLink to="/" style={{ textDecoration: 'none', display: "flex", alignItems: "center", padding: "0 40px"}}>
                 <div className={`${styles.logo}`}>
                     <h3 className={`${styles.logo_text}`}>Ware</h3>
                     <img
@@ -46,10 +46,6 @@ const Header = () => {
 
 
             <nav className={`${styles.nav_panel}`}>
-
-                <Header_btn path={WORKERS_PATH}>
-                    Сборка
-                </Header_btn>
 
                 <Header_btn
                     className={splitLocation[1] === "" ? `${styles.routActive}` : ""}

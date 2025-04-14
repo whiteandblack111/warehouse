@@ -1,4 +1,4 @@
-import $api from "../http";
+import $api from "../http/index";
 
 export default class Tovar_Service {
 

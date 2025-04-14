@@ -73,6 +73,7 @@ class tovar_Controller {
 
     async getAll(req, res) {
         const tovarData = await Tovar_Service.getAll()
+        console.log(tovarData)
         return res.json(tovarData)
     }
 

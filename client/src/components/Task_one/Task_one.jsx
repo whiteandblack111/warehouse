@@ -95,9 +95,11 @@ const Task_one = ({ task }) => {
                 <div className={`${styles.headingItem_value} ${styles.shop_name}`}>{task.shop_name}</div>
                 <div className={styles.line}></div>
 
-                {task.userId === "не определён" || task.userId === null
-                    ? <div className={`${styles.headingItem_value} ${styles.author_warning} .no-select`}>{"не определён"}</div>
-                    : <div className={`${styles.headingItem_value} ${styles.author_build} .no-select`}>{task.userId}</div>
+                {task.userId && task.user && task.user.firstname
+                    ? 
+                    <div className={`${styles.headingItem_value} ${styles.author_warning} .no-select`}>{task.user.firstname}</div>
+                    : 
+                    <div className={`${styles.headingItem_value} ${styles.author_warning} .no-select`}>{"не определён"}</div>
                 }
                 <div className={styles.line}></div>
 
@@ -110,7 +112,7 @@ const Task_one = ({ task }) => {
 
 
 
-                {   user_store.isAdmin?
+                {user_store.isAdmin ?
                     <div
                         onMouseEnter={(e) => { handler_hover_executorStatus(e) }}
                         onMouseLeave={(e) => { handler_leave_executorStatus(e) }}
@@ -121,9 +123,9 @@ const Task_one = ({ task }) => {
                             : `${styles.headingItem_value} ${styles.executor_value}`
                         }
 
-                        // className={
-                        //     `${styles.headingItem_value} ${styles.executor_value}`
-                        // }
+                    // className={
+                    //     `${styles.headingItem_value} ${styles.executor_value}`
+                    // }
                     >
                         {executor}
 

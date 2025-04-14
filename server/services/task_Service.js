@@ -13,10 +13,13 @@ class Task_Service {
 
     async getOne(id) {
         const task = await Task.findOne({
-            id,
+            where: {id:id},
             include: [
                 {
                     model: Tovar_For_Task, as: "tovar_for_tasks"
+                },
+                {
+                    model: User, as: "user"
                 }
             ]
 
@@ -30,11 +33,7 @@ class Task_Service {
     async set_executor(task_id, worker_id) {
         const task = await Task.findOne({
             where:{ id: task_id },
-            include: [
-                {
-                    model: Tovar_For_Task, as: "tovar_for_tasks"
-                }
-            ]
+            include: {all: true}
         })
 
         const user = await User.findOne({
@@ -79,6 +78,9 @@ class Task_Service {
                     {
                         model: Tovar_For_Task, as: "tovar_for_tasks"
 
+                    },
+                    {
+                        model: User, as: "user"
                     }
                 ]
             }

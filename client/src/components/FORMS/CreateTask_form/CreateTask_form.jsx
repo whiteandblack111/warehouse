@@ -57,6 +57,7 @@ const CreateTask_form = () => {
 
 
     const { task_store } = useContext(Context);
+
     const create_task = async () => {
         const creator_id = user_store.user.id;
         let mutateTovar = tovars_for_task.map((tovar) => {
@@ -70,14 +71,13 @@ const CreateTask_form = () => {
 
         setTovars_from_task(mutateTovar)
         const dataTask = {
-            // userId: creator_id,
+            userId: user_store.user.id,
             task_name,
             shop_name,
             tovars_for_task: mutateTovar
         }
         console.log("dataTask====>", dataTask);
         await task_store.create_task(dataTask)
-        task_store.setIsCreate(false);
     }
 
     const handler_keyUp_form = (e) => {

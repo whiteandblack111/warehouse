@@ -59,17 +59,25 @@ export default class Tovar_store {
             const response = await Tovar_Service.create_tovar_warehouse(formData);
 
             const tovar = response.data
-            console.log("tovar====>", tovar )
-            this.setTovar(tovar);
-            this.allTovars = [
-                ...this._allTovars,
-                tovar
-            ]
 
+            // console.log("1 tovar-----------------> ", tovar)
+
+            let new_allTovars = [
+                ...this._allTovars
+            ]
+            new_allTovars.unshift(tovar);
+
+            // console.log("2 new_allTovars-----------------> ", new_allTovars)
+
+            this.setAllTovars(new_allTovars);
+            this.setIsCreate(false);
+            this.setIsSearch(false);
             this.setTovar(tovar)
-            this.isCreate(false);
-            this.isSearch(false);
-            return this.tovar
+
+            // console.log("3 this.allTovars-----------------> ", this.allTovars)
+
+            return tovar
+
 
         } catch (e) {
             console.log(e.response?.data?.message);
@@ -78,16 +86,17 @@ export default class Tovar_store {
 
     async getAll_tovars_warehouse() {
         try {
+            this.setIsLoading(true)
             const response = await Tovar_Service.getAll_tovars_warehouse();
             
             const tovars = response.data
-            // console.log("tovars====>", tovars )
+            console.log("tovars====>", tovars)
 
             await Help_Service.sortData_for_upDown(tovars, "id")
 
              this.setAllTovars(tovars);
-
-
+             this.setIsCreate(false);
+             this.setIsLoading(false)
 
         } catch (e) {
             console.log(e.response?.data?.message);

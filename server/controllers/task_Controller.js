@@ -6,7 +6,7 @@ const Tovar_Service = require('./../services/tovar_Service');
 
 class Task_Controller {
     async create(req, res) {
-        console.log("req.body=========>", req.body)
+
         const taskData = {
             task_name: req.body.task_name,
             shop_name: req.body.shop_name,
@@ -14,7 +14,7 @@ class Task_Controller {
         }
         // const user = await User_Service.getOne(req.body.userId);
         const task = await Task_Service.create(taskData);
-        console.log("task.isNewRecord---------------------------> ", task.isNewRecord)
+        console.log("1 task.isNewRecord---------------------------> ", task.id)
 
 
         const tovars = req.body.tovars_for_task
@@ -24,9 +24,10 @@ class Task_Controller {
                 ...tovar,
                 taskId: task.id
             }
-            await Tovar_Service.create_for_task(mutateTovar);
+           return await Tovar_Service.create_for_task(mutateTovar);
         })
 
+        
         const task_with_goods = await Task_Service.getOne(task.id);
 
         return res.json(task_with_goods)

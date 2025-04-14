@@ -24,7 +24,7 @@ const CreateTovar_form = () => {
     }, []);
 
 
-    const createFile_for_tovar = async (
+    const create_tovar_warehouse = async (
         tovar_photo,
         name,
         manufacturer_ID,
@@ -38,11 +38,16 @@ const CreateTovar_form = () => {
         form_data.append("quantity", quantity);
 
         const tovar = await tovar_store.create_tovar_warehouse(form_data);
-        tovar_store.setIsCreate(false)
+        
+        console.log("tovar_store.isCreate tovar===>", tovar_store.isCreate)
+        console.log("tovar_store.isSearch tovar===>", tovar_store.isSearch)
         console.log("CreateTovar_form tovar===>", tovar)
 
-
     }
+
+
+
+
 
     const input_tovar_photo_ref = useRef()
     const input_name_ref = useRef()
@@ -188,7 +193,7 @@ const CreateTovar_form = () => {
                         ref={input_submit_ref}
                         className={styles.submit_btn}
                         onClick={() => {
-                            createFile_for_tovar(
+                            create_tovar_warehouse(
                                 tovar_photo,
                                 name,
                                 manufacturer_ID,

@@ -8,7 +8,6 @@ const LOGIN_PAGE = () => {
 
     const { user_store } = useContext(Context)
 
-    console.log(user_store.userData)
     return (
         <div className={styles.container}>
             <h1 >{user_store.isAuth ? `Пользователь ${user_store._user.email} авторизован` : 'Вход в аккаунт'}</h1>
