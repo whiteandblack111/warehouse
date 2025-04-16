@@ -1,5 +1,7 @@
 
-const { Task, Tovar_For_Task, Stiker, User } = require('../models/models');
+const { where } = require('sequelize');
+const { model, models } = require('../db');
+const { Task, Tovar_For_Task, Sticker, User, Tovar_For_Warehouse, Photo_For_Tovar } = require('../models/models');
 
 
 class Task_Service {
@@ -13,7 +15,7 @@ class Task_Service {
 
     async getOne(id) {
         const task = await Task.findOne({
-            where: {id:id},
+            where: { id: id },
             include: [
                 {
                     model: Tovar_For_Task, as: "tovar_for_tasks"
@@ -32,19 +34,19 @@ class Task_Service {
 
     async set_executor(task_id, worker_id) {
         const task = await Task.findOne({
-            where:{ id: task_id },
-            include: {all: true}
+            where: { id: task_id },
+            include: { all: true }
         })
 
         const user = await User.findOne({
-            where:{ id: worker_id }
+            where: { id: worker_id }
         })
         console.log("getOne_byId+++====++++====> ", task)
 
         await task.update(
             {
-               executor: user.firstname,
-            
+                executor: user.firstname,
+
             }
         )
 
@@ -70,14 +72,26 @@ class Task_Service {
 
     async getAll(limit, offset) {
 
+
         const tasks = await Task.findAndCountAll(
             {
                 limit,
                 offset,
                 include: [
                     {
-                        model: Tovar_For_Task, as: "tovar_for_tasks"
-
+                        model: Tovar_For_Task, as: "tovar_for_tasks",
+                        include: [
+                            {
+                                model: Sticker, as: "sticker",
+                            },
+                            {
+                                model: Tovar_For_Warehouse, as: "tovar_for_warehouse",
+                                include: [
+                                    { model: Photo_For_Tovar, as: 'photo_for_tovars' }
+                                ]
+                            },
+                        ]
+                        
                     },
                     {
                         model: User, as: "user"
@@ -85,6 +99,8 @@ class Task_Service {
                 ]
             }
         )
+
+
 
 
         return tasks

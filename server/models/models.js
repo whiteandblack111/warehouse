@@ -38,8 +38,6 @@ const User = sequelize.define(
         activationLink: { type: DataTypes.STRING }
     }
 )
-Role.belongsToMany(User, { through: Roles_User })
-User.belongsToMany(Role, { through: Roles_User })
 
 
 const Photo_For_Tovar = sequelize.define(
@@ -78,15 +76,11 @@ const Tovar_For_Task = sequelize.define(
         // additional_information: { type: DataTypes.STRING, },
         box_number: { type: DataTypes.STRING, defaultValue: "не определён" },
         status: { type: DataTypes.STRING, defaultValue: "default" },
+
     }
 )
 
-User.hasMany(Task)
-Task.belongsTo(User)
 
-
-Task.hasMany(Tovar_For_Task);
-// Tovar_For_Task.belongsTo(Task);
 
 
 
@@ -101,8 +95,7 @@ const Sticker = sequelize.define(
         
     }
 )
-// Sticker.hasMany(Tovar_For_Task)
-// Tovar_For_Task.belongsTo(Sticker)
+
 
 
 const Tovar_For_Warehouse = sequelize.define(
@@ -115,11 +108,7 @@ const Tovar_For_Warehouse = sequelize.define(
     }
 )
 
-Tovar_For_Warehouse.hasMany(Photo_For_Tovar);
-Photo_For_Tovar.belongsTo(Tovar_For_Warehouse)
 
-Tovar_For_Warehouse.hasMany(Sticker);
-Sticker.belongsTo(Tovar_For_Warehouse)
 
 const Photo_For_Box = sequelize.define(
     'photo_for_boxes',
@@ -131,12 +120,30 @@ const Photo_For_Box = sequelize.define(
     }
 )
 
+Role.belongsToMany(User, { through: Roles_User })
+User.belongsToMany(Role, { through: Roles_User })
+User.hasMany(Task)
+
+
+Task.belongsTo(User)
+Task.hasMany(Tovar_For_Task);
+
+
 Tovar_For_Warehouse.hasMany(Photo_For_Box);
+Tovar_For_Warehouse.hasMany(Photo_For_Tovar);
+Tovar_For_Warehouse.hasMany(Tovar_For_Task);
+Tovar_For_Warehouse.hasMany(Sticker);
+
+
+Tovar_For_Task.belongsTo(Task);
+Tovar_For_Task.belongsTo(Sticker);
+Tovar_For_Task.belongsTo(Tovar_For_Warehouse);
+
+Sticker.belongsTo(Tovar_For_Warehouse);
+Sticker.hasMany(Tovar_For_Task)
+
+Photo_For_Tovar.belongsTo(Tovar_For_Warehouse);
 Photo_For_Box.belongsTo(Tovar_For_Warehouse)
-
-
-
-
 
 module.exports = {
     User,

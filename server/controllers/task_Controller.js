@@ -1,6 +1,7 @@
 const { default: User_Service } = require('../../client/src/services/User_Service');
 const ApiError = require('../error/ApiError');
-const { User } = require('../models/models');
+const { User, Tovar_For_Task } = require('../models/models');
+const sticker_Service = require('../services/sticker_Service');
 const Task_Service = require('../services/task_Service');
 const Tovar_Service = require('./../services/tovar_Service');
 
@@ -20,11 +21,20 @@ class Task_Controller {
         const tovars = req.body.tovars_for_task
 
         await tovars.map(async (tovar) => {
+        
+
+            const sticker = await sticker_Service.get_by_barcode(tovar.barcode);
+
+    
             let mutateTovar = {
                 ...tovar,
-                taskId: task.id
+                taskId: task.id,
+                stickerId:sticker.id,
+                tovarForWarehouseId: sticker.tovarForWarehouseId
             }
-           return await Tovar_Service.create_for_task(mutateTovar);
+
+
+           return await Tovar_For_Task.create(mutateTovar);
         })
 
         
@@ -67,7 +77,7 @@ class Task_Controller {
         let { statusWork, executor, createAt, from_and_to_number, limit, page } = req.body;
 
         page = page || 1
-        limit = limit || 10
+        limit = limit || 100
         let offset = page * limit - limit
 
         let tasks;
@@ -85,6 +95,8 @@ class Task_Controller {
         if (createAt) {
             tasks = await Task_Service.getAll_createAt(createAt, limit, offset);
         }
+
+
 
 
         return res.json(tasks)

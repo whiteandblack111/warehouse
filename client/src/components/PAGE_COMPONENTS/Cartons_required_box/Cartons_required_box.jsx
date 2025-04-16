@@ -34,11 +34,15 @@ const Cartons_required_box = (props) => {
 
     }
 
+    const warehouse_tovar_quantity = tovar_task
+    console.log("warehouse_tovar_quantity=======> ", warehouse_tovar_quantity.brcode )
 
     return (
         <div
             key={tovar_task.id}
-            className={`${styles.item} ${styles.cartons_required_box} ${styles.clip_text}`}
+            className={`${styles.item} 
+            ${styles.cartons_required_box} 
+            ${styles.clip_text}`}
 
         >
             <div className={styles.column}>
@@ -84,7 +88,7 @@ const Cartons_required_box = (props) => {
                     ></Open_close_btn>
 
                 </>
-                : 
+                :
                 <></>
 
             }

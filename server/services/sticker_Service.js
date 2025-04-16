@@ -23,6 +23,11 @@ class Sticker_Service {
         return sticker
     }
 
+    async get_by_barcode(barcode) {
+        const sticker = await Sticker.findOne({where: {barcode: barcode} })
+        return sticker
+    }
+
 
     async getAll() {
 

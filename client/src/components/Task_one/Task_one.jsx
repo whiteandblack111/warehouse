@@ -96,9 +96,9 @@ const Task_one = ({ task }) => {
                 <div className={styles.line}></div>
 
                 {task.userId && task.user && task.user.firstname
-                    ? 
+                    ?
                     <div className={`${styles.headingItem_value} ${styles.author_warning} .no-select`}>{task.user.firstname}</div>
-                    : 
+                    :
                     <div className={`${styles.headingItem_value} ${styles.author_warning} .no-select`}>{"не определён"}</div>
                 }
                 <div className={styles.line}></div>
@@ -216,7 +216,7 @@ const Task_one = ({ task }) => {
 
                                 <img
                                     className={styles.photo_for_tovars}
-                                    src={`http://localhost:7000/cecc7192-1d25-4c10-be5f-09aca96198fa.jpg `}
+                                    src={`http://localhost:7000/${tovar_task.tovar_for_warehouse.photo_for_tovars[0].img_name}`}
                                     alt="Фото товара"
                                 />
 
@@ -235,11 +235,9 @@ const Task_one = ({ task }) => {
 
                             <div className={`${styles.item} ${styles.barcode_info}`}>
                                 <div className={styles.barcode_box}>
-                                    <img
-                                        className={styles.photo_for_barcode}
-                                        src={`http://localhost:7000/barcode.png `}
-                                        alt="стикер"
-                                    />
+
+                                    <Sticker_warehouse sticker={tovar_task.sticker} />
+
                                     <div className={`${styles.item} ${styles.barcode_text} ${styles.clip_text}`}>
                                         {tovar_task.barcode}
                                     </div>
