@@ -14,12 +14,23 @@ import { Context } from "../../../index";
 const Cartons_required_box = (props) => {
 
     const [tovar_task, setTovar_task] = useState({})
+    const [tovar_warehouse_quantity, setTovar_warehouse_quantity] = useState("")
 
     const { user_store } = useContext(Context)
+    const { tovar_forTask_store } = useContext(Context)
 
     useEffect(() => {
         setTovar_task(props.tovar_task)
     }, [])
+
+    useEffect(() => {
+        setTovar_task(props.tovar_task)
+        if (tovar_task?.tovar_for_warehouse?.quantity) {
+            setTovar_warehouse_quantity(tovar_task.tovar_for_warehouse.quantity)
+
+        }
+
+    }, [tovar_task])
 
 
 
@@ -34,8 +45,8 @@ const Cartons_required_box = (props) => {
 
     }
 
-    const warehouse_tovar_quantity = tovar_task
-    console.log("warehouse_tovar_quantity=======> ", warehouse_tovar_quantity.brcode )
+    // setTovar_for_warehouse(tovar_task.warehouse_tovar_quantity.tovar_for_warehouse)
+    console.log("tovar_warehouse_quantity=======> ", tovar_warehouse_quantity)
 
     return (
         <div
@@ -69,7 +80,7 @@ const Cartons_required_box = (props) => {
                 <p
                     className={styles.cartons_found}
                 >
-                    {tovar_task.cartons_found}
+                    {tovar_warehouse_quantity}
                 </p>
             </div>
             {user_store.isAdmin

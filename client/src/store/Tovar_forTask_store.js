@@ -10,13 +10,28 @@ export default class Tovar_store {
     _isCreate = false;
     _isSearch = false;
     _allTovars = [];
+    _status = "default";
+    _isLoading = false;
 
 
     constructor() {
         makeAutoObservable(this);
     }
 
+    setIsLoading(bool) {
+        this._isLoading = bool;
+    }
+    get isLoading() {
+        return this._isLoading;
+    }
 
+    setStatus(status) {
+        this._status = status;
+    }
+    get status() {
+        return this._status;
+    }
+    
     setTovar(tovar) {
         this._tovar = tovar;
     }

@@ -198,12 +198,7 @@
     border-radius: 20px 0 0 0;
 }
 
-.task_id_value {
-    width: 5%;
-    font-family: MOSCOW, Arial, serif;
-    color: #08b5ff;
-    font-size: 32px;
-}
+
 
 .task_time {
     width: 21%;
@@ -328,9 +323,6 @@
 
 }
 
-.barcode_info {
-    width: 20%;
-}
 
 .photo_for_barcode {
     margin-top: 10px;
@@ -390,15 +382,24 @@
 
 }
 
-box_numberbar .task_id {
-    width: 10%;
+/* .box_numberbar {
+    width: 5%;
+    font-family: MOSCOW, Arial, serif;
+    color: #08b5ff;
+    font-size: 32px;
+} */
+
+
+
+.task_id_value {
+    width: 5%;
     font-family: MOSCOW, Arial, serif;
     color: #08b5ff;
     font-size: 32px;
 }
 
 .itemFoto {
-    width: 15%;
+    width: 25%;
     overflow: hidden;
 }
 
@@ -416,20 +417,23 @@ box_numberbar .task_id {
     width: 15%;
     cursor: auto;
 }
+.barcode_info {
+    width: 30%;
+}
 
 .cartons_required_box {
     display: flex;
     justify-content: space-around;
     font-size: 20px;
     box-sizing: border-box;
-    width: 20%;
+    width:25%;
     position: relative;
 }
-
 
 .box_number {
     width: 5%;
     font-size: 20px;
+    position: relative;
 }
 
 .column {
@@ -452,6 +456,3 @@ box_numberbar .task_id {
     display: visible;
 }
 
-.box_number {
-    padding: 20px !important;
-}

@@ -1,0 +1,69 @@
+
+
+
+div.button4 {
+    position: relative;
+    font-family: Arial, Helvetica, FreeSans, "Liberation Sans", "Nimbus Sans L", sans-serif;
+    font-size: 1em;
+    font-weight: 700;
+    /* color: rgb(158, 45, 45); */
+    text-shadow: 0 -1px rgba(0, 0, 0, .1);
+    text-decoration: none;
+    user-select: none;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background: #d7d707 linear-gradient(#706f20, #545006);
+    box-shadow: inset #01e210 0 -1px 1px, inset 0 1px 1px #93982d, #60620b 0 0 0 1px, rgba(0, 0, 0, 0.3) 0 2px 5px;
+    -webkit-animation: pulsate 1.2s linear infinite;
+    animation: pulsate 8s linear infinite;
+  
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px !important;
+    width: 60px;
+    height: 60px;
+  
+  
+  }
+  
+  div.button4:hover {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+    cursor: pointer;
+  
+    border: 1px solid #d0ff00;
+    box-shadow: 0px 1px 4px 3px #b9f700;
+    animation: pulsate2 0.5s linear infinite;
+  }
+  
+  div.button4:active {
+    top: 1px;
+    color: #ffffff;
+    text-shadow: 0 -1px rgba(0, 0, 0, .3), 0 0 5px rgb(133, 138, 63), 0 0 8px #aeb700;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, .3), 0 1px 1px #c9f830, inset 0 1px 2px rgba(0, 0, 0, 0.8), inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  
+  
+  @keyframes pulsate {
+    50% {
+      color: #ffffff;
+      text-shadow: 0 -1px rgba(0, 0, 0, .3), 0 0 5px rgb(249, 255, 221), 0 0 8px #ffffff;
+    }
+  }
+  
+  @keyframes pulsate2 {
+    50% {
+      color: #bdf700;
+      text-shadow: 0 -1px rgba(0, 0, 0, .3), 0 0 5px rgb(255, 221, 234), 0 0 8px #ffffff;
+      box-shadow: 0px 1px 4px 3px #c2f700, 0px 1px 8px 3px #e7f700;
+      
+    }
+  }
+  
+  .text_color {
+    font-size: 40px;
+  }

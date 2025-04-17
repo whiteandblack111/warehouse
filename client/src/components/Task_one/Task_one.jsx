@@ -4,9 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import styles from './task_one.module.css'
 import { Context } from '../../index';
 
-
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import { observer } from 'mobx-react-lite';
 import Sticker_warehouse from '../UI/Sticker_warehouse/Sticker_warehouse';
 import { TiPrinter } from "react-icons/ti";
@@ -14,17 +11,19 @@ import { TiPrinter } from "react-icons/ti";
 import { BsFillBoxSeamFill } from "react-icons/bs";
 import Cartons_required_box from '../PAGE_COMPONENTS/Cartons_required_box/Cartons_required_box';
 import Update_executor_popup from '../POPUPs/Update_executor/Update_executor_popup';
+import ChangeStatus_tovarTask from '../POPUPs/ChangeStatus_tovarTask/ChangeStatus_tovarTask';
 
 
 
 
 const Task_one = ({ task }) => {
-    const [taskSort_tovars, setTaskSort_tovars] = useState([])
     const [executor, setExecutor] = useState("")
     const [isOpen_update_executor_popup, setIsOpen_update_executor_popup] = useState(false)
+    const [isOpen_сhangeStatus_tovarTask_popup, setIsOpen_сhangeStatus_tovarTask_popup] = useState(false)
 
     const { sticker_store } = useContext(Context);
     const { task_store } = useContext(Context);
+    const { tovar_forTask_store } = useContext(Context);
     const { user_store } = useContext(Context);
 
 
@@ -54,6 +53,10 @@ const Task_one = ({ task }) => {
         await user_store.get_all_workers();
 
         setIsOpen_update_executor_popup(true)
+    }
+
+    const сhangeStatus_tovarTask_OPENpopup = () => {
+        setIsOpen_сhangeStatus_tovarTask_popup(true)
     }
 
     const print_sticker = () => {
@@ -266,11 +269,17 @@ const Task_one = ({ task }) => {
                             <div className={styles.line} ></div>
 
 
-                            <div className={`box_number`}>
-                                <BsFillBoxSeamFill className={styles.BsFillBoxSeamFill} />
+                            <div className={styles.box_number}>
+                                <BsFillBoxSeamFill
+                                    className={styles.BsFillBoxSeamFill}
+                                    onClick={сhangeStatus_tovarTask_OPENpopup}
+                                />
+
+                                <ChangeStatus_tovarTask
+                                    isOpen={isOpen_сhangeStatus_tovarTask_popup}
+
+                                ></ChangeStatus_tovarTask>
                             </div>
-
-
                         </div>
                     })
 

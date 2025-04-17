@@ -23,7 +23,8 @@ export const Context = createContext({
   task_store,
   tovar_store,
   sticker_store,
-  order_store
+  order_store,
+  tovar_forTask_store
 })
 
 const root = ReactDOM.createRoot(
