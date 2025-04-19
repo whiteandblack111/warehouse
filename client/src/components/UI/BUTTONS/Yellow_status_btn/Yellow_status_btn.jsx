@@ -1,15 +1,16 @@
 import { observer } from "mobx-react-lite"
 
 import styles from './yellow_status_btn.module.css'
-import { TbSquareHalf } from "react-icons/tb";
+
+import { Children } from "react";
 
 
-const Yellow_status_btn = ({ btn_function }) => {
+const Yellow_status_btn = (props) => {
 
     return (
         <div>
-            <div onClick={btn_function} className={styles.button4} >
-                <TbSquareHalf />
+            <div onClick={()=>{props.btn_function(props.boolParams)}} className={styles.button4} >
+               {props.children}
             </div>
         </div>
 

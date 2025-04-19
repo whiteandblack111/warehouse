@@ -33,7 +33,7 @@
     /* padding-top: 150px; */
 }
 
-.task_container {
+.tovar_task_container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -53,15 +53,35 @@
     margin: 6px 2px;
 }
 
-.task_container_changed {
+.tovar_task_container_changed {
 
     backdrop-filter: blur(10px);
     box-shadow:
         1px 3px 7px 0px rgba(47, 200, 255, 1),
         inset 4px 4px 7px 0px rgba(47, 200, 255, 1),
         inset 0px 0px 123px 20px rgba(47, 200, 255, 0.3);
+}
+
+.tovar_task_container_done {
+
+    backdrop-filter: blur(10px);
+    box-shadow:
+        1px 3px 7px 0px rgb(47, 255, 78),
+        inset 4px 4px 7px 0px rgb(47, 255, 78),
+        inset 0px 0px 123px 20px rgba(47, 255, 78, 0.3);
 
 }
+
+.tovar_task_container_stop {
+
+    backdrop-filter: blur(10px);
+    box-shadow:
+        1px 3px 7px 0px rgb(255, 47, 78),
+        inset 4px 4px 7px 0px rgb(255, 47, 57),
+        inset 0px 0px 123px 20px rgba(255, 47, 47, 0.3);
+
+}
+
 
 
 .task_name_container {
@@ -417,6 +437,7 @@
     width: 15%;
     cursor: auto;
 }
+
 .barcode_info {
     width: 30%;
 }
@@ -426,14 +447,36 @@
     justify-content: space-around;
     font-size: 20px;
     box-sizing: border-box;
-    width:25%;
+    width: 25%;
     position: relative;
 }
 
 .box_number {
     width: 5%;
+    height: 100%;
     font-size: 20px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.number {
+    position: absolute;
+    top: 48%;
+    bottom: 52%;
+    left: 39%;
+    margin: 0;
+    padding: 0;
+    font-size: 26px;
+    font-weight: bold;
+    /* font-family: VENUS, Arial, serif; */
+
+    color: #000000;
+
+
+    
 }
 
 .column {
@@ -451,8 +494,14 @@
 }
 
 .BsFillBoxSeamFill {
-    padding: 10px;
-    font-size: 84px;
+    font-size: 54px;
     display: visible;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.green {
+    color: rgb(64, 255, 47)
+}

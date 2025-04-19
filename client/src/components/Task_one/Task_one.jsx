@@ -9,6 +9,8 @@ import Sticker_warehouse from '../UI/Sticker_warehouse/Sticker_warehouse';
 import { TiPrinter } from "react-icons/ti";
 
 import { BsFillBoxSeamFill } from "react-icons/bs";
+import { BsFillBox2Fill } from "react-icons/bs";
+
 import Cartons_required_box from '../PAGE_COMPONENTS/Cartons_required_box/Cartons_required_box';
 import Update_executor_popup from '../POPUPs/Update_executor/Update_executor_popup';
 import ChangeStatus_tovarTask from '../POPUPs/ChangeStatus_tovarTask/ChangeStatus_tovarTask';
@@ -202,8 +204,12 @@ const Task_one = ({ task }) => {
                             key={tovar_task.id}
                             className={
                                 tovar_task.status === 'changed'
-                                    ? `${styles.task_container} ${styles.task_container_changed}`
-                                    : styles.task_container
+                                    ? `${styles.tovar_task_container} ${styles.tovar_task_container_changed}`
+                                    :tovar_task.status === 'done' ?
+                                    `${styles.tovar_task_container} ${styles.tovar_task_container_done}`
+                                    :tovar_task.status === 'stop' ?
+                                    `${styles.tovar_task_container} ${styles.tovar_task_container_stop}`
+                                    :styles.tovar_task_container
 
                             }>
 
@@ -270,13 +276,41 @@ const Task_one = ({ task }) => {
 
 
                             <div className={styles.box_number}>
-                                <BsFillBoxSeamFill
-                                    className={styles.BsFillBoxSeamFill}
+                                <div
+                                    className={
+                                        tovar_task.status === 'done'
+                                            ? `${styles.BsFillBoxSeamFill} ${styles.green}`
+                                            : `${styles.BsFillBoxSeamFill} `
+
+                                    }
+
+
                                     onClick={сhangeStatus_tovarTask_OPENpopup}
-                                />
+                                >
+                                    {
+                                        tovar_task.quantityBoxes === "0"
+                                            ? <BsFillBoxSeamFill />
+                                            :
+                                            <div>
+                                                <BsFillBox2Fill />
+                                                <div
+                                                    className={styles.number}
+                                                >
+                                                    {tovar_task.quantityBoxes}
+                                                </div>
+                                            </div>
+
+
+
+                                    }
+
+                                </div>
 
                                 <ChangeStatus_tovarTask
+                                    all_taskTovars={task.tovar_for_tasks}
+                                    tovar_task={tovar_task}
                                     isOpen={isOpen_сhangeStatus_tovarTask_popup}
+                                    setIsOpen={setIsOpen_сhangeStatus_tovarTask_popup}
 
                                 ></ChangeStatus_tovarTask>
                             </div>

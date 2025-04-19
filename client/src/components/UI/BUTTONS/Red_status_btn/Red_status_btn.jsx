@@ -1,15 +1,15 @@
 import { observer } from "mobx-react-lite"
-
 import styles from './red_status_btn.module.css'
-import { AiOutlineStop } from "react-icons/ai";
 
 
-const Red_status_btn = ({ btn_function }) => {
+
+const Red_status_btn = (props) => {
 
     return (
         <div>
-            <div onClick={btn_function} className={styles.button4} >
-                <AiOutlineStop />
+            <div onClick={()=>{props.btn_function()}} className={styles.button4} >
+               
+                {props.children}
             </div>
         </div>
 

@@ -63,16 +63,19 @@ export default class Tovar_store {
     async update_tovar_forTask(formData) {
         try {
             
+            this.setIsLoading(true);
             const response = await Tovar_forTask_Service.update_tovar_forTask(formData);
             console.log("formData====>", formData )
             const tovar = response.data
             this.setTovar(tovar);
-          
+            this.setIsLoading(false);
 
             return this.tovar
 
         } catch (e) {
             console.log(e.response?.data?.message);
+        }finally{
+            this.setIsLoading(false);
         }
     }
 

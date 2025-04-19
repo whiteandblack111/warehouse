@@ -5,8 +5,6 @@ import {
     WAREHOUSE_PATH,
     TASKS_PATH,
     ORDERS_PATH,
-
-    TASK_ONE_PATH
 } from "../utils/routes_constants"
 
 import REGISTRATION_PAGE from "../pages/guests/registration/REGISTRATION_PAGE"
@@ -15,7 +13,6 @@ import LOGIN_PAGE from "../pages/guests/login/LOGIN_PAGE"
 
 import WAREHOUSE_PAGE from "../pages/warehouse/WAREHOUSE_PAGE"
 import TASKS_PAGE from "../pages/tasks/TASKS_PAGE"
-import TASK_ONE_PAGE from "../pages/task_one/TASK_ONE_PAGE"
 import ORDERS_PAGE from "../pages/orders/ORDERS_PAGE"
 import WORKERS_PAGE from "../pages/workers/WORKERS_PAGE"
 
@@ -47,9 +44,6 @@ export const auth_routes = [
         Component: ORDERS_PAGE
     },
 
-    {
-        path: TASK_ONE_PATH + '/:id',
-        Component: TASK_ONE_PAGE
-    },
+    
 
 ]

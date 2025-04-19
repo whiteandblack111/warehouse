@@ -3,15 +3,16 @@ import { observer } from "mobx-react-lite"
 import styles from './fiolet_border_btn.module.css'
 
 
-const Fiolet_border_btn = ({ btn_click_callbackFunction, children }) => {
-
-
+const Fiolet_border_btn = (props) => {
 
     return (
 
         <div
-            onClick={() => { btn_click_callbackFunction() }}
-            className={styles.fiolet_border_btn}><span>{children}</span>
+            onClick={() => { props.btn_click_callbackFunction()}}
+            className={styles.fiolet_border_btn}>
+            <span className={styles.span}>
+                {props.children}
+            </span>
         </div>
 
     )

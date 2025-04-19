@@ -14,6 +14,13 @@ class Tovar_forTask_Controller {
             if (req.body.quantity) {
                 dataTovar = await Tovar_forTask_Service.update_quantity(req.body)
             }
+            if (req.body.quantityBoxes) {
+                dataTovar = await Tovar_forTask_Service.update_box_number(req.body)
+            }
+
+            if (req.body.stopReason) {
+                dataTovar = await Tovar_forTask_Service.stopReason(req.body)
+            }
 
 
             return res.json(dataTovar);

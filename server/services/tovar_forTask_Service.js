@@ -23,6 +23,34 @@ class Tovar_forTask_Service {
         return tovar
     }
 
+    async update_box_number(formdata) {
+        console.log("formdata;;;; ", formdata)
+        const tovar = await Tovar_For_Task.findOne({
+            where: { id: formdata.tovar_task_id }
+        })
+        await tovar.update(
+            {
+                quantityBoxes: formdata.quantityBoxes,
+                status: "done"
+            }
+        )
+        return tovar
+    }
+
+    async stopReason(formdata) {
+        console.log("formdata;;;; ", formdata)
+        const tovar = await Tovar_For_Task.findOne({
+            where: { id: formdata.tovar_task_id }
+        })
+        await tovar.update(
+            {
+                stopReason: formdata.stopReason,
+                status: "stop"
+            }
+        )
+        return tovar
+    }
+
 
 
 
