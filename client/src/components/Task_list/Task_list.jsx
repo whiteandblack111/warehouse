@@ -18,7 +18,7 @@ const Task_list = () => {
             <div className={styles.task_box}>
                 {
                     task_store.allTasks.map((task) => {
-
+                        // console.log(task)
 
                         return <Task_one
                             key={task.id}

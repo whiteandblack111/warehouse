@@ -1,50 +1,128 @@
 import { observer } from "mobx-react-lite"
+import React, { useContext, useState, useEffect, useRef } from 'react';
 
-import styles from './сhangeStatus_tovarTask.module.css'
+// import styles from './сhangeStatus_tovarTask.module.css'
+import styles_desctop from './сhangeStatus_tovarTask.module.css';
+import styles_mobile from './сhangeStatus_tovarTask.module.css';
 import Green_status_btn from "../../UI/BUTTONS/Green_status_btn/Green_status_btn"
 import Yellow_status_btn from "../../UI/BUTTONS/Yellow_status_btn/Yellow_status_btn"
 import Red_status_btn from "../../UI/BUTTONS/Red_status_btn/Red_status_btn"
-import { useContext, useRef, useState } from "react"
 import { Context } from "../../.."
 
 import Form from 'react-bootstrap/Form';
 import Fiolet_border_btn from "../../UI/BUTTONS/Fiolet_border_btn/Fiolet_border_btn"
 import { MdDoneOutline } from "react-icons/md";
 import { AiOutlineStop } from "react-icons/ai";
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import Close_btn from "../../UI/BUTTONS/Close_btn/Close_btn"
 
 
 
 
 const ChangeStatus_tovarTask = (props) => {
+    const [styles, setStyles] = useState('');
     const [tovarStatus, setTovarStatus] = useState("default");
     const [isOpen_green_blockBtns, setIsOpen_green_blockBtns] = useState(false);
     const [isOpen_red_blockBtns, setIsOpen_red_blockBtns] = useState(false);
 
 
-    const [quantityBoxes, setQuantityBoxes] = useState(1);
-    const [stopReason, setStopReason] = useState(null);
+    const [quantityBoxes, setQuantityBoxes] = useState(0);
+    const [stopReason, setStopReason] = useState("");
 
-    const { tovar_store } = useContext(Context);
     const { tovar_forTask_store } = useContext(Context);
+    const { interface_store } = useContext(Context);
+    const { task_store } = useContext(Context);
 
+
+
+
+    useEffect(() => {
+
+        setStyles(styles_desctop)
+
+        if (interface_store.isMobile) {
+            setStyles(styles_mobile)
+        }
+
+    }, [interface_store.isMobile])
 
     const update_quantityBoxes_tovarTask = async () => {
         let formData = {
             tovar_task_id: props.tovar_task.id,
-            quantityBoxes: quantityBoxes
+            tovarForWarehouseId: props.tovar_task.tovarForWarehouseId,
+            quantityBoxes: quantityBoxes,
+            quantityTovar: props.tovar_task.cartons_required
         }
-        await tovar_forTask_store.update_tovar_forTask(formData)
+        const tovar_task = await tovar_forTask_store.update_tovar_forTask(formData)
+
+
+        let allTask_new = [...task_store.allTasks]
+
+        let allTask_mutate = allTask_new.map((task) => {
+            if (task.id === tovar_task.taskId) {
+
+                let new_Tovar_for_tasks = task.tovar_for_tasks.map((task_tovar) => {
+
+                    if (task_tovar.id === tovar_task.id) {
+                        return tovar_task
+                    }
+
+                    if (task_tovar.id !== tovar_task.id) {
+                        return task_tovar
+                    }
+                })
+                task.tovar_for_tasks = new_Tovar_for_tasks
+
+                return task
+                // task.tovar_for_tasks.map(task_tovar => task_tovar.id === tovar_task.id ? tovar_task : task_tovar)
+            }
+            return task
+        })
+
+        console.log("allTask_mutate========= ", allTask_mutate)
+
+        task_store.setIsLoading(true)
+        task_store.setAllTasks(allTask_mutate)
+        task_store.setIsLoading(false)
     }
 
     const set_stopStatus_tovarTask = async () => {
         let formData = {
             tovar_task_id: props.tovar_task.id,
-            stopReason: stopReason
+            tovarForWarehouseId: props.tovar_task.tovarForWarehouseId,
+            quantityBoxes: quantityBoxes,
+            quantityTovar: props.tovar_task.cartons_required,
+            stopReason: stopReason,
+
         }
-        await tovar_forTask_store.update_tovar_forTask(formData)
+        const tovar_task = await tovar_forTask_store.update_tovar_forTask(formData);
+
+        let allTask_new = [...task_store.allTasks]
+
+        let allTask_mutate = allTask_new.map((task) => {
+            if (task.id === tovar_task.taskId) {
+
+                let new_Tovar_for_tasks = task.tovar_for_tasks.map((task_tovar) => {
+
+                    if (task_tovar.id === tovar_task.id) {
+                        return tovar_task
+                    }
+
+                    if (task_tovar.id !== tovar_task.id) {
+                        return task_tovar
+                    }
+                })
+                task.tovar_for_tasks = new_Tovar_for_tasks
+
+                return task
+                // task.tovar_for_tasks.map(task_tovar => task_tovar.id === tovar_task.id ? tovar_task : task_tovar)
+            }
+            return task
+        })
+
+        task_store.setIsLoading(true)
+        task_store.setAllTasks(allTask_mutate)
+        task_store.setIsLoading(false)
+
     }
 
 

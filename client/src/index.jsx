@@ -7,6 +7,7 @@ import Tovar_forTask_store from "./store/Tovar_forTask_store";
 import Tovar_store from './store/Tovar_store';
 import Sticker_store from './store/Sticker_store';
 import Order_store from './store/Order_store';
+import Interface_store from './store/Interface_store';
 
 
 
@@ -17,6 +18,7 @@ const tovar_forTask_store = new Tovar_forTask_store();
 const tovar_store = new Tovar_store();
 const sticker_store = new Sticker_store();
 const order_store = new Order_store();
+const interface_store = new Interface_store();
 
 export const Context = createContext({
   user_store,
@@ -24,7 +26,8 @@ export const Context = createContext({
   tovar_store,
   sticker_store,
   order_store,
-  tovar_forTask_store
+  tovar_forTask_store,
+  interface_store
 })
 
 const root = ReactDOM.createRoot(
@@ -39,7 +42,8 @@ root.render(
       tovar_forTask_store,
       tovar_store,
       sticker_store,
-      order_store
+      order_store,
+      interface_store
     }
   }>
     <App />

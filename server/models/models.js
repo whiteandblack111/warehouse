@@ -72,9 +72,9 @@ const Tovar_For_Task = sequelize.define(
         name: { type: DataTypes.STRING, allowNull: false },
         
         cartons_required: { type: DataTypes.INTEGER, allowNull: false },
-        cartons_found: { type: DataTypes.STRING, defaultValue: 0 },
+        cartons_found: { type: DataTypes.INTEGER, defaultValue: 0 },
         // additional_information: { type: DataTypes.STRING, },
-        quantityBoxes: { type: DataTypes.STRING, defaultValue: 0 },
+        quantityBoxes: { type: DataTypes.INTEGER, defaultValue: 0 },
         stopReason: { type: DataTypes.STRING, defaultValue: "no" },
         status: { type: DataTypes.STRING, defaultValue: "default" },
 
@@ -93,6 +93,7 @@ const Sticker = sequelize.define(
         img_name: { type: DataTypes.STRING, allowNull: false },
         barcode: { type: DataTypes.STRING, allowNull: false },
         shop_name: { type: DataTypes.STRING, allowNull: false },
+        warehouse_ID: { type: DataTypes.STRING, allowNull: false },
         
     }
 )
@@ -105,7 +106,9 @@ const Tovar_For_Warehouse = sequelize.define(
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         manufacturer_ID: { type: DataTypes.STRING, defaultValue: "не указан" },
         name: { type: DataTypes.STRING, allowNull: false },
-        quantity: { type: DataTypes.STRING, defaultValue: 0 },
+        quantity: { type: DataTypes.INTEGER, defaultValue: 0 },
+        garbage: { type: DataTypes.INTEGER, defaultValue: 0 },
+        reserve: {type: DataTypes.INTEGER, defaultValue: 0 },
     }
 )
 
@@ -123,28 +126,27 @@ const Photo_For_Box = sequelize.define(
 
 Role.belongsToMany(User, { through: Roles_User })
 User.belongsToMany(Role, { through: Roles_User })
+
 User.hasMany(Task)
-
-
 Task.belongsTo(User)
+
 Task.hasMany(Tovar_For_Task);
+// Tovar_For_Task.belongsTo(Task);
 
-
-Tovar_For_Warehouse.hasMany(Photo_For_Box);
-Tovar_For_Warehouse.hasMany(Photo_For_Tovar);
 Tovar_For_Warehouse.hasMany(Tovar_For_Task);
-Tovar_For_Warehouse.hasMany(Sticker);
-
-
-Tovar_For_Task.belongsTo(Task);
-Tovar_For_Task.belongsTo(Sticker);
 Tovar_For_Task.belongsTo(Tovar_For_Warehouse);
 
-Sticker.belongsTo(Tovar_For_Warehouse);
+Tovar_For_Warehouse.hasMany(Sticker);
+// Sticker.belongsTo(Tovar_For_Warehouse);
+
 Sticker.hasMany(Tovar_For_Task)
+Tovar_For_Task.belongsTo(Sticker);
 
 Photo_For_Tovar.belongsTo(Tovar_For_Warehouse);
 Photo_For_Box.belongsTo(Tovar_For_Warehouse)
+
+Tovar_For_Warehouse.hasMany(Photo_For_Box);
+Tovar_For_Warehouse.hasMany(Photo_For_Tovar);
 
 module.exports = {
     User,

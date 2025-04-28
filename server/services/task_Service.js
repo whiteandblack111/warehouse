@@ -14,21 +14,43 @@ class Task_Service {
     }
 
     async getOne(id) {
-        const task = await Task.findOne({
+
+        let task = await Task.findOne({
             where: { id: id },
             include: [
-                {
-                    model: Tovar_For_Task, as: "tovar_for_tasks"
-                },
+               
                 {
                     model: User, as: "user"
                 }
+            ],
+            raw: true, // <----- HERE
+            nest: true, // <----- HERE
+        })
+
+        task.tovar_for_tasks = []
+
+        let tovars_for_task = await Tovar_For_Task.findAll({
+            where: { taskId: task.id },
+            include: [
+                {
+                    model: Sticker, as: "sticker",
+                },
+                {
+                    model: Tovar_For_Warehouse, as: "tovar_for_warehouse",
+                    include: [
+                        { model: Photo_For_Tovar, as: 'photo_for_tovars' }
+                    ]
+                },
             ]
 
-
         })
-        console.log("getOne_byId+++====++++====> ", task)
-        return task
+        
+        await task.tovar_for_tasks.push(tovars_for_task)
+
+        if (task.tovar_for_tasks.length !== 0) {
+            return task
+        }
+
     }
 
 
@@ -91,7 +113,7 @@ class Task_Service {
                                 ]
                             },
                         ]
-                        
+
                     },
                     {
                         model: User, as: "user"

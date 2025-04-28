@@ -8,11 +8,9 @@ import { LuPackagePlus } from "react-icons/lu";
 const Plus_btn = ({ plus_quantity }) => {
 
     return (
-        <div>
             <div onClick={plus_quantity} className={styles.button4} >
                 <LuPackagePlus className={styles.text_color} />
             </div>
-        </div>
 
     )
 }

@@ -13,7 +13,7 @@ const Close_btn = (props) => {
 
     return (
         <div className={styles.close_btn}
-            onClick={() => { props.callback_func() }}
+            onClick={() => { props.onClick() }}
         >
             {props.children
                 ?

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import styles from './cartons_required_box.module.css';
-import Update_quantityTovarTask_popup from "../../POPUPs/Update_quantityTovarTask/Update_quantityTovarTask_popup";
+import Update_quantityTovarTask_popup from "../../POPUPs/Update_quantityTovar/Update_quantityTovar_popup";
 import Open_close_btn from "../../UI/BUTTONS/Open_close_btn/Open_close_btn";
 import { useEffect, useState } from "react";
 import User_controller from "../../../controllers/User_controller";
@@ -14,23 +14,13 @@ import { Context } from "../../../index";
 const Cartons_required_box = (props) => {
 
     const [tovar_task, setTovar_task] = useState({})
-    const [tovar_warehouse_quantity, setTovar_warehouse_quantity] = useState("")
 
     const { user_store } = useContext(Context)
     const { tovar_forTask_store } = useContext(Context)
 
     useEffect(() => {
-        setTovar_task(props.tovar_task)
     }, [])
 
-    useEffect(() => {
-        setTovar_task(props.tovar_task)
-        if (tovar_task?.tovar_for_warehouse?.quantity) {
-            setTovar_warehouse_quantity(tovar_task.tovar_for_warehouse.quantity)
-
-        }
-
-    }, [tovar_task])
 
 
 
@@ -46,11 +36,11 @@ const Cartons_required_box = (props) => {
     }
 
     // setTovar_for_warehouse(tovar_task.warehouse_tovar_quantity.tovar_for_warehouse)
-    console.log("tovar_warehouse_quantity=======> ", tovar_warehouse_quantity)
+    // console.log("tovar_warehouse_quantity=======> ", tovar_warehouse_quantity)
 
     return (
         <div
-            key={tovar_task.id}
+            key={props.tovar_task.id}
             className={`${styles.item} 
             ${styles.cartons_required_box} 
             ${styles.clip_text}`}
@@ -58,43 +48,51 @@ const Cartons_required_box = (props) => {
         >
             <div className={styles.column}>
                 <p>
-                    требуется
+                    {
+                        props.tovar_task.status === 'done'
+                            ?
+                            "В заказе"
+                            :
+                            "Требуется"
+                    }
+
                 </p>
                 <p
                     className={
-                        tovar_task.status === 'changed'
+                        props.tovar_task.status === 'changed'
                             ? `${styles.cartons_required}  ${styles.clip_text} ${styles.cartons_required_changed}`
                             : `${styles.cartons_required}  ${styles.clip_text}`
 
                     }
                 >
-                    {tovar_task.cartons_required}
+                    {props.tovar_task.cartons_required}
                 </p>
             </div>
 
             <div className={styles.line_mini} ></div>
             <div className={styles.column}>
                 <p>
-                    имеется
+                    Имеется
                 </p>
                 <p
                     className={styles.cartons_found}
                 >
-                    {tovar_warehouse_quantity}
+                    {props.tovar_task?.tovar_for_warehouse?.quantity}
                 </p>
             </div>
             {user_store.isAdmin
                 ?
                 <>
                     <Update_quantityTovarTask_popup
+                        warehouse_or_task="task"
                         task_id={props.task_id}
-                        tovar_task={tovar_task}
+                        tovar_task={props.tovar_task}
                         isOpenPopup={isOpen_update_quantity_popup}
                         callback_active_func={open_close_quantity_update_popup}
                     ></Update_quantityTovarTask_popup>
 
                     <Open_close_btn
-                        key={tovar_task.id}
+                        key={props.tovar_task.id}
                         callback_active_func={open_close_quantity_update_popup}
                     ></Open_close_btn>
 

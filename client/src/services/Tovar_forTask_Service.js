@@ -7,6 +7,11 @@ export default class Task_Service {
         
     }
 
+    static async add_tovar_forTask(taskData) {
+        return $api.post('/tovarsfortask/addfortask', taskData);
+        
+    }
+
     static async getone(id) {
         return $api.post('/tovarsfortask/getetone/', {id});
         

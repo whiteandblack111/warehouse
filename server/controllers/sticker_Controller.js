@@ -4,7 +4,7 @@ const Sticker_Service = require('../services/sticker_Service');
 const { createPath, uploadFile } = require('../services/Sticker_Uploader');
 
 class Sticker_Controller {
-    async create(req, res) {
+    async create(req, res, next) {
         try {
             console.log("req.body=========>", req.body)
 
@@ -14,13 +14,17 @@ class Sticker_Controller {
 
             console.log("fileName================>", fileName)
 
-            
+            const formData = {
+                img_path: filePath,
+                img_name: fileName,
+                barcode: req.body.barcode,
+                shop_name: req.body.shop_name,
+                tovarForWarehouseId: req.body.tovar_id,
+                warehouse_ID: req.body.warehouse_ID
+            }
+
             const sticker = await Sticker_Service.create(
-                filePath,
-                fileName,
-                req.body.barcode,
-                req.body.shop_name,
-                req.body.tovar_id
+                formData
             );
 
             return res.json(sticker)

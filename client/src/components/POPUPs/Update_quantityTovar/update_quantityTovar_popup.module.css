@@ -4,7 +4,7 @@
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    height: 308px;
+    height: 250px;
     background: rgb(114, 5, 105, 0.05);
     border: 2px solid #7c7c7c;
     border-radius: 20px;
@@ -56,7 +56,7 @@
 }
 
 .inputLabel {
-
+    text-align: center;
     font-weight: 600;
     font-size: 20px;
     color: transparent;
@@ -82,7 +82,7 @@
     padding: 5px;
     overflow: hidden;
     box-sizing: border-box;
-    height: 60px;
+    height: 40px;
     min-height: 40px;
     margin-bottom: 1px;
     border: 2px solid #7c7c7c;
@@ -183,7 +183,7 @@
 .btn_box_row{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 66%;
 }
 .color{

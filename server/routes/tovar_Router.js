@@ -8,6 +8,8 @@ router.post('/createtovarfortask', tovar_Controller.create_tovar_for_task);
 router.post('/updatequantitytovarfortask', tovar_Controller.update_quantity_tovar_for_task);
 
 router.get('/getall', tovar_Controller.getAll);
+router.post('/getone', tovar_Controller.getOne);
+router.post('/update', tovar_Controller.update);
 
 router.get('/:id', tovar_Controller.getOne);
 

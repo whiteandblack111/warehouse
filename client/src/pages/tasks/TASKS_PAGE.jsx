@@ -13,11 +13,12 @@ import Loader from './../../components/PAGE_COMPONENTS/Loader/Loader';
 const TASKS_PAGE = () => {
 
     const { task_store } = useContext(Context);
+    const { tovar_forTask_store } = useContext(Context);
 
 
     useEffect(() => {
         get_all_tasks();
-    }, [])
+    }, [task_store.task])
 
 
     async function get_all_tasks() {
@@ -30,7 +31,7 @@ const TASKS_PAGE = () => {
     }
 
 
-    if (task_store.isLoading) {
+    if (task_store.isLoading || tovar_forTask_store.isLoading) {
         return <Loader></Loader>
     }
 

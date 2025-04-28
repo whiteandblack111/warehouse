@@ -20,7 +20,7 @@ class tovar_Controller {
             const filePath = createPath();
             const fileName = uploadFile(filePath, tovar_photo);
             await PhotoService.create(filePath, fileName, tovar.id);
-        
+
 
             const dataTovar = await Tovar_Service.getOneFromWarehouseById(tovar.id);
             console.log("tovar>>>", tovar)
@@ -38,24 +38,30 @@ class tovar_Controller {
 
 
     async create_tovar_for_task(req, res, next) {
+        try {
+            const tovarList = req.body.tovarList
 
-        const tovarList = req.body.tovarList
+            const tovars = await Promise.all(tovarList.map(async (tovarData) => {
+                const formData = {
+                    // manufacturer_ID: tovarData.manufacturer_ID,
+                    warehouse_ID: tovarData.warehouse_ID,
+                    barcode: tovarData.barcode,
+                    name: tovarData.name,
+                    cartons_required: tovarData.cartons_required,
+                    taskNikitumId: req.body.taskId
+                }
 
-        const tovars = await Promise.all(tovarList.map(async (tovarData) => {
-            const formData = {
-                // manufacturer_ID: tovarData.manufacturer_ID,
-                warehouse_ID: tovarData.warehouse_ID,
-                barcode: tovarData.barcode,
-                name: tovarData.name,
-                cartons_required: tovarData.cartons_required,
-                taskNikitumId: req.body.taskId
-            }
+                await Tovar_Service.create_for_task(formData)
+                return tovarData
+            }));
 
-            await Tovar_Service.create_for_task(formData)
-            return tovarData
-        }));
+            return res.json(tovars)
 
-        return res.json(tovars)
+        } catch (error) {
+            next(ApiError.bad_Request(error.message));
+        }
+
+
     }
 
     async update_quantity_tovar_for_task(req, res, next) {
@@ -70,6 +76,17 @@ class tovar_Controller {
         return res.json(tovarData)
     }
 
+    async update(req, res, next) {
+        try {
+            console.log("updateupdateupdate==== ", req.body)
+            const tovarData = await Tovar_Service.update_quantity_tovar_for_warehouse(req.body)
+            return res.json(tovarData)
+        } catch (error) {
+            next(ApiError.bad_Request(error.message));
+        }
+
+    }
+
 
     async getAll(req, res) {
         const tovarData = await Tovar_Service.getAll()
@@ -79,7 +96,10 @@ class tovar_Controller {
 
 
     async getOne(req, res) {
-
+        console.log("req.body.id++++++ ========= ", req.body.id)
+        const tovarData = await Tovar_Service.getOneFromWarehouseById(req.body.id)
+        console.log(tovarData)
+        return res.json(tovarData)
     }
 }
 

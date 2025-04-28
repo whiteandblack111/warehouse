@@ -68,16 +68,21 @@ export default class Task_store {
             this.setIsCreate(true)
             const response = await Task_Service.create_task(taskData);
 
+
+
             const task = response.data
-            let mutate_allTasks = [ task, ...this.allTasks];
+
+            // console.log("task===============>  ", task);
+            // let mutate_allTasks = [ task, ...this.allTasks];
 
            
 
-            // mutate_allTasks.unshift(task);
+            // // mutate_allTasks.unshift(task);
+            // console.log("task=====================>>>> ", task)
+            // console.log("mutate_allTasks=====================>>>> ", mutate_allTasks)
 
-            console.log("task=====================>>>> ", task)
-            console.log("mutate_allTasks=====================>>>> ", mutate_allTasks)
-            this.setAllTasks(mutate_allTasks);
+
+            // this.setAllTasks(mutate_allTasks);
             // console.log("task====>", task)
             this.setTask(task);
             this.setIsCreate(false);
@@ -99,7 +104,7 @@ export default class Task_store {
 
             const tasks = response.data
 
-            console.log("tasks = response.data ===================================> ",tasks)
+            // console.log("tasks = response.data ===================================> ",tasks)
         
             await Help_Service.sortData_for_upDown(tasks.rows, "id")
 
@@ -117,6 +122,7 @@ export default class Task_store {
         try {
             const response = await Task_Service.get_one(task_id);
            
+            console.log("task_id::: ", response.data)
             const task = response.data
 
             // console.log("get_one===================================> ", task)

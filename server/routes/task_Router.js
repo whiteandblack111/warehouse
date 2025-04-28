@@ -6,7 +6,7 @@ const task_Controller = require('../controllers/task_Controller')
 
 router.post('/create', task_Controller.create);
 
-router.get('/getone', task_Controller.getOne);
+router.post('/getone', task_Controller.getOne);
 
 router.post('/setexecutor', task_Controller.set_executor);
 

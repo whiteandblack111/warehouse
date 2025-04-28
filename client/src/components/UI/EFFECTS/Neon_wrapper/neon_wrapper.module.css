@@ -1,0 +1,10 @@
+
+
+
+.neon_wrapper{
+    color: var(--light);
+    background: var(--background);
+    box-shadow: var(--m-shadow, .4rem .4rem 10.2rem .2rem) var(--shadow-1);
+    border-radius: .8rem;
+    z-index: 0;
+}

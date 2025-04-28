@@ -14,11 +14,6 @@ const APP_ROUTER = () => {
     const { user_store } = useContext(Context)
     const navigate = useNavigate()
 
-
-
-    // console.log("user_store.isAuth===>", user_store.isAuth)
-    // console.log("user_store.isAdmin===>", user_store.isAdmin)
-    // console.log("user_store.isWorker===>", user_store.isWorker)
     
    
     return (

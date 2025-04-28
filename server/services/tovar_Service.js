@@ -1,5 +1,5 @@
 
-const { Tovar_For_Warehouse, Photo_For_Tovar, Tovar_For_Task ,Sticker} = require('../models/models');
+const { Tovar_For_Warehouse, Photo_For_Tovar, Tovar_For_Task, Sticker } = require('../models/models');
 
 
 class Tovar_Service {
@@ -22,11 +22,25 @@ class Tovar_Service {
         return tovar
     }
 
+    async update_quantity_tovar_for_warehouse(formData) {
+        console.log("update_quantity_tovar_for_warehouse+++++++>>>>>>> ", formData)
+        const tovar = await Tovar_For_Warehouse.findOne(
+            { where: { id: formData.id } }
+        )
+        await tovar.update(
+            { quantity: formData.quantity }
+        )
+        await tovar.save();
+        return tovar
+
+       
+    }
 
 
     async getOneFromWarehouseById(id) {
+        console.log("getOneFromWarehouseById+++++++>>>>>>> ", id)
         const tovar = await Tovar_For_Warehouse.findOne({
-            where: id,
+            where: { id: id },
             include: [
                 { model: Photo_For_Tovar, as: 'photo_for_tovars' },
                 { model: Sticker, as: 'stickers' }
@@ -34,6 +48,7 @@ class Tovar_Service {
 
         })
 
+        console.log("tovar+++++++>>>>>>> ", tovar)
         return tovar
     }
 

@@ -2,11 +2,12 @@ import { makeAutoObservable } from "mobx";
 import Tovar_forTask_Service from "../services/Tovar_forTask_Service";
 import axios from "axios";
 import { API_URL } from "../http";
+import Help_Service from "../services/Help_Service";
 
 
-export default class Tovar_store {
+export default class Tovar_forTask_store {
 
-    _tovar = {};
+    _tovar_task = {};
     _isCreate = false;
     _isSearch = false;
     _allTovars = [];
@@ -31,14 +32,14 @@ export default class Tovar_store {
     get status() {
         return this._status;
     }
-    
-    setTovar(tovar) {
-        this._tovar = tovar;
+
+    setTovarTask(tovar_task) {
+        this._tovar_task = tovar_task;
     }
-    get tovar() {
-        return this._tovar;
+    get tovarTask() {
+        return this._tovar_task;
     }
-    
+
     setAllTovars(tovars) {
         this._allTovars = tovars;
     }
@@ -62,10 +63,37 @@ export default class Tovar_store {
 
     async update_tovar_forTask(formData) {
         try {
-            
+
+            console.log("formData====>", formData)
             this.setIsLoading(true);
             const response = await Tovar_forTask_Service.update_tovar_forTask(formData);
-            console.log("formData====>", formData )
+            const tovar = response.data;
+
+            if(tovar.id === formData.tovar_task_id){
+
+                this.setIsLoading(false);
+
+                return tovar
+
+               
+            }
+
+       
+           
+
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        } finally {
+            this.setIsLoading(false);
+        }
+    }
+
+    async add_tovar_forTask(formData) {
+        try {
+
+            this.setIsLoading(true);
+            const response = await Tovar_forTask_Service.add_tovar_forTask(formData);
+            console.log("formData====>", formData)
             const tovar = response.data
             this.setTovar(tovar);
             this.setIsLoading(false);
@@ -74,25 +102,28 @@ export default class Tovar_store {
 
         } catch (e) {
             console.log(e.response?.data?.message);
-        }finally{
+        } finally {
             this.setIsLoading(false);
         }
     }
 
     async getAll() {
         try {
+            this.setIsLoading(true);
             const response = await Tovar_forTask_Service.getAll();
-            
+
             const tovars = response.data
             // console.log("tovars====>", tovars )
-             this.setAllTovars(tovars);
+            this.setAllTovars(tovars);
 
 
 
+            this.setIsLoading(true);
         } catch (e) {
             console.log(e.response?.data?.message);
         } finally {
 
+            this.setIsLoading(true);
         }
     }
 

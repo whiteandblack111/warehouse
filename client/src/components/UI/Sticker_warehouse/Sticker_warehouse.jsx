@@ -9,7 +9,8 @@ const Sticker_warehouse = ({ sticker }) => {
     return(
         <div className={styles.barcode_box_item}>
           <div>{`${sticker.shop_name}`}</div>
-          <div>{`${sticker.barcode}`}</div>
+          <div>{`Шк: ${sticker.barcode}`}</div>
+          <div>{`Арт: ${sticker.warehouse_ID}`}</div>
           
         </div>
     )

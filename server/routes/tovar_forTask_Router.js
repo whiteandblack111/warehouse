@@ -5,6 +5,8 @@ const tovar_forTask_Controller = require('./../controllers/tovar_forTask_Control
 
 router.post('/update', tovar_forTask_Controller.update_tovar_forTask);
 
+router.post('/addfortask', tovar_forTask_Controller.add_tovar_forTask);
+
 router.get('/getallfortask', tovar_forTask_Controller.getAll_forTask);
 
 router.get('/getall', tovar_forTask_Controller.getAll);

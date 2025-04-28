@@ -10,11 +10,17 @@ import { observer } from 'mobx-react-lite';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Light_neon_input from '../../UI/INPUTS/Light_neon_input/Light_neon_input';
+import Popup_fon from '../../PAGE_COMPONENTS/Popup_fon/Popup_fon';
+import Neon_wrapper from '../../UI/EFFECTS/Neon_wrapper/Neon_wrapper';
+import Close_btn from '../../UI/BUTTONS/Close_btn/Close_btn';
+import Glaassmorphism_btn from '../../UI/BUTTONS/Glaassmorphism_btn/Glaassmorphism_btn';
+
 
 
 const CreateTask_form = () => {
     const { user_store } = useContext(Context);
-    console.log("user_store>>>> ", user_store.user)
+    // console.log("user_store>>>> ", user_store.user);
 
     const [task_name, setTask_name] = useState('');
     const [tovars_for_task, setTovars_from_task] = useState([]);
@@ -77,6 +83,7 @@ const CreateTask_form = () => {
             tovars_for_task: mutateTovar
         }
         console.log("dataTask====>", dataTask);
+
         await task_store.create_task(dataTask)
     }
 
@@ -87,82 +94,94 @@ const CreateTask_form = () => {
         }
     }
 
+    const close_createTask_form = () => {
+        task_store.setIsCreate(false)
+    }
 
     return (
-        <Form className={styles.container}>
-            <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
-                <Form.Label
-                    className={styles.inputLabel}
-                >Регистрация новой поставки в системе</Form.Label>
-                <Form.Control
-                    className={styles.input}
-                    key="task_name"
-                    type='text'
-                    placeholder="Введите название поставки"
-                    onChange={
-                        (e) => setTask_name(e.target.value)
-                    }
-                    value={task_name}
-                />
-            </Form.Group>
+        <Popup_fon>
+            <Neon_wrapper className={styles.Neon_wrapper}>
+                <Form className={styles.container}>
 
-            <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
+                    <Close_btn
+                        onClick={close_createTask_form}
+                    ></Close_btn>
 
-                {tovars_for_task.length === 0 ?
-                    <Form.Label
-                        htmlFor="file"
-                        className={`${styles.custom_file_inputLabelinput}`}
-                    >
+                    <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+                        <Form.Label
+                            className={styles.inputLabel}
+                        >Регистрация новой поставки в системе</Form.Label>
 
-                        Выберите файл с данными
+                        <Light_neon_input
+                            placeholder="Введите название поставки"
+                            name="task_name"
+                            key="task_name"
+                            type='text'
+                            onChange={setTask_name}
+                            value={task_name}
+                        ></Light_neon_input>
+                    </Form.Group>
 
-                    </Form.Label>
-                    :
-                    <Form.Label
-                        htmlFor="file"
-                        className={`${styles.custom_file_inputLabelinput} ${styles.isGoLoadingFile}`}
-                    >
+                    <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
 
-                        Файл подготовлен к загрузке
+                        {tovars_for_task.length === 0 ?
+                            <Form.Label
+                                htmlFor="file"
+                                className={`${styles.custom_file_inputLabelinput}`}
+                            >
 
-                    </Form.Label>
+                                Выберите файл с данными
 
-                }
-                <Form.Control
-                    className={`${styles.custom_file_input} ${styles.file}`}
-                    name='file'
-                    id="file"
-                    key="tovars_for_task"
-                    type='file'
-                    placeholder="Не менее 6 символов"
-                    onChange={(e) => handleFile(e)}
-                />
-            </Form.Group>
+                            </Form.Label>
+                            :
+                            <Form.Label
+                                htmlFor="file"
+                                className={`${styles.custom_file_inputLabelinput} ${styles.isGoLoadingFile}`}
+                            >
 
-            <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
-                <DropdownButton
+                                Файл подготовлен к загрузке
 
-                    onSelect={(eventKey) => handleSelect(eventKey)}
+                            </Form.Label>
 
-                    className="btn_glass"
-                    id="dropdown-basic-button"
-                    title={shop_name}
-                >
-                    <Dropdown.Item eventKey="PUGGY">PUGGY</Dropdown.Item>
-                    <Dropdown.Item eventKey="TODDY TOY">TODDY TOY</Dropdown.Item>
-                    <Dropdown.Item eventKey="WHOLLAJOY">WHOLLAJOY</Dropdown.Item>
-                </DropdownButton>
-            </Form.Group>
+                        }
+                        <Form.Control
+                            className={`${styles.custom_file_input} ${styles.file}`}
+                            name='file'
+                            id="file"
+                            key="tovars_for_task"
+                            type='file'
+                            placeholder="Не менее 6 символов"
+                            onChange={(e) => handleFile(e)}
+                        />
+                    </Form.Group>
 
-            <Form.Group className="mb-3">
-                <Button
-                    className={styles.autx_btn}
-                    onClick={() => create_task()}
-                    variant="outline-success">Создать
-                </Button>
-            </Form.Group>
-        </Form>
+                    <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
+                        <DropdownButton
 
+                            onSelect={(eventKey) => handleSelect(eventKey)}
+
+                            className="btn_glass"
+                            id="dropdown-basic-button"
+                            title={shop_name}
+                        >
+                            <Dropdown.Item eventKey="PUGGY">PUGGY</Dropdown.Item>
+                            <Dropdown.Item eventKey="TODDY TOY">TODDY TOY</Dropdown.Item>
+                            <Dropdown.Item eventKey="WHOLLAJOY">WHOLLAJOY</Dropdown.Item>
+                        </DropdownButton>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+
+                        <Glaassmorphism_btn
+                            onClick={() => create_task()}
+                        >Создать</Glaassmorphism_btn>
+                    </Form.Group>
+                </Form>
+            </Neon_wrapper>
+
+
+
+        </Popup_fon >
 
     );
 }

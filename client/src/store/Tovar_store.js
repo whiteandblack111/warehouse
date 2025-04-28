@@ -31,7 +31,7 @@ export default class Tovar_store {
     get tovar() {
         return this._tovar;
     }
-    
+
     setAllTovars(tovars) {
         this._allTovars = tovars;
     }
@@ -55,7 +55,7 @@ export default class Tovar_store {
 
     async create_tovar_warehouse(formData) {
         try {
-            
+
             const response = await Tovar_Service.create_tovar_warehouse(formData);
 
             const tovar = response.data
@@ -88,20 +88,76 @@ export default class Tovar_store {
         try {
             this.setIsLoading(true)
             const response = await Tovar_Service.getAll_tovars_warehouse();
-            
+
             const tovars = response.data
             console.log("tovars====>", tovars)
 
             await Help_Service.sortData_for_upDown(tovars, "id")
 
-             this.setAllTovars(tovars);
-             this.setIsCreate(false);
-             this.setIsLoading(false)
+            this.setAllTovars(tovars);
+            this.setIsCreate(false);
+            this.setIsLoading(false)
 
         } catch (e) {
             console.log(e.response?.data?.message);
         } finally {
 
+        }
+    }
+
+    async getOne_tovar_warehouse(id) {
+        try {
+            this.setIsLoading(true)
+            const response = await Tovar_Service.getOne_tovar_warehouse(id);
+
+            const tovar = response.data
+
+            await Help_Service.sortData_for_upDown(tovar, "id")
+
+            this.setAllTovars(tovar);
+            this.setIsCreate(false);
+            this.setIsLoading(false)
+
+            return tovar
+
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        } finally {
+            this.setIsLoading(false)
+        }
+    }
+
+    async update_tovar_warehouse(formData) {
+        try {
+            this.setIsLoading(true)
+
+            console.log("asdassaddsaasdadsdsadsa ", formData)
+            const response = await Tovar_Service.update_tovar_warehouse(formData);
+
+            const tovar = response.data
+            console.log("tovar.id ", typeof tovar.id)
+            console.log("formData.id ", typeof formData.id)
+            if(tovar.id === formData.id){
+                
+                const allTovars_mutate = this.allTovars.map((tovar_item) => {
+                    if(tovar.id === tovar_item.id){
+                        tovar_item.quantity = tovar.quantity
+                    }
+                    return tovar_item
+                })
+
+                this.setAllTovars(allTovars_mutate)
+            }
+
+
+            this.setIsLoading(false)
+
+            return tovar
+
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        } finally {
+            this.setIsLoading(false)
         }
     }
 

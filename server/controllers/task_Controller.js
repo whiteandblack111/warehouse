@@ -7,6 +7,7 @@ const Tovar_Service = require('./../services/tovar_Service');
 
 class Task_Controller {
     async create(req, res) {
+    
 
         const taskData = {
             task_name: req.body.task_name,
@@ -34,7 +35,7 @@ class Task_Controller {
             }
 
 
-           return await Tovar_For_Task.create(mutateTovar);
+            await Tovar_For_Task.create(mutateTovar);
         })
 
         
@@ -45,10 +46,12 @@ class Task_Controller {
 
 
     async getOne(req, res) {
+        console.log("req.bodyreq.body req.body===========>",req.body)
         const { id, task_number } = req.body;
+        
         let task;
         if (id) {
-            task = await Task_Service.getOne_byId(id);
+            task = await Task_Service.getOne(id);
         }
         if (task_number) {
             task = await Task_Service.getOne_byNumber(task_number);
@@ -56,9 +59,9 @@ class Task_Controller {
 
 
         //сортировать товары в таске по порядку следования id
-        const tovarSort = task.tovar_for_task_nikita;
+        const tovarSort = task.tovar_for_tasks;
         tovarSort.sort((a, b) => (+a.id) - (+b.id));
-        task.tovar_for_task_nikita = tovarSort
+        task.tovar_for_tasks = tovarSort
 
         return res.json(task)
     }

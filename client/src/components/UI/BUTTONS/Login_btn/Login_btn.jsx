@@ -4,7 +4,7 @@ import styles from "./login_btn.module.css"
 import { FaRegUser } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
 
-import { Context } from '../../../index';
+import { Context } from '../../../..';
 
 const Login_btn = (props) => {
 

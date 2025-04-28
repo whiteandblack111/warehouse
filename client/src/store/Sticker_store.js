@@ -8,11 +8,20 @@ export default class Sticker_store {
     _isCreate = false;
     _isSearch = false;
     _allStickers = [];
+    _isLoading = false;
 
 
     constructor() {
         makeAutoObservable(this);
     }
+
+    setIsLoading(bool) {
+        this._isLoading = bool;
+    }
+    get isLoading() {
+        return this._isLoading;
+    }
+
 
     setSticker(sticker) {
         this._sticker = sticker;
@@ -28,7 +37,7 @@ export default class Sticker_store {
         return this._allStickers;
     }
 
-    
+
     get isCreate() {
         return this._isCreate;
     }
@@ -45,11 +54,13 @@ export default class Sticker_store {
 
     async create(stickerData) {
         try {
-
+            this.setIsLoading(true)
             const response = await Sticker_Service.create(stickerData);
-
             const sticker = response.data
             this.setSticker(sticker);
+
+            this.setIsLoading(false)
+            return sticker
 
         } catch (e) {
             console.log(e.response?.data?.message);

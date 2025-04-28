@@ -15,7 +15,7 @@ class Tovar_forTask_Controller {
                 dataTovar = await Tovar_forTask_Service.update_quantity(req.body)
             }
             if (req.body.quantityBoxes) {
-                dataTovar = await Tovar_forTask_Service.update_box_number(req.body)
+                dataTovar = await Tovar_forTask_Service.update_boxesQuantity(req.body)
             }
 
             if (req.body.stopReason) {
@@ -28,6 +28,21 @@ class Tovar_forTask_Controller {
         } catch (error) {
             next(ApiError.bad_Request(error.message));
         }
+    }
+    
+
+    async add_tovar_forTask(req, res) {
+        try {
+            console.log("req.body>>>>> ", req.body)
+
+      
+
+            const tovarForTask = await Tovar_forTask_Service.create(req.body)
+            
+        } catch (error) {
+            next(ApiError.bad_Request(error.message));
+        }
+
     }
 
     async getAll_forTask(req, res) {

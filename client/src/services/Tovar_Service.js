@@ -12,5 +12,15 @@ export default class Tovar_Service {
         
     }
 
+    static async getOne_tovar_warehouse(id) {
+        return $api.post('/tovars/getone', {id});
+        
+    }
+
+    static async update_tovar_warehouse(formData) {
+        return $api.post('/tovars/update', formData);
+        
+    }
+    
 
 }

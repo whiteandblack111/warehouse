@@ -5,14 +5,19 @@ import { Context } from '../../index';
 import Tovar_warehouse from '../Tovar_warehouse/Tovar_warehouse';
 import Create_Stickers_form from '../FORMS/Stickers_form/Create_Stickers_form';
 import Loader from '../PAGE_COMPONENTS/Loader/Loader';
+import AddTovar_forTask_popup from '../POPUPs/AddTovar_forTask_popup/AddTovar_forTask_popup';
 
 const List_warehouse = () => {
-
+   
     const { sticker_store } = useContext(Context);
     const { tovar_store } = useContext(Context);
+    const { interface_store } = useContext(Context);
 
 
-    
+    const openClose_addTovar_forTask_popup = () => {
+        interface_store.setIsOpen_addTovar_forTask(true)
+    }
+
 
     return (
         <div>
@@ -35,6 +40,13 @@ const List_warehouse = () => {
 
                 <div className={`${styles.headingItem} ${styles.quantity}`}>Кол-во</div>
             </div>
+            {interface_store.isOpen_addTovar_forTask ?
+                <AddTovar_forTask_popup
+                ></AddTovar_forTask_popup>
+                :
+                <></>
+            }
+
             <div
                 className={styles.container}
             >

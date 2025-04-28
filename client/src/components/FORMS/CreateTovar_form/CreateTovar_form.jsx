@@ -5,6 +5,11 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { observer } from 'mobx-react-lite';
 
+import Popup_fon from '../../PAGE_COMPONENTS/Popup_fon/Popup_fon';
+import Neon_wrapper from '../../UI/EFFECTS/Neon_wrapper/Neon_wrapper';
+import Glaassmorphism_btn from '../../UI/BUTTONS/Glaassmorphism_btn/Glaassmorphism_btn';
+import Light_neon_input from '../../UI/INPUTS/Light_neon_input/Light_neon_input';
+import Close_btn from '../../UI/BUTTONS/Close_btn/Close_btn';
 
 
 const CreateTovar_form = () => {
@@ -38,7 +43,7 @@ const CreateTovar_form = () => {
         form_data.append("quantity", quantity);
 
         const tovar = await tovar_store.create_tovar_warehouse(form_data);
-        
+
         console.log("tovar_store.isCreate tovar===>", tovar_store.isCreate)
         console.log("tovar_store.isSearch tovar===>", tovar_store.isSearch)
         console.log("CreateTovar_form tovar===>", tovar)
@@ -85,10 +90,19 @@ const CreateTovar_form = () => {
         }
     }
 
+    const close_createTovar_form = () => {
+        tovar_store.setIsCreate(false)
+    }
+
     return (
-        <div>
-            <Form className={styles.container}>
-                <div>
+        <Popup_fon>
+            <Neon_wrapper className={styles.Neon_wrapper}>
+                <Form className={styles.container}>
+
+                    <Close_btn
+                    onClick={close_createTovar_form}
+                    ></Close_btn>
+
                     {/* ========== Изображение товара ============== */}
                     <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
 
@@ -127,86 +141,87 @@ const CreateTovar_form = () => {
                             onChange={(e) => handleFile(e)}
                         />
                     </Form.Group>
-                </div>
-
-
-                {/* ==========  name  ============== */}
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
-                    <Form.Label
-                        className={styles.inputLabel}
-                    >Название товара</Form.Label>
-                    <Form.Control
-                        as="textarea" rows={4}
-                        ref={input_name_ref}
-                        className={`${styles.input} ${styles.textarea}`}
-                        key="name"
-                        type="text"
-                        placeholder="Name"
-                        onChange={e => setName(e.target.value)}
-                        onKeyUp={handler_keyUp_input_name}
-                        value={name}
-                    />
-                </Form.Group>
-
-                {/* ==========  manufacturer_ID  ============== */}
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
-                    <Form.Label
-                        className={styles.inputLabel}
-                    >Производитель ID</Form.Label>
-                    <Form.Control
-                        ref={input_manufacturer_ID_ref}
-                        className={`${styles.input} ${styles.input_manufacturer_ID}`}
-                        key="manufacturer_ID"
-                        type="text"
-                        placeholder="Manufacturer_ID"
-                        onChange={e => setManufacturer_ID(e.target.value)}
-                        onKeyUp={handler_keyUp_manufacturer_ID}
-                        value={manufacturer_ID}
-                    />
-                </Form.Group>
-
-                {/* ==========  quantity  ============== */}
-                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`}>
-                    <Form.Label
-                        className={styles.inputLabel}
-                    >Количество товара</Form.Label>
-                    <Form.Control
-                        ref={input_quantity_ref}
-                        className={`${styles.input} ${styles.input_quantity}`}
-                        key="quantity"
-                        type="text"
-                        placeholder="Quantity"
-                        onChange={e => setQuantity(e.target.value)}
-                        onKeyUp={handler_keyUp_quantity}
-                        value={quantity}
-                    />
-                </Form.Group>
 
 
 
+                    {/* ==========  name  ============== */}
+                    <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+                        <Form.Label
+                            className={styles.inputLabel}
+                        >Название товара</Form.Label>
+                        <Form.Control
+                            as="textarea" rows={4}
+                            ref={input_name_ref}
+                            className={`${styles.input} ${styles.textarea}`}
+                            key="name"
+                            type="text"
+                            placeholder="Name"
+                            onChange={e => setName(e.target.value)}
+                            onKeyUp={handler_keyUp_input_name}
+                            value={name}
+                        />
+                    </Form.Group>
+
+                    {/* ==========  manufacturer_ID  ============== */}
+                    <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+                        <Light_neon_input
+                            ref={input_manufacturer_ID_ref}
+                            forKey="Производитель ID"
+                            type="text"
+                            placeholder="Manufacturer_ID"
+                            onChange={setManufacturer_ID}
+                            onKeyUp={handler_keyUp_manufacturer_ID}
+                            value={manufacturer_ID}
+                        ></Light_neon_input>
+                    </Form.Group>
+
+                    {/* ==========  quantity  ============== */}
+                    <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`}>
+                        <Light_neon_input
+                            ref={input_quantity_ref}
+                            forKey="quantity"
+                            type="text"
+                            placeholder="Количество товара"
+                            onChange={setQuantity}
+                            onKeyUp={handler_keyUp_quantity}
+                            value={quantity}
+                        ></Light_neon_input>
+                    </Form.Group>
 
 
-                {/* ==========  BUTTON  ============== */}
-                <Form.Group className="mb-3" >
+                    {/* ==========  BUTTON  ============== */}
+                    <Form.Group className="mb-3" >
 
-                    <Button
-                        ref={input_submit_ref}
-                        className={styles.submit_btn}
-                        onClick={() => {
-                            create_tovar_warehouse(
-                                tovar_photo,
-                                name,
-                                manufacturer_ID,
-                                quantity,
-                            )
-                        }}
-                        variant="outline-success">Создать
-                    </Button>
-                </Form.Group>
-            </Form>
+                        {/* <Button
+                            ref={input_submit_ref}
+                            className={styles.submit_btn}
+                            onClick={() => {
+                                create_tovar_warehouse(
+                                    tovar_photo,
+                                    name,
+                                    manufacturer_ID,
+                                    quantity,
+                                )
+                            }}
+                            variant="outline-success">Создать
+                        </Button> */}
 
-        </div>
+                        <Glaassmorphism_btn
+                            ref={input_submit_ref}
+                            onClick={() => {
+                                create_tovar_warehouse(
+                                    tovar_photo,
+                                    name,
+                                    manufacturer_ID,
+                                    quantity,
+                                )
+                            }}
+                        >Создать</Glaassmorphism_btn>
+                    </Form.Group>
+                </Form>
 
+            </Neon_wrapper>
+        </Popup_fon >
     );
 }
 

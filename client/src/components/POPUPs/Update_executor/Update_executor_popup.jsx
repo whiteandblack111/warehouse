@@ -38,17 +38,12 @@ const Update_executor_popup = ({ isOpen_update_executor_popup, setIsOpen_update_
 
 
     const handleSelect = (evt) => {
-    
-
         user_store.allWorkers.map((worker) => {
             if (worker.id == evt) {
                 setExecutor_name(worker.firstname);
                 setWorkerId(worker.id)
             }
         })
-        
-   
-
     }
 
     const update_executor = async () => {

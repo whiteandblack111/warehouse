@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 
 
 import BtwJS from 'btw-js';
@@ -13,20 +13,51 @@ import { observer } from 'mobx-react-lite';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Help_Service from '../../../services/Help_Service';
+import Light_neon_input from '../../UI/INPUTS/Light_neon_input/Light_neon_input';
+import Close_btn from '../../UI/BUTTONS/Close_btn/Close_btn';
 
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
+import { particle_options } from '../../../utils/particle_options';
 
 
 
 const Create_Stickers_form = () => {
+    const [init, setInit] = useState(false);
 
     const [barcode, setBarcode] = useState('');
     const [sticker_file, setSticker_file] = useState(null);
     const [translit_name, setTratslit_name] = useState('');
     const [shop_name, setShop_name] = useState('Установите магазин');
+    const [warehouse_ID, setWarehouse_ID] = useState('');
 
     // console.log("window.BtwJS=======>", BtwJS)
     const { tovar_store } = useContext(Context);
+    const { sticker_store } = useContext(Context);
 
+
+    useEffect(() => {
+        initParticlesEngine(async (engine) => {
+
+            await loadSlim(engine);
+        }).then(() => {
+            setInit(true);
+        });
+
+        return (
+            setInit(false)
+        )
+    }, [])
+
+    const particlesLoaded = (container) => {
+        // console.log(container);
+    };
+
+    const options = useMemo(
+        () =>
+            (particle_options),
+        [],
+    );
 
     useEffect(() => {
 
@@ -46,15 +77,12 @@ const Create_Stickers_form = () => {
         console.log(evt)
     }
 
+    const close_stickerForm = () => {
+        sticker_store.setIsCreate(false)
+    }
 
-    const { sticker_store } = useContext(Context);
-    const create_sticker = async (
-        barcode,
-        shop_name,
-        sticker_file,
-        tovar_id
 
-    ) => {
+    const create_sticker = async () => {
 
         let form_data = new FormData();
 
@@ -62,96 +90,138 @@ const Create_Stickers_form = () => {
         form_data.append("shop_name", shop_name);
         form_data.append("sticker_file", sticker_file);
         form_data.append("translit_name", translit_name);
-        form_data.append("tovar_id", tovar_id);
+        form_data.append("tovar_id", tovar_store.tovar.id);
+        form_data.append("warehouse_ID", warehouse_ID);
 
-        // console.log("sticker_file.name====>", sticker_file.name) 
 
-        await sticker_store.create(form_data)
 
+
+        console.log("barcode>>>> ", barcode)
+        console.log("shop_name>>>> ", shop_name)
+        console.log("tovar_store.tovar.id>>>> ", tovar_store.tovar.id)
+        console.log("warehouse_ID>>>> ", warehouse_ID)
+
+
+        const sticker = await sticker_store.create(form_data);
+
+        tovar_store.allTovars.map((tovar) => {
+
+            if (tovar.id === tovar_store.tovar.id) {
+
+                tovar.stickers.push(sticker)
+            }
+        })
+
+        sticker_store.setIsCreate(false)
     }
 
 
     return (
-        <Form className={styles.container}>
-            <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+
+        <div className={styles.modal_container} >
+            {
+                init ?
+                    <Particles
+                        id="tsparticles"
+                        particlesLoaded={particlesLoaded}
+                        options={options}
+                    />
+                    :
+                    <></>
+
+            }
+
+            <Form className={styles.container}>
+                <Close_btn
+                    onClick={close_stickerForm}
+                ></Close_btn>
                 <Form.Label
                     className={styles.inputLabel}
-                >Добавление штрихкода магазина</Form.Label>
-                <Form.Control
-                    className={styles.input}
-                    key="barcode"
-                    type='text'
-                    placeholder="Введите BARCOD"
-                    onChange={
-                        (e) => setBarcode(e.target.value)
+                >Добавление стикера магазина</Form.Label>
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+
+                    <Light_neon_input
+                        placeholder="Введите BARCOD"
+                        key="barcode"
+                        id="barcode"
+                        type='text'
+                        onChange={setBarcode}
+                        value={barcode}
+                    ></Light_neon_input>
+                </Form.Group>
+
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+
+                    <Light_neon_input
+                        placeholder="Артикул товара"
+                        key="warehouse_ID"
+                        id="warehouse_ID"
+                        type='text'
+                        onChange={setWarehouse_ID}
+                        value={warehouse_ID}
+                    ></Light_neon_input>
+                </Form.Group>
+
+
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
+
+                    {!sticker_file ?
+                        <Form.Label
+                            htmlFor="file"
+                            className={`${styles.custom_file_inputLabelinput}`}
+                        >
+
+                            Выберите файл штрихкода
+
+                        </Form.Label>
+                        :
+                        <Form.Label
+                            htmlFor="file"
+                            className={`${styles.custom_file_inputLabelinput} ${styles.isGoLoadingFile}`}
+                        >
+
+                            Файл подготовлен к загрузке
+
+                        </Form.Label>
+
                     }
-                    value={barcode}
-                />
-            </Form.Group>
+                    <Form.Control
+                        className={`${styles.custom_file_input} ${styles.file}`}
+                        name='file'
+                        id="file"
+                        key="tovars_for_task"
+                        type='file'
+                        placeholder="Файл штрихкода"
+                        onChange={(e) => handleFile(e)}
+                    />
 
-            <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
+                </Form.Group>
 
-                {!sticker_file ?
-                    <Form.Label
-                        htmlFor="file"
-                        className={`${styles.custom_file_inputLabelinput}`}
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
+                    <DropdownButton
+
+                        onSelect={(eventKey) => handleSelect(eventKey)}
+
+                        className="btn_glass"
+                        id="dropdown-basic-button"
+                        title={shop_name}
                     >
+                        <Dropdown.Item eventKey="PUGGY">PUGGY</Dropdown.Item>
+                        <Dropdown.Item eventKey="TODDY TOY">TODDY TOY</Dropdown.Item>
+                        <Dropdown.Item eventKey="WHOLLAJOY">WHOLLAJOY</Dropdown.Item>
+                    </DropdownButton>
+                </Form.Group>
 
-                        Выберите файл штрихкода
+                <Form.Group className="mb-3">
+                    <Button
+                        className={styles.autx_btn}
+                        onClick={() => create_sticker()}
+                        variant="outline-success">Создать
+                    </Button>
+                </Form.Group>
+            </Form>
 
-                    </Form.Label>
-                    :
-                    <Form.Label
-                        htmlFor="file"
-                        className={`${styles.custom_file_inputLabelinput} ${styles.isGoLoadingFile}`}
-                    >
-
-                        Файл подготовлен к загрузке
-
-                    </Form.Label>
-
-                }
-                <Form.Control
-                    className={`${styles.custom_file_input} ${styles.file}`}
-                    name='file'
-                    id="file"
-                    key="tovars_for_task"
-                    type='file'
-                    placeholder="Файл штрихкода"
-                    onChange={(e) => handleFile(e)}
-                />
-            </Form.Group>
-
-            <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
-                <DropdownButton
-
-                    onSelect={(eventKey) => handleSelect(eventKey)}
-
-                    className="btn_glass"
-                    id="dropdown-basic-button"
-                    title={shop_name}
-                >
-                    <Dropdown.Item eventKey="PUGGY">PUGGY</Dropdown.Item>
-                    <Dropdown.Item eventKey="TODDY TOY">TODDY TOY</Dropdown.Item>
-                    <Dropdown.Item eventKey="WHOLLAJOY">WHOLLAJOY</Dropdown.Item>
-                </DropdownButton>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-                <Button
-                    className={styles.autx_btn}
-                    onClick={() => create_sticker(
-                        barcode,
-                        shop_name,
-                        sticker_file,
-                        tovar_store.tovar.id
-                    )}
-                    variant="outline-success">Создать
-                </Button>
-            </Form.Group>
-        </Form>
-
-
+        </div>
     );
 }
 
