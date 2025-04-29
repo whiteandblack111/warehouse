@@ -28,6 +28,8 @@ body {
   --background: linear-gradient(to right, hsl(210, 30%, 20%), hsl(255, 30%, 25%));
   --shadow-1: hsla(236, 50%, 50%, .3);
   --shadow-2: hsla(236, 50%, 50%, .4);
+
+  /* background: #0c002b; */
 }
 
 html,
@@ -70,6 +72,10 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #52f6e2;
+}
+
+span::before, span::after{
+  content: none;
 }
 
 /* Стрелки */

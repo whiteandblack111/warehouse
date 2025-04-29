@@ -29,8 +29,8 @@
 
 .fiolet_border_btn:before,
 .fiolet_border_btn:after,
-span:before,
-span:after {
+.span:before,
+.span:after {
     content: '';
     position: absolute;
     width: 10px;

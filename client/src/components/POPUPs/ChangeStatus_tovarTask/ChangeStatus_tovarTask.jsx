@@ -154,7 +154,7 @@ const ChangeStatus_tovarTask = (props) => {
                 </Red_status_btn>
 
                 <Close_btn
-                    callback_func={() => { props.setIsOpen(false) }}
+                    onClick={() => { props.setIsOpen(false) }}
                 ></Close_btn>
             </div>
 
@@ -186,7 +186,7 @@ const ChangeStatus_tovarTask = (props) => {
                 >Указать</Fiolet_border_btn>
 
                 <Close_btn
-                    callback_func={() => { setIsOpen_green_blockBtns(false) }}
+                    onClick={() => { setIsOpen_green_blockBtns(false) }}
                 ></Close_btn>
 
             </div>
@@ -218,7 +218,7 @@ const ChangeStatus_tovarTask = (props) => {
                 >Отправить</Fiolet_border_btn>
 
                 <Close_btn
-                    callback_func={() => { setIsOpen_red_blockBtns(false) }}
+                    onClick={() => { setIsOpen_red_blockBtns(false) }}
                 ></Close_btn>
             </div>
 

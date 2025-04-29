@@ -93,7 +93,7 @@ const Cartons_required_box = (props) => {
 
                     <Open_close_btn
                         key={props.tovar_task.id}
-                        callback_active_func={open_close_quantity_update_popup}
+                        onClick={open_close_quantity_update_popup}
                     ></Open_close_btn>
 
                 </>

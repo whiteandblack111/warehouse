@@ -1,0 +1,108 @@
+.container_btn {
+    color: #1670f0;
+    
+    font-size: 30px;
+    padding: 10px 30px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    /* margin: 10px; */
+    position: relative;
+    margin: 20px;
+    overflow: hidden;
+
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(80px);
+    cursor: pointer;
+    font-family: MARSKE;
+    background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(180deg, #FFFFFF 21.75%, #1A3031 100%);
+
+    text-shadow: 0px 0px 2px rgba(228, 246, 26, 0.2);
+}
+
+.container_btn:before{
+    content:  "" ;
+    position: absolute;
+    top: 2x;
+    left: 2px;
+    bottom: 2px;
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+
+
+.container_btn .span:nth-child(1) {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #0c002b, #07e5ed);
+    animation: animate_1 3s linear infinite;
+}
+@keyframes animate_1
+{
+    0%{ transform:  translateX(-100%); }
+    100%{ transform:  translateX(100%); }
+}
+
+
+.container_btn .span:nth-child(2) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #0c002b, #0767ed);
+    animation: animate_2 3s linear infinite;
+    animation-delay: 1.5s;
+}
+@keyframes animate_2
+{
+    0%{ transform:  translateY(-100%); }
+    100%{ transform:  translateY(100%); }
+}
+
+
+
+.container_btn .span:nth-child(3) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to bottom, #0c002b, #0767ed);
+    animation: animate_3 3s linear infinite;
+}
+@keyframes animate_3
+{
+    0%{ transform:  translateX(100%); }
+    100%{ transform:  translateX(-100%); }
+}
+
+
+
+.container_btn .span:nth-child(4) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to top, #0c002b, #0748ed);
+    animation: animate_4 3s linear infinite;
+    animation-delay: 2.1s;
+}
+@keyframes animate_4
+{
+    0%{ transform:  translateY(100%); }
+    100%{ transform:  translateY(-100%); }
+}

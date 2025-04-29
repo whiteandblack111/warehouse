@@ -10,7 +10,7 @@ const Open_close_btn = (props) => {
     return (
 
         <div
-            onClick={(e) => { props.callback_active_func(true) }} className={styles.button}
+            onClick={(e) => { props.onClick(true) }} className={styles.button}
             
         ></div>
     )

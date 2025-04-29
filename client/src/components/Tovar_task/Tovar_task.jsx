@@ -118,7 +118,7 @@ const Tovar_task = ({ tovar_task, index }) => {
                         tovar_task.quantityBoxes == "0"
                             ? <BsFillBoxSeamFill />
                             :
-                            <div>
+                            <div className={styles.wrapper_number}>
                                 <BsFillBox2Fill />
                                 <div
                                     className={styles.number}

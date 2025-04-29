@@ -197,16 +197,21 @@
     color: rgb(64, 255, 47)
 }
 
+.wrapper_number{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .number {
     position: absolute;
-    top: 48%;
-    bottom: 52%;
-    left: 39%;
+    margin-top: 14px !important;
     margin: 0;
     padding: 0;
     font-size: 26px;
     font-weight: bold;
     /* font-family: VENUS, Arial, serif; */
+    font-family: MOSCOW, Arial, serif;
     color: #000000;
 }
 
