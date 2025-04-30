@@ -150,7 +150,7 @@ const Tovar_warehouse = ({ tovar }) => {
 
                         <Open_close_btn
                             key={tovar.id}
-                            callback_active_func={open_close_quantity_update_popup}
+                            onClick={open_close_quantity_update_popup}
                         ></Open_close_btn>
 
                     </>
