@@ -64,9 +64,18 @@ const Task_one = ({ task }) => {
 
     return (
 
-        <div className={styles.container}
+        <div className={styles.container}>
 
-        >
+            
+            <div className={styles.task_name_container}>
+
+                <div className={`${styles.headingItem} ${styles.task_name}`}>
+                    Название поставки
+                </div>
+                <div className={`${styles.headingItem_value} ${styles.task_name_value}`}>
+                    {task.task_name}
+                </div>
+            </div>
 
             <div className={styles.heading}
             >
@@ -135,7 +144,7 @@ const Task_one = ({ task }) => {
 
 
                         <Update_executor_popup
-                        
+
                             ref={executor_popup_ref}
                             task_id={task.id}
                             isOpen_update_executor_popup={isOpen_update_executor_popup}
@@ -189,15 +198,6 @@ const Task_one = ({ task }) => {
 
             <div className={styles.container_tasks}>
 
-                <div className={styles.task_name_container}>
-
-                    <div className={`${styles.headingItem} ${styles.task_name}`}>
-                        Название поставки
-                    </div>
-                    <div className={`${styles.headingItem_value} ${styles.task_name_value}`}>
-                        {task.task_name}
-                    </div>
-                </div>
                 {
                     task.tovar_for_tasks.map((tovar_task, index) => {
                         return <Tovar_task
