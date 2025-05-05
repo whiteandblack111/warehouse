@@ -1,18 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { observer } from 'mobx-react-lite';
-import { Routes, Route, Redirect, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { auth_routes, guest_routes } from "../../routes/routes";
-
 import { Context } from '../../index';
-
-import { TASKS_PATH } from '../../utils/routes_constants';
-
 
 
 const APP_ROUTER = () => {
 
     const { user_store } = useContext(Context)
-    const navigate = useNavigate()
 
     
    

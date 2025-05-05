@@ -1,9 +1,6 @@
+
 import { observer } from "mobx-react-lite"
-
 import styles from './yellow_status_btn.module.css'
-
-import { Children } from "react";
-
 
 const Yellow_status_btn = (props) => {
 

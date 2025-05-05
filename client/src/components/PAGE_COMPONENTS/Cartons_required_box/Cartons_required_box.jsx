@@ -2,8 +2,7 @@ import { observer } from "mobx-react-lite"
 import styles from './cartons_required_box.module.css';
 import Update_quantityTovarTask_popup from "../../POPUPs/Update_quantityTovar/Update_quantityTovar_popup";
 import Open_close_btn from "../../UI/BUTTONS/Open_close_btn/Open_close_btn";
-import { useEffect, useState } from "react";
-import User_controller from "../../../controllers/User_controller";
+import { useState } from "react";
 import { useContext } from "react";
 import { Context } from "../../../index";
 
@@ -13,15 +12,7 @@ import { Context } from "../../../index";
 
 const Cartons_required_box = (props) => {
 
-    const [tovar_task, setTovar_task] = useState({})
-
     const { user_store } = useContext(Context)
-    const { tovar_forTask_store } = useContext(Context)
-
-    useEffect(() => {
-    }, [])
-
-
 
 
     const [isOpen_update_quantity_popup, setIsOpen_update_quantity_popup] = useState(false);

@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { observer } from "mobx-react-lite"
 import styles from './sticker_warehouse.module.css'
-import { Context } from '../../../index';
-import { FaDownload } from "react-icons/fa";
 
 const Sticker_warehouse = ({ sticker }) => {
 

@@ -1,8 +1,5 @@
 import { makeAutoObservable } from "mobx";
 import Tovar_forTask_Service from "../services/Tovar_forTask_Service";
-import axios from "axios";
-import { API_URL } from "../http";
-import Help_Service from "../services/Help_Service";
 
 
 export default class Tovar_forTask_store {

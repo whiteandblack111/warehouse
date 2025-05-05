@@ -1,7 +1,5 @@
 import { makeAutoObservable } from "mobx";
 import Tovar_Service from "../services/Tovar_Service";
-import axios from "axios";
-import { API_URL } from "../http";
 import Help_Service from "../services/Help_Service";
 
 

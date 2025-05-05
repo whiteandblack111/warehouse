@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styles from "./header_btn.module.css"
 import { Context } from './../../../../index';
 import { observer } from 'mobx-react-lite';
@@ -18,7 +18,6 @@ const Header_btn = (props) => {
     const { order_store } = useContext(Context);
 
     let location = useLocation();
-    let navigate = useNavigate();
 
     useEffect(() => {
 

@@ -5,7 +5,6 @@ import { Context } from '../../index';
 import { observer } from 'mobx-react-lite';
 import Update_executor_popup from '../POPUPs/Update_executor/Update_executor_popup';
 import Tovar_task from '../Tovar_task/Tovar_task';
-import Snake_border_btn from '../UI/BUTTONS/Snake_border_btn/Snake_border_btn';
 
 
 
@@ -15,14 +14,8 @@ const Task_one = ({ task }) => {
     const [executor, setExecutor] = useState("")
     const [isOpen_update_executor_popup, setIsOpen_update_executor_popup] = useState(false)
 
-
-
-    const { sticker_store } = useContext(Context);
-    const { task_store } = useContext(Context);
-    const { tovar_forTask_store } = useContext(Context);
     const { user_store } = useContext(Context);
     const { interface_store } = useContext(Context);
-
 
     const executor_ref = useRef(null);
     const executor_popup_ref = useRef(null);

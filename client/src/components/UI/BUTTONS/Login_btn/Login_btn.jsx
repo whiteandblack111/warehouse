@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from "react-router-dom";
 import styles from "./login_btn.module.css"
 import { FaRegUser } from "react-icons/fa";

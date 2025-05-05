@@ -1,11 +1,9 @@
 import { observer } from "mobx-react-lite"
-import React, { useContext, useState, useEffect, useRef } from 'react';
-
+import React, { useContext, useState, useEffect } from 'react';
 // import styles from './сhangeStatus_tovarTask.module.css'
 import styles_desctop from './сhangeStatus_tovarTask.module.css';
 import styles_mobile from './сhangeStatus_tovarTask.module.css';
 import Green_status_btn from "../../UI/BUTTONS/Green_status_btn/Green_status_btn"
-import Yellow_status_btn from "../../UI/BUTTONS/Yellow_status_btn/Yellow_status_btn"
 import Red_status_btn from "../../UI/BUTTONS/Red_status_btn/Red_status_btn"
 import { Context } from "../../.."
 
@@ -20,7 +18,6 @@ import Close_btn from "../../UI/BUTTONS/Close_btn/Close_btn"
 
 const ChangeStatus_tovarTask = (props) => {
     const [styles, setStyles] = useState('');
-    const [tovarStatus, setTovarStatus] = useState("default");
     const [isOpen_green_blockBtns, setIsOpen_green_blockBtns] = useState(false);
     const [isOpen_red_blockBtns, setIsOpen_red_blockBtns] = useState(false);
 

@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Context } from './index';
 import { observer } from 'mobx-react-lite';
-import User_Service from './services/User_Service';
 import APP_ROUTER from './components/appRouter/APP_ROUTER';
 
 

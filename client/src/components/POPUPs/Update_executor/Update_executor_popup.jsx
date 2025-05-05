@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite"
 import styles from './update_executor_popup.module.css'
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Fiolet_border_btn from "../../UI/BUTTONS/Fiolet_border_btn/Fiolet_border_btn";

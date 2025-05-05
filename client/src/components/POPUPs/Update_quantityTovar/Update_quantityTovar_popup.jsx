@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { observer } from "mobx-react-lite"
 import styles from './update_quantityTovar_popup.module.css'
 import Plus_btn from "../../UI/BUTTONS/Plus_btn/Plus_btn"
@@ -7,11 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Fiolet_border_btn from '../../UI/BUTTONS/Fiolet_border_btn/Fiolet_border_btn';
 import { Context } from '../../..';
-
-
-
-
-
 
 
 const Update_quantityTovar_popup = (props) => {

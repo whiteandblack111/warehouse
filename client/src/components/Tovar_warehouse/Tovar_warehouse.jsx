@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { observer } from "mobx-react-lite"
 import styles from './tovar_warehouse.module.css'
 import { Context } from '../../index';
 import { FaDownload } from "react-icons/fa";
 import Sticker_warehouse from '../UI/Sticker_warehouse/Sticker_warehouse';
 import Glaassmorphism_btn from '../UI/BUTTONS/Glaassmorphism_btn/Glaassmorphism_btn';
-import Plus_btn from '../UI/BUTTONS/Plus_btn/Plus_btn';
-import Minus_btn from '../UI/BUTTONS/Minus_btn/Minus_btn';
 import Open_close_btn from '../UI/BUTTONS/Open_close_btn/Open_close_btn';
 import Update_quantityTovar_popup from '../POPUPs/Update_quantityTovar/Update_quantityTovar_popup';
 

@@ -1,4 +1,4 @@
-const { default: User_Service } = require('../../client/src/services/User_Service');
+const { User_Service } = require('../../client/src/services/User_Service');
 const ApiError = require('../error/ApiError');
 const { User, Tovar_For_Task } = require('../models/models');
 const sticker_Service = require('../services/sticker_Service');

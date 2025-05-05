@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Context } from '../../index';
+
+import React, { useState } from 'react';
 
 import { observer } from "mobx-react-lite"
 import styles from "./tovar_task.module.css"
@@ -15,11 +15,6 @@ import { BsFillBox2Fill } from "react-icons/bs";
 const Tovar_task = ({ tovar_task, index }) => {
 
     const [isOpen_сhangeStatus_tovarTask_popup, setIsOpen_сhangeStatus_tovarTask_popup] = useState(false);
-
-
-    const { sticker_store } = useContext(Context);
-    const { task_store } = useContext(Context);
-    const { tovar_forTask_store } = useContext(Context);
 
     const сhangeStatus_tovarTask_OPENpopup = () => {
 

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styles from './header.module.css'
 import Header_btn from "./../../../components/UI/BUTTONS/Header_btn/Header_btn"
 
@@ -11,10 +11,8 @@ import { Context } from './../../../index';
 
 const Header = () => {
 
-    const [currentRout, setCurrentRout] = useState('')
 
     let location = useLocation();
-    let navigate = useNavigate();
 
     const { pathname } = location;
     const splitLocation = pathname.split("/");

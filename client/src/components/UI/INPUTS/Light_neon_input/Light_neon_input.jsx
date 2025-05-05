@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite"
-import { useEffect, useState } from "react";
 import styles_typeText from "./light_neon_input_typeText.module.css"
 import styles_typeFile from "./light_neon_input_typeFile.module.css"
 

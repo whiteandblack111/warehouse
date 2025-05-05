@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext} from 'react';
 import { observer } from "mobx-react-lite"
 import styles from './list_warehouse.module.css'
 import { Context } from '../../index';
 import Tovar_warehouse from '../Tovar_warehouse/Tovar_warehouse';
 import Create_Stickers_form from '../FORMS/Stickers_form/Create_Stickers_form';
-import Loader from '../PAGE_COMPONENTS/Loader/Loader';
 import AddTovar_forTask_popup from '../POPUPs/AddTovar_forTask_popup/AddTovar_forTask_popup';
 
 const List_warehouse = () => {
