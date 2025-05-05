@@ -1,6 +1,23 @@
 import axios from "axios";
 
-export const API_URL = 'http://localhost:7000/api'
+
+export let API_URL;
+if (typeof window !== 'undefined') {
+    let currentUrl = window.location.href.split(':')[1];
+    currentUrl = currentUrl.split('//')[1];
+
+    if (currentUrl === "localhost") {
+        API_URL = process.env.API_URL
+    }
+
+    if (currentUrl === "87.228.82.237") {
+        API_URL = process.env.API_URL_DEPLOY
+    }
+    console.log(currentUrl)
+}
+
+
+
 
 const $api = axios.create({
     withCredentials: true,
