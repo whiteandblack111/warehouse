@@ -5,6 +5,8 @@ export let API_URL;
 if (typeof window !== 'undefined') {
     console.log("typeof window:::",typeof window);
     console.log(" window:::", window);
+    console.log(" process.env.API_URL:::", process.env.API_URL);
+    console.log(" process.env.API_URL_DEPLOY:::", process.env.API_URL_DEPLOY);
     let currentUrl = window.location.href.split(':')[1] ;
     currentUrl = currentUrl.split('//')[1] ;
     
