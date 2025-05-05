@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(cors(
     {
         credentials: true,
-        origin: [process.env.CLIENT_URL, process.env.СLIENT_URL_DEPLOY]
+        origin: ["http://localhost", "http://87.228.81.138"]
     }
 ));
 app.use(express.json());
