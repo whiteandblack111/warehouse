@@ -1,4 +1,5 @@
 import $api from "../http";
+// тут какая то проблема
 
 export default class Sticker_Service {
 
