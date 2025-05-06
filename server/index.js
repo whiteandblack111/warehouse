@@ -29,7 +29,7 @@ app.use(fileUpload({}))
 app.use('/api', router);
 
 
-// вроде норм
+
 // обработчик ошибок(errorHandler регистрируется последним в списке app.use)
 app.use(errorHandler)
 
