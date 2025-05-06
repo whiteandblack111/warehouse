@@ -1,6 +1,7 @@
 import axios from "axios";
 
-// export const API_URL = 'http://localhost:7000/api'
+export const LOCAL_URL = 'http://localhost:7000/api'
+export const DEPLOY_URL = 'http://localhost:7000/api'
 
 // export const API_URL = `${process.env.API_URL}/api`
 
@@ -15,13 +16,13 @@ if (typeof window !== 'undefined') {
     currentUrl = currentUrl.split('//')[1] ;
     
     if(currentUrl === "localhost"){
-        API_URL = `${process.env.API_URL}/api`
-        console.log(" process.env.API_URL:::", process.env.API_URL);
+        API_URL = LOCAL_URL
+        console.log("LOCAL_URL:::", API_URL);
     }
     
     if(currentUrl === "87.228.81.138/"){
-        API_URL = `${process.env.API_URL_DEPLOY}api`
-        console.log(" process.env.API_URL_DEPLOY:::", process.env.API_URL_DEPLOY);
+        API_URL = DEPLOY_URL
+        console.log("DEPLOY_URL:::", API_URL);
     }
     console.log(currentUrl)
    
