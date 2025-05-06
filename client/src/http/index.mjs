@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const LOCAL_URL = 'http://localhost:7000/api'
-export const DEPLOY_URL = 'http://localhost:7000/api'
+export const DEPLOY_URL = 'http://87.228.81.138/api'
 
 // export const API_URL = `${process.env.API_URL}/api`
 
