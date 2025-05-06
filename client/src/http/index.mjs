@@ -19,8 +19,8 @@ if (typeof window !== 'undefined') {
         console.log(" process.env.API_URL:::", process.env.API_URL);
     }
     
-    if(currentUrl === "87.228.81.138"){
-        API_URL = `${process.env.API_URL_DEPLOY}/api`
+    if(currentUrl === "87.228.81.138/"){
+        API_URL = `${process.env.API_URL_DEPLOY}api`
         console.log(" process.env.API_URL_DEPLOY:::", process.env.API_URL_DEPLOY);
     }
     console.log(currentUrl)
