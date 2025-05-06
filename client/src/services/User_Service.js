@@ -1,4 +1,4 @@
-import $api from "../http/index.js";
+import $api from "../http/index.mjs";
 
 // import { IUser } from "../models/response/IUser";
 
