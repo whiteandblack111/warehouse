@@ -41,7 +41,7 @@ const Tovar_warehouse = ({ tovar }) => {
 
             if (currentUrl !== 'localhost') {
                 setCurrent_URL(`${http}://${currentUrl}/files/`)
-                build_url = `${http}://${currentUrl}/files`
+                build_url = `${http}://${currentUrl}/files/`
             }
 
             setCurrent_URL(build_url)
