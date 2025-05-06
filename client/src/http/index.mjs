@@ -15,12 +15,12 @@ if (typeof window !== 'undefined') {
     currentUrl = currentUrl.split('//')[1] ;
     
     if(currentUrl === "localhost"){
-        API_URL = process.env.API_URL
+        API_URL = `${process.env.API_URL}/api`
         console.log(" process.env.API_URL:::", process.env.API_URL);
     }
     
     if(currentUrl === "87.228.81.138"){
-        API_URL = process.env.API_URL_DEPLOY
+        API_URL = `${process.env.API_URL_DEPLOY}/api`
         console.log(" process.env.API_URL_DEPLOY:::", process.env.API_URL_DEPLOY);
     }
     console.log(currentUrl)
