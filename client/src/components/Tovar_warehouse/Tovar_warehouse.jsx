@@ -92,7 +92,7 @@ const Tovar_warehouse = ({ tovar }) => {
             <div className={styles.line} ></div>
 
             <div className={`${styles.item} ${styles.itemFoto}`}>
-                {current_URL
+                {current_URL && tovar.photo_for_tovars[0]?.img_name
                     ?
                     <img
                         className={styles.photo_for_tovars}

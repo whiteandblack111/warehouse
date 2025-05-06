@@ -13,7 +13,7 @@ const createPath = () => {
     const filePath = path.join(
         __dirname,
         '..',
-        'static',
+        'files',
         
     );
    
@@ -28,9 +28,11 @@ const createPath = () => {
 };
 
 const uploadFile = (filePath, file) => {
-    
+    const file_extension = file.name.split('.')[1]
 
-    let fileName = uuid.v4() + '.jpg';
+    const generate_name = uuid.v4()
+
+    let fileName = `${generate_name}.${file_extension}`;
     file.mv(path.resolve(filePath, fileName));
 
     return fileName
