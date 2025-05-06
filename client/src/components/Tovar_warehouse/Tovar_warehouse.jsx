@@ -11,10 +11,44 @@ import Open_close_btn from '../UI/BUTTONS/Open_close_btn/Open_close_btn';
 import Update_quantityTovar_popup from '../POPUPs/Update_quantityTovar/Update_quantityTovar_popup';
 
 const Tovar_warehouse = ({ tovar }) => {
+    const [current_URL, setCurrent_URL] = useState('')
 
     const { sticker_store } = useContext(Context);
     const { tovar_store } = useContext(Context);
     const { user_store } = useContext(Context)
+
+    useEffect(() => {
+        get_current_host_url()
+    }, [])
+
+    const get_current_host_url = () => {
+
+
+        if (typeof window !== 'undefined') {
+            console.log("typeof window:::", typeof window);
+            console.log(" window:::", window);
+
+            let currentUrl = window.location.href.split(':')[1];
+            let http = window.location.href.split(':')[0];
+            currentUrl = currentUrl.split('//')[1];
+            currentUrl = currentUrl.split('/')[0];
+
+            let build_url;
+            if (currentUrl === 'localhost') {
+                setCurrent_URL(`${http}://localhost:7000/`)
+                build_url = `${http}://localhost:7000/`
+            }
+
+            if (currentUrl !== 'localhost') {
+                setCurrent_URL(`${http}://${currentUrl}/files/`)
+                build_url = `${http}://${currentUrl}/files`
+            }
+
+            setCurrent_URL(build_url)
+        
+            return build_url
+        }
+    }
 
     const open_close_create_sticker = () => {
         if (sticker_store.isCreate) {
@@ -48,6 +82,8 @@ const Tovar_warehouse = ({ tovar }) => {
     }
 
 
+
+
     return (
         <div className={styles.container}>
             <div className={styles.fon}></div>
@@ -56,11 +92,18 @@ const Tovar_warehouse = ({ tovar }) => {
             <div className={styles.line} ></div>
 
             <div className={`${styles.item} ${styles.itemFoto}`}>
-                <img
-                    className={styles.photo_for_tovars}
-                    src={`http://localhost:7000/${tovar.photo_for_tovars[0].img_name}`}
-                    alt="Фото товара"
-                />
+                {current_URL
+                    ?
+                    <img
+                        className={styles.photo_for_tovars}
+                        src={`${current_URL}${tovar.photo_for_tovars[0].img_name}`}
+                        alt="Фото товара"
+                    />
+                    :
+                    <></>
+
+                }
+
             </div>
             <div className={styles.line} ></div>
 

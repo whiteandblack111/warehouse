@@ -1,34 +1,39 @@
-user root;
-worker_processes 1;
+server {
 
-events {
-}
+    listen 80;
+    # listen [::]:80;
 
-http {
-    server {
+    #        server_name 87.228.81.138;
+    access_log /var/log/nginx/warehouse.access.log;
+    error_log /var/log/nginx/warehouse.error_log warn;
 
-        listen 80;
-        # listen [::]:80;
-
-        server_name 87.228.81.138;
-
-        location / {
-            proxy_pass http://localhost:3000;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection 'upgrade';
-            proxy_set_header Host $host;
-            proxy_cache_bypass $http_upgrade;
-        }
-
-        location /api {
-            proxy_pass http://localhost:7000/;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection 'upgrade';
-            proxy_set_header Host $host;
-            proxy_cache_bypass $http_upgrade;
-
-        }
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
     }
+
+    location /api {
+        proxy_pass http://localhost:7000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+
+    }
+
+    location /public/ {
+        alias /home/ztavruz/projects/warehouse/client/public;
+        autoindex off;
+    }
+
+    location /files/ {
+        alias /home/ztavruz/projects/warehouse/server/static;
+        autoindex off;
+    }
+
 }
