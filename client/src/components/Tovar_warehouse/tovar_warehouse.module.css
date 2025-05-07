@@ -52,6 +52,21 @@
     align-items: center;
     
 }
+.tovar_number_flexBox{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding:  20px 0;
+
+}
+.tovar_number{
+    font-family: MOSCOW, Arial, serif;
+    font-size: 40px;
+}
 .name {
     width: 100%;
     font-size: 22px;

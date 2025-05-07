@@ -7,7 +7,11 @@ const Red_status_btn = (props) => {
 
     return (
         <div>
-            <div onClick={()=>{props.btn_function()}} className={styles.button4} >
+            <div 
+            onClick={()=>{props.onClick()}} 
+            className={styles.button4} 
+            style={props.style}
+            >
                
                 {props.children}
             </div>

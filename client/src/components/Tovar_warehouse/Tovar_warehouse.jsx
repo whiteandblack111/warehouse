@@ -5,10 +5,10 @@ import { Context } from '../../index';
 import { FaDownload } from "react-icons/fa";
 import Sticker_warehouse from '../UI/Sticker_warehouse/Sticker_warehouse';
 import Glaassmorphism_btn from '../UI/BUTTONS/Glaassmorphism_btn/Glaassmorphism_btn';
-import Plus_btn from '../UI/BUTTONS/Plus_btn/Plus_btn';
-import Minus_btn from '../UI/BUTTONS/Minus_btn/Minus_btn';
 import Open_close_btn from '../UI/BUTTONS/Open_close_btn/Open_close_btn';
 import Update_quantityTovar_popup from '../POPUPs/Update_quantityTovar/Update_quantityTovar_popup';
+import Red_status_btn from '../UI/BUTTONS/Red_status_btn/Red_status_btn';
+import { MdDeleteForever } from "react-icons/md";
 
 const Tovar_warehouse = ({ tovar }) => {
     const [current_URL, setCurrent_URL] = useState('')
@@ -45,7 +45,7 @@ const Tovar_warehouse = ({ tovar }) => {
             }
 
             setCurrent_URL(build_url)
-        
+
             return build_url
         }
     }
@@ -88,7 +88,24 @@ const Tovar_warehouse = ({ tovar }) => {
         <div className={styles.container}>
             <div className={styles.fon}></div>
 
-            <div className={`${styles.item} ${styles.id} ${styles.clip_text}`}>{tovar.id}</div>
+            <div className={`${styles.item} ${styles.id} ${styles.clip_text}`}>
+                <div className={styles.tovar_number_flexBox}>
+
+                    <div className={styles.tovar_number}>
+                        {tovar.id}
+                    </div>
+
+
+                    <Red_status_btn
+                        style={{width: "80px", height: "50px"}}
+                        
+                    >
+                        <MdDeleteForever />
+                    </Red_status_btn>
+                </div>
+
+
+            </div>
             <div className={styles.line} ></div>
 
             <div className={`${styles.item} ${styles.itemFoto}`}>
