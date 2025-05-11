@@ -22,5 +22,8 @@ export default class Tovar_Service {
         
     }
     
+    static async delete_tovar_warehouse(id){
+        return $api.post('/tovars/delete', {id});
+    }
 
 }

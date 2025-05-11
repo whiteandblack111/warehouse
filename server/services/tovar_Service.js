@@ -81,6 +81,14 @@ class Tovar_Service {
         return tovars
     }
 
+    async delete_tovar_warehouse(id){
+        const result = await Tovar_For_Warehouse.destroy({
+            where:{id:id}
+        })
+
+        return result
+    }
+
 }
 
 module.exports = new Tovar_Service()

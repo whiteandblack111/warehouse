@@ -13,13 +13,46 @@ import { BsFillBox2Fill } from "react-icons/bs";
 
 
 const Tovar_task = ({ tovar_task, index }) => {
-
+    const [current_URL, setCurrent_URL] = useState('');
     const [isOpen_сhangeStatus_tovarTask_popup, setIsOpen_сhangeStatus_tovarTask_popup] = useState(false);
 
 
     const { sticker_store } = useContext(Context);
     const { task_store } = useContext(Context);
     const { tovar_forTask_store } = useContext(Context);
+
+    useEffect(() => {
+        get_current_host_url()
+        console.log(tovar_task)
+
+    }, [])
+
+    const get_current_host_url = () => {
+
+
+        if (typeof window !== 'undefined') {
+
+            let currentUrl = window.location.href.split(':')[1];
+            let http = window.location.href.split(':')[0];
+            currentUrl = currentUrl.split('//')[1];
+            currentUrl = currentUrl.split('/')[0];
+
+            let build_url;
+            if (currentUrl === 'localhost') {
+                setCurrent_URL(`${http}://localhost:7000/`)
+                build_url = `${http}://localhost:7000/`
+            }
+
+            if (currentUrl !== 'localhost') {
+                setCurrent_URL(`${http}://${currentUrl}/files/`)
+                build_url = `${http}://${currentUrl}/files/`
+            }
+
+            setCurrent_URL(build_url)
+
+            return build_url
+        }
+    }
 
     const сhangeStatus_tovarTask_OPENpopup = () => {
 
@@ -50,13 +83,17 @@ const Tovar_task = ({ tovar_task, index }) => {
 
             <div className={`${styles.item} ${styles.itemFoto}`}>
 
+                {current_URL && tovar_task.tovar_for_warehouse?.photo_for_tovars[0]?.img_name
+                    ?
+                    <img
+                        className={styles.photo_for_tovars}
+                        src={`${current_URL}${tovar_task.tovar_for_warehouse.photo_for_tovars[0].img_name}`}
+                        alt="Фото товара"
+                    />
+                    :
+                    <></>
 
-                <img
-                    className={styles.photo_for_tovars}
-                    src={`http://localhost:7000/${tovar_task.tovar_for_warehouse.photo_for_tovars[0].img_name}`}
-                    alt="Фото товара"
-                />
-
+                }
             </div>
             <div className={styles.line} ></div>
 

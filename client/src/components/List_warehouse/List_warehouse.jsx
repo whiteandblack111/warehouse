@@ -8,7 +8,7 @@ import Loader from '../PAGE_COMPONENTS/Loader/Loader';
 import AddTovar_forTask_popup from '../POPUPs/AddTovar_forTask_popup/AddTovar_forTask_popup';
 
 const List_warehouse = () => {
-   
+
     const { sticker_store } = useContext(Context);
     const { tovar_store } = useContext(Context);
     const { interface_store } = useContext(Context);
@@ -18,6 +18,8 @@ const List_warehouse = () => {
         interface_store.setIsOpen_addTovar_forTask(true)
     }
 
+
+    
 
     return (
         <div>
@@ -58,10 +60,15 @@ const List_warehouse = () => {
 
                 {
                     tovar_store._allTovars.map((tovar) => {
-                        return <Tovar_warehouse
-                            key={tovar.id}
-                            tovar={tovar}
-                        ></Tovar_warehouse>
+                        return (tovar.id
+                            ?
+                            <Tovar_warehouse
+                                key={tovar.id}
+                                tovar={tovar}
+                            ></Tovar_warehouse>
+                            :
+                            <div>Товар удалён из базы</div>
+                        )
                     })
 
                 }

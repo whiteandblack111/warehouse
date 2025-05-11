@@ -12,11 +12,21 @@ export default class Tovar_store {
     _isSearch = false;
     _allTovars = [];
     _isLoading = false;
+    _response_message = "";
 
 
     constructor() {
         makeAutoObservable(this);
     }
+
+    setResponse_message(text) {
+        this._response_message = text;
+    }
+
+    get response_message() {
+        return this._response_message;
+    }
+
     setIsLoading(bool) {
         this._isLoading = bool;
     }
@@ -137,10 +147,10 @@ export default class Tovar_store {
             const tovar = response.data
             console.log("tovar.id ", typeof tovar.id)
             console.log("formData.id ", typeof formData.id)
-            if(tovar.id === formData.id){
-                
+            if (tovar.id === formData.id) {
+
                 const allTovars_mutate = this.allTovars.map((tovar_item) => {
-                    if(tovar.id === tovar_item.id){
+                    if (tovar.id === tovar_item.id) {
                         tovar_item.quantity = tovar.quantity
                     }
                     return tovar_item
@@ -156,6 +166,29 @@ export default class Tovar_store {
 
         } catch (e) {
             console.log(e.response?.data?.message);
+        } finally {
+            this.setIsLoading(false)
+        }
+    }
+
+    async delete_tovar_warehouse(id) {
+        try {
+
+            this.setIsLoading(true)
+            const response = await Tovar_Service.delete_tovar_warehouse(id)
+
+            if (response.status && response.status === 200) {
+          
+                this.setAllTovars(this.allTovars.filter(t=>t.id !== id))
+
+                this.setIsLoading(false)
+                this.setResponse_message = "Товар удалён из базы данных!"
+            }
+
+            return this.response_message
+            
+        } catch (error) {
+            console.log(error.response?.data?.message);
         } finally {
             this.setIsLoading(false)
         }

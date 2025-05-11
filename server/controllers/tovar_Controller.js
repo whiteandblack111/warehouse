@@ -101,6 +101,11 @@ class tovar_Controller {
         console.log(tovarData)
         return res.json(tovarData)
     }
+
+    async delete_tovar_warehouse(req, res){
+        const result = await Tovar_Service.delete_tovar_warehouse(req.body.id);
+        return res.json(result)
+    }
 }
 
 module.exports = new tovar_Controller()

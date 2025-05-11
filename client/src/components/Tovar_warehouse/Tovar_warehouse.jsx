@@ -11,7 +11,7 @@ import Red_status_btn from '../UI/BUTTONS/Red_status_btn/Red_status_btn';
 import { MdDeleteForever } from "react-icons/md";
 
 const Tovar_warehouse = ({ tovar }) => {
-    const [current_URL, setCurrent_URL] = useState('')
+    const [current_URL, setCurrent_URL] = useState('');
 
     const { sticker_store } = useContext(Context);
     const { tovar_store } = useContext(Context);
@@ -19,14 +19,13 @@ const Tovar_warehouse = ({ tovar }) => {
 
     useEffect(() => {
         get_current_host_url()
+
     }, [])
 
     const get_current_host_url = () => {
 
 
         if (typeof window !== 'undefined') {
-            console.log("typeof window:::", typeof window);
-            console.log(" window:::", window);
 
             let currentUrl = window.location.href.split(':')[1];
             let http = window.location.href.split(':')[0];
@@ -82,6 +81,15 @@ const Tovar_warehouse = ({ tovar }) => {
     }
 
 
+    const delete_tovar_warehouse = async() => {
+
+       const result = await tovar_store.delete_tovar_warehouse(tovar.id);
+
+       console.log("tovar_deleted====> ", result)
+
+    }
+
+
 
 
     return (
@@ -98,7 +106,7 @@ const Tovar_warehouse = ({ tovar }) => {
 
                     <Red_status_btn
                         style={{width: "80px", height: "50px"}}
-                        
+                        onClick={delete_tovar_warehouse}
                     >
                         <MdDeleteForever />
                     </Red_status_btn>
@@ -113,7 +121,7 @@ const Tovar_warehouse = ({ tovar }) => {
                     ?
                     <img
                         className={styles.photo_for_tovars}
-                        src={`${current_URL}${tovar.photo_for_tovars[0].img_name}`}
+                        src={`${current_URL}${tovar.photo_for_tovars[0]?.img_name}`}
                         alt="Фото товара"
                     />
                     :

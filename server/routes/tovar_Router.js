@@ -10,6 +10,7 @@ router.post('/updatequantitytovarfortask', tovar_Controller.update_quantity_tova
 router.get('/getall', tovar_Controller.getAll);
 router.post('/getone', tovar_Controller.getOne);
 router.post('/update', tovar_Controller.update);
+router.post('/delete', tovar_Controller.delete_tovar_warehouse);
 
 router.get('/:id', tovar_Controller.getOne);
 
