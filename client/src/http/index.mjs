@@ -9,23 +9,27 @@ export const DEPLOY_URL = 'http://87.228.81.138/api'
 
 export let API_URL;
 if (typeof window !== 'undefined') {
-    console.log("typeof window:::",typeof window);
+    console.log("typeof window:::", typeof window);
     console.log(" window:::", window);
-    
-    let currentUrl = window.location.href.split(':')[1] ;
-    currentUrl = currentUrl.split('//')[1] ;
-    
-    if(currentUrl === "localhost"){
+
+    let currentUrl = window.location.href.split(':')[1];
+    currentUrl = currentUrl.split('//')[1];
+    currentUrl = currentUrl.split('/')[0];
+
+    if (currentUrl === "localhost") {
         API_URL = LOCAL_URL
         console.log("LOCAL_URL:::", API_URL);
     }
-    
-    if(currentUrl === "87.228.81.138/"){
+
+    if (currentUrl === "87.228.81.138" ||
+        currentUrl === "skynetbot.ru"
+
+    ) {
         API_URL = DEPLOY_URL
         console.log("DEPLOY_URL:::", API_URL);
     }
     console.log(currentUrl)
-   
+
 }
 
 // ==========================================
