@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(cors(
     {
         credentials: true,
-        origin: [process.env.CLIENT_URL, process.env.СLIENT_URL_DEPLOY]
+        origin: [process.env.CLIENT_URL, process.env.СLIENT_URL_DEPLOY, "http://skynetbot.ru" , "https://skynetbot.ru"]
     }
 ));
 app.use(express.json());
