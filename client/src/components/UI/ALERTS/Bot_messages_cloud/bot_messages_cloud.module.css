@@ -1,0 +1,43 @@
+.cloud {
+	border: 2px solid #fff;
+	border-radius: 10px;
+	min-height: 110px;
+	max-height: 300%;
+	width: 500px;
+	padding: 20px;
+	position: fixed;
+
+	top: 125%;
+	left: 170px;
+
+	-webkit-box-shadow: 0px 0px 17px 10px rgba(41, 255, 248, 0.4);
+	-moz-box-shadow: 0px 0px 17px 10px rgba(41, 255, 248, 0.4);
+	box-shadow: 0px 0px 17px 10px rgba(41, 255, 248, 0.4);
+
+	text-align: center;
+	font-family: MARSKE;
+	font-size: 20px;
+	font-weight: 700;
+	letter-spacing: 4px;
+	background: rgba(25, 25, 40, 0.95);
+	backdrop-filter: blur(80px) !important;
+}
+
+.cloud:before {
+	border: 50px solid transparent;
+	border-bottom-color: rgba(255, 255, 255, 1);
+	position: absolute;
+	bottom: 100%;
+	left: 42px;
+	content: '';
+
+}
+
+.cloud:after {
+	border: 48px solid transparent;
+	border-bottom-color: rgba(25, 25, 25, 1);
+	position: absolute;
+	bottom: 99%;
+	left: 44px;
+	content: '';
+}

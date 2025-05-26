@@ -1,0 +1,34 @@
+.container{
+    border: 1px solid #151515;
+    border-radius: 50%;
+    /* padding: 5px 10 px; */
+    width: 70px;
+    height: 70px;
+    margin: 5px 10px;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bolder;
+    letter-spacing: 0.2rem;
+    background: rebeccapurple;
+    background: linear-gradient(180deg,#e6e6e6 0%,rgba(0, 0, 0, 0.25) 49%, rgba(38, 38, 38, 0.6) 51%,rgba(0, 0, 0, 0.25) 100%);
+
+    
+}
+.container:hover{
+    cursor: pointer;
+    border-color: #7c7c7c;
+  background: linear-gradient(top, rgba(38, 38, 38, 0.8), #e6e6e6 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, rgba(38, 38, 38, 0.8));
+  background: -webkit-linear-gradient(top, rgba(38, 38, 38, 0.5), #e6e6e6 25%, #ffffff 38%, rgba(0, 0, 0, 0.25) 63%, #e6e6e6 87%, rgba(38, 38, 38, 0.4));
+}
+.link{
+    color: #00FFCB;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+

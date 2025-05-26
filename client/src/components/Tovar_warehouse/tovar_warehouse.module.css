@@ -1,0 +1,217 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 99%;
+    height: 200px;
+    /* padding: 30px 20px; */
+    background: rgb(114, 5, 105, 0.05);
+
+    border: 2px solid #7c7c7c;
+    border-radius: 20px;
+    cursor: pointer;
+
+    -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
+    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
+    margin: 6px 2px;
+    position:relative
+}
+.fon{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(80px);
+    z-index: -1;
+}
+
+.item {
+    height: 100%;
+    font-weight: 400;
+    font-size: 30px;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 5px 0;
+    overflow: hidden;
+    /* user-select: none; */
+}
+.box_name{
+    width: 19%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.tovar_number_flexBox{
+    width: 100%;
+    /* height: 100%; */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding:  20px 0;
+
+}
+.tovar_number{
+    font-family: MOSCOW, Arial, serif;
+    font-size: 40px;
+}
+.name {
+    width: 100%;
+    font-size: 22px;
+    text-align: center;
+}
+
+.id {
+    width: 10%;
+
+
+}
+
+.clip_text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(180deg, #FFFFFF 21.75%, #1A3031 100%);
+    display: flex;
+}
+
+.itemFoto {
+    width: 20%;
+}
+
+.photo_for_tovars {
+    height: 100%;
+    width: auto;
+}
+
+.Manufacturer_ID {
+    width: 19%;
+}
+
+.quantity_box{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.quantity_good {
+    color: #3ef979;
+}
+.quantity_warning {
+    color: #dfff0f;
+}
+.quantity_danger {
+    color: #b70e3b;
+}
+.quantity_value{
+    width: 100%;
+    height: 30%;
+    font-family: MOSCOW, Arial, serif;
+    -webkit-text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+    -moz-text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+    text-shadow: 0px 0px 16px rgba(0, 0, 0, 1);
+    padding: 10px 0;
+}
+
+.line {
+    border: 1px solid #7c7c7c;
+    height: 100%;
+    width: 1px;
+
+}
+
+.line_mini {
+    border: 1px solid #7c7c7c;
+    height: 84%;
+    width: 1px;
+}
+
+.barcode {
+    width: 22%;
+    height: 200px;
+    overflow: hidden;
+    position: relative
+}
+
+.barcode_box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    padding: 1px;
+    width: 70%;
+
+    overflow-y: scroll;
+    overflow-x: scroll;
+
+}
+
+.barcode_download_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 30%;
+
+}
+
+.barcode_box_item {}
+
+.barcode_download_btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    border-color: #7c7c7c;
+    background: linear-gradient(top, rgba(38, 38, 38, 0.8), #e6e6e6 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, rgba(38, 38, 38, 0.8));
+    background: -webkit-linear-gradient(top, rgba(38, 38, 38, 0.5), #e6e6e6 25%, #ffffff 38%, rgba(0, 0, 0, 0.25) 63%, #e6e6e6 87%, rgba(38, 38, 38, 0.4));
+
+    box-sizing: border-box;
+
+    font-size: 26px;
+    font-weight: 400;
+
+    color: #08b5ff;
+    letter-spacing: 3px;
+    -webkit-text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+    -moz-text-shadow: 0px 0px 6px rgba(0, 0, 0, 1);
+    text-shadow: 0px 0px 6px 08b5ff;
+
+    background: linear-gradient(top, rgba(38, 38, 38, 0.8), #e6e6e6 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, rgba(38, 38, 38, 0.8));
+    background: -webkit-linear-gradient(top, rgba(38, 38, 38, 0.5), #e6e6e6 25%, #ffffff 38%, rgba(0, 0, 0, 0.25) 63%, #e6e6e6 87%, rgba(38, 38, 38, 0.4));
+
+    /* text-shadow: -3px 1px 16px #000; */
+    /* border: 2px solid #7c7c7c; */
+    border: 1px solid #7c7c7c;
+    border-radius: 4px;
+    width: 60px;
+    height: 60px;
+    transition: all 0.2s;
+}
+
+.barcode_download_btn:hover {
+    color: #52f6e2;
+    font-size: 40px;
+    width: 64px;
+    height: 64px;
+
+}

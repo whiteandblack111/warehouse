@@ -1,0 +1,31 @@
+.point_light {
+    position: relative;
+    width: 0;
+    height: 0;
+    /* top: 50%; */
+    left: 17%;
+
+    -webkit-box-shadow: 0px 0px 47px 36px rgba(82, 246, 241, 0.73);
+    -moz-box-shadow: 0px 0px 47px 36px rgba(82, 246, 241, 0.73);
+    box-shadow: 0px 0px 47px 36px rgba(82, 246, 241, 0.73);
+
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    /* коррекция положения элемента */
+    transform: translate(-50%, -50%);
+
+}
+
+.srart_pulsate {
+    animation: pulsate 1.5s linear infinite;
+}
+
+@keyframes pulsate {
+    50% {
+
+        -webkit-box-shadow: 0px 0px 35px 45px rgba(82, 246, 241, 0.99);
+        -moz-box-shadow: 0px 0px 35px 45px rgba(82, 246, 241, 0.99);
+        box-shadow: 0px 0px 35px 45px rgba(82, 246, 241, 0.99);
+    }
+}

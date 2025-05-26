@@ -1,0 +1,99 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    /* height: 10vh; */
+    backdrop-filter: blur(50px);
+    border-bottom: 1px solid rgba(114, 0, 116, 0.3);
+
+    background-position: 50% 50%;
+    background-size: cover;
+    background-attachment: fixed;
+
+    position: relative;
+    z-index: 100;
+    /* padding: 10px 0px; */
+}
+
+.nav_panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    min-height: 80px;
+
+}
+
+.routActive{
+    background: red;
+    color: red;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 10vh;
+
+    border: 3px solid #fff;
+    padding: 0px 10px;
+    --angle: 0deg;
+
+    /* This won't work: */
+    border-image: linear-gradient(var(--angle), #000, #fff, #000, #fff, #000, #fff) 1;
+    animation: 10s rotate linear infinite;
+    position: relative !important;
+}
+
+.logoimg {
+    position: relative;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+@keyframes rotate {
+    to {
+        --angle: 360deg;
+    }
+}
+
+.logo_text {
+
+    font-weight: 600;
+    font-size: 40px;
+
+
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(180deg, #FFFFFF 21.75%, #1A3031 100%);
+}
+
+.auth_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* width: 380px; */
+    max-width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100px;
+    /* background: #000; */
+    padding: 0px 10px;
+    padding-right: 20px;
+    margin: 10px;
+}

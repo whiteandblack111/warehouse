@@ -1,0 +1,87 @@
+server {
+
+    root /var/www/build;
+
+    server_name skynetbot.ru www.skynetbot.ru;
+
+
+    access_log /var/log/nginx/warehouse.access.log;
+    error_log /var/log/nginx/warehouse.error_log warn;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+
+        #        proxy_pass http://localhost:3000;
+        #        proxy_http_version 1.1;
+        #        proxy_set_header Upgrade $http_upgrade;
+        #        proxy_set_header Connection 'upgrade';
+        #        proxy_set_header Host $host;
+        #        proxy_cache_bypass $http_upgrade;
+    }
+
+    location /api {
+        proxy_pass http://localhost:7000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+
+    }
+
+    location /public {
+        alias /home/ztavruz/projects/warehouse/client/public;
+        autoindex off;
+    }
+
+    location /files/ {
+        alias /home/ztavruz/projects/warehouse/server/files/;
+        autoindex on;
+        # autoindex_exact_size off;
+    }
+
+    location ~ /.git {
+        return 404;
+    }
+
+    location ~* /(images|cache|media|logs|tmp)/.*.(php|pl|py|jsp|asp|sh|cgi)$ {
+        return 404;
+    }
+
+
+    location /ws/ {
+        try_files $uri @proxy_for_websocket;
+        # websocket connection comes with ws
+    }
+
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/skynetbot.ru/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/skynetbot.ru/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = www.skynetbot.ru) {
+        return 301 https://$host$request_uri;
+        } # managed by Certbot
+
+
+        if ($host = skynetbot.ru) {
+            return 301 https://$host$request_uri;
+            } # managed by Certbot
+
+
+            listen 80;
+            listen [::]:80;
+
+            server_name skynetbot.ru www.skynetbot.ru;
+            return 404; # managed by Certbot
+
+
+        }
+    }
+}

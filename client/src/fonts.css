@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'MOSCOW';
+    font-weight: 900;
+    src: local('MOSCOW'), url(./fonts/MOSCOW2024.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'FACON';
+    font-weight: 400;
+    src: local('FACON'), url(./fonts/facon.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'PORSHE';
+    font-weight: 900;
+    src: local('PORSHE'), url(./fonts/Porsche_Regular_0.ttf) format('opentype');
+}
+
+@font-face {
+    font-family: 'VENUS';
+    font-weight: 400;
+    src: local('VENUS'), url(./fonts/venus_rising_rg.ttf) format('opentype');
+}
+
+@font-face {
+    font-family: 'MARSKE';
+    font-weight: 900;
+    src: local('MARSKE'), url(./fonts/Marske.ttf) format('opentype');
+}
