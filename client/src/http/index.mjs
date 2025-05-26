@@ -34,7 +34,7 @@ if (typeof window !== 'undefined') {
 
 // ==========================================
 
-const $api = axios.create({
+export const $api = axios.create({
     withCredentials: true,
     baseURL: API_URL
 });
@@ -62,4 +62,4 @@ $api.interceptors.response.use((config) => {
     throw error;
 })
 
-export default $api;
+// export default $api;

@@ -1,4 +1,4 @@
-import $api from "../http/index.mjs";
+import { $api } from "../http/index.mjs";
 
 export default class AuthService {
 

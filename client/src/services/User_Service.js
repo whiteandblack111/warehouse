@@ -1,4 +1,4 @@
-import $api from "../http/index.mjs";
+import { $api } from "../http/index.mjs";
 
 // import { IUser } from "../models/response/IUser";
 
@@ -8,9 +8,5 @@ export default class User_Service {
         return $api.get('/users');
         
     }
-
-  
-
-   
 
 }
