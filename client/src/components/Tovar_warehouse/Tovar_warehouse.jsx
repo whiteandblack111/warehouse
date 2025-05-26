@@ -13,6 +13,7 @@ import ROLE_VERIFICATION from '../PAGE_COMPONENTS/ROLE_VERIFICATION/ROLE_VERIFIC
 
 const Tovar_warehouse = ({ tovar }) => {
     const [current_URL, setCurrent_URL] = useState('');
+    
 
     const { sticker_store } = useContext(Context);
     const { tovar_store } = useContext(Context);
@@ -20,8 +21,10 @@ const Tovar_warehouse = ({ tovar }) => {
 
     useEffect(() => {
         get_current_host_url()
+        
 
     }, [])
+
 
     const get_current_host_url = () => {
 
@@ -65,9 +68,11 @@ const Tovar_warehouse = ({ tovar }) => {
 
     const { interface_store } = useContext(Context);
     const open_addTovar_forTask_popup = () => {
+        
         tovar_store.setTovar(tovar)
-
+        console.log("open_close ", tovar_store.tovar)
         interface_store.setIsOpen_addTovar_forTask(true)
+
     }
 
     const [isOpen_update_quantity_popup, setIsOpen_update_quantity_popup] = useState(false);

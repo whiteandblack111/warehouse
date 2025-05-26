@@ -5,7 +5,7 @@ import styles_typeFile from "./light_neon_input_typeFile.module.css"
 import { checkInput_for_allowNumbers } from "../../../../utils/helpers";
 
 
-// props ---> forTypeValue={"number"}
+// props ---> forTypeValue={number}
 
 const Light_neon_input = (props) => {
 

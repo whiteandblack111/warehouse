@@ -16,10 +16,12 @@ import { loadSlim } from "@tsparticles/slim";
 import { particle_options } from "../../../utils/particle_options";
 import { statuses_tovar_for_task } from "../../../utils/entity_statuses";
 
+
 const AddTovar_forTask_popup = (props) => {
     const [init, setInit] = useState(false);
     const [task_id, setTask_id] = useState('Укажите поставку');
     const [tovar_quantity, setTovar_quantity] = useState(0);
+    const [maximum_allowed_quantity, setMaximum_allowed_quantity] = useState(0);
 
 
     const { tovar_store } = useContext(Context);
@@ -34,7 +36,6 @@ const AddTovar_forTask_popup = (props) => {
         }).then(() => {
             setInit(true);
         });
-
         task_store.get_all_tasks()
 
 
@@ -60,21 +61,31 @@ const AddTovar_forTask_popup = (props) => {
 
     const handleSelect_taskNumber = async (evt) => {
         setTask_id(evt);
-
+        return evt
     }
 
     const handleSelect_tovarQuantity = async (evt) => {
+        console.log("evt ", evt)
+        console.log("quantity ", Number(tovar_store.tovar.quantity))
+        if (Number(tovar_store.tovar.quantity) < evt) {
+            setTovar_quantity(tovar_store.tovar.quantity);
+            return
+        }
         setTovar_quantity(evt);
-
+        return
     }
 
     const addTovar_forTask = async () => {
+
         const id = task_id
         await task_store.get_one(id)
 
         await tovar_store.getOne_tovar_warehouse(tovar_store.tovar.id)
 
         let stickerMagaz = null;
+
+
+
         await tovar_store.tovar.stickers.map((sticker) => {
             if (sticker.shop_name === task_store.task.shop_name) {
                 stickerMagaz = sticker
@@ -146,6 +157,7 @@ const AddTovar_forTask_popup = (props) => {
                         <div className={`${styles.box} ${styles.tovar_box}`}>
 
                             <Light_neon_input
+                                forTypeValue={"number"}
                                 type="text"
                                 placeholder="Количество товара"
                                 onChange={handleSelect_tovarQuantity}
