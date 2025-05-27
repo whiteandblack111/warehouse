@@ -70,7 +70,7 @@ const Tovar_warehouse = ({ tovar }) => {
     const open_addTovar_forTask_popup = () => {
         
         tovar_store.setTovar(tovar)
-        console.log("open_close ", tovar_store.tovar)
+        console.log("open_close ", tovar_store.tovar)   
         interface_store.setIsOpen_addTovar_forTask(true)
 
     }
@@ -80,7 +80,7 @@ const Tovar_warehouse = ({ tovar }) => {
     const open_close_quantity_update_popup = () => {
 
         if (isOpen_update_quantity_popup) {
-            setIsOpen_update_quantity_popup(true);
+            setIsOpen_update_quantity_popup(false);
             return
         }
         setIsOpen_update_quantity_popup(true)
