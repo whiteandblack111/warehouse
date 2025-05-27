@@ -28,8 +28,8 @@ const Update_quantityTovar_popup = (props) => {
 
     }, [tovar_forTask_store.tovarTask])
 
-           
-    
+
+
     const handler_input = (e) => {
         if (e.key === "Enter") {
             // input__ref.current.focus();
@@ -47,7 +47,10 @@ const Update_quantityTovar_popup = (props) => {
 
     }
 
-    const close_popup = (e) => {
+    const close_popup = () => {
+
+        console.log("dassadasdasddas")
+
         props.callback_active_func(false)
     }
 
@@ -63,12 +66,12 @@ const Update_quantityTovar_popup = (props) => {
 
     }
 
-       const hendlerInputQuantity = (e) => {
-            
-            checkInput_for_allowNumbers(e)
-    
-            setQuantity(e.target.value)
-        }
+    const hendlerInputQuantity = (e) => {
+
+        checkInput_for_allowNumbers(e)
+
+        setQuantity(e.target.value)
+    }
 
 
     return (
@@ -77,31 +80,33 @@ const Update_quantityTovar_popup = (props) => {
             onMouseLeave={(e) => { close_popup() }}
         >
 
+            <Form className={styles.Form} >
+                <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
+                    <Form.Label
+                        className={styles.inputLabel}
+                    >Изменить количество</Form.Label>
+                    <Form.Control
+
+                        className={`${styles.input} ${styles.input_update}`}
+                        key="manufacturer_ID"
+                        type="text"
+                        placeholder={quantity}
+                        onChange={e => hendlerInputQuantity(e)}
+                        onKeyUp={handler_input}
+                        value={quantity}
+                    />
+                </Form.Group>
+            </Form>
 
             <div className={styles.btn_box_row}>
                 <Minus_btn minus_quantity={minus_quantity}></Minus_btn>
-                <Form className={styles.Form} >
-                    <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
-                        <Form.Label
-                            className={styles.inputLabel}
-                        >Изменить количество</Form.Label>
-                        <Form.Control
 
-                            className={`${styles.input} ${styles.input_update}`}
-                            key="manufacturer_ID"
-                            type="text"
-                            placeholder={quantity}
-                            onChange={e => hendlerInputQuantity(e)}
-                            onKeyUp={handler_input}
-                            value={quantity}
-                        />
-                    </Form.Group>
-                </Form>
                 <Plus_btn plus_quantity={plus_quantity} ></Plus_btn>
             </div>
 
             <Fiolet_border_btn
                 className={styles.Fiolet_border_btn_Update_quantity}
+                className_text={styles.Fiolet_border_btnText}
                 btn_click_callbackFunction={update_quantity_tovar}
             >отправить</Fiolet_border_btn>
 

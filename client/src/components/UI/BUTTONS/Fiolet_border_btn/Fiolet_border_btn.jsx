@@ -10,7 +10,7 @@ const Fiolet_border_btn = (props) => {
         <div
             onClick={() => { props.btn_click_callbackFunction()}}
             className={`${styles.fiolet_border_btn} ${props.className}`}>
-            <span className={styles.span}>
+            <span className={`${styles.span} ${props.className_text}`}>
                 {props.children}
             </span>
         </div>

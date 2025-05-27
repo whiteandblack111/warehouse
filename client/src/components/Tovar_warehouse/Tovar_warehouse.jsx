@@ -75,11 +75,12 @@ const Tovar_warehouse = ({ tovar }) => {
 
     }
 
+    // открыть или закрыть окно изменения товара
     const [isOpen_update_quantity_popup, setIsOpen_update_quantity_popup] = useState(false);
     const open_close_quantity_update_popup = () => {
 
         if (isOpen_update_quantity_popup) {
-            setIsOpen_update_quantity_popup(false);
+            setIsOpen_update_quantity_popup(true);
             return
         }
         setIsOpen_update_quantity_popup(true)
@@ -217,7 +218,6 @@ const Tovar_warehouse = ({ tovar }) => {
                     ?
                     <>
                         <Update_quantityTovar_popup
-                            warehouse_or_task="warehouse"
                             tovar={tovar}
                             isOpenPopup={isOpen_update_quantity_popup}
                             callback_active_func={open_close_quantity_update_popup}
