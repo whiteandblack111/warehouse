@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.085ae9d8.css",
-    "main.js": "/static/js/main.fd883364.js",
+    "main.css": "/static/css/main.08fe2517.css",
+    "main.js": "/static/js/main.eeed3548.js",
     "static/media/fiol.jpg": "/static/media/fiol.baf80218d86e5485ab61.jpg",
     "static/media/venus_rising_rg.ttf": "/static/media/venus_rising_rg.e218153d4e2e1f1134cb.ttf",
     "static/media/facon.otf": "/static/media/facon.b7fb675e96268c3fe909.otf",
@@ -9,11 +9,11 @@
     "static/media/Porsche_Regular_0.ttf": "/static/media/Porsche_Regular_0.61e34cf220aebe545aea.ttf",
     "static/media/MOSCOW2024.otf": "/static/media/MOSCOW2024.1178c37da550d5517e39.otf",
     "index.html": "/index.html",
-    "main.085ae9d8.css.map": "/static/css/main.085ae9d8.css.map",
-    "main.fd883364.js.map": "/static/js/main.fd883364.js.map"
+    "main.08fe2517.css.map": "/static/css/main.08fe2517.css.map",
+    "main.eeed3548.js.map": "/static/js/main.eeed3548.js.map"
   },
   "entrypoints": [
-    "static/css/main.085ae9d8.css",
-    "static/js/main.fd883364.js"
+    "static/css/main.08fe2517.css",
+    "static/js/main.eeed3548.js"
   ]
 }
