@@ -20,8 +20,8 @@ const Roles_User = sequelize.define(
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     },
     {
-        createdAt:false,
-        updatedAt:false
+        createdAt: false,
+        updatedAt: false
     }
 )
 
@@ -31,7 +31,7 @@ const User = sequelize.define(
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         firstname: { type: DataTypes.STRING, defaultValue: "Не указано" },
         twoname: { type: DataTypes.STRING, defaultValue: "Не указано" },
-        phone:{type: DataTypes.STRING, defaultValue: "Не указано"},  
+        phone: { type: DataTypes.STRING, defaultValue: "Не указано" },
         email: { type: DataTypes.STRING, allowNull: false, unique: true },  // для подтверждения регистрации 
         password: { type: DataTypes.STRING, allowNull: false },
         isActivated: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
@@ -60,7 +60,7 @@ const Task = sequelize.define(
         statusWork: { type: DataTypes.STRING, defaultValue: "в очереди" },
         start_build: { type: DataTypes.STRING, defaultValue: "12.04.2025" },
         end_build: { type: DataTypes.STRING, defaultValue: "15.04.2025" },
-        
+
     }
 )
 const Tovar_For_Task = sequelize.define(
@@ -70,15 +70,24 @@ const Tovar_For_Task = sequelize.define(
         warehouse_ID: { type: DataTypes.STRING, allowNull: false },
         barcode: { type: DataTypes.STRING, allowNull: false },
         name: { type: DataTypes.STRING, allowNull: false },
-        
+
         cartons_required: { type: DataTypes.INTEGER, allowNull: false },
         cartons_found: { type: DataTypes.INTEGER, defaultValue: 0 },
         // additional_information: { type: DataTypes.STRING, },
         stopReason: { type: DataTypes.STRING, defaultValue: "no" },
         status: { type: DataTypes.STRING, defaultValue: "default" },
-        changed_cartons_required:{type: DataTypes.INTEGER, defaultValue: 0},
-        completion_status:{type: DataTypes.STRING, defaultValue: "default"}
-     
+        changed_cartons_required: { type: DataTypes.INTEGER, defaultValue: 0 },
+        completion_status: { type: DataTypes.STRING, defaultValue: "default" }
+
+    }
+)
+
+const TovarTask_statuses = sequelize.define(
+    'tovarTask_statuses',
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        value: { type: DataTypes.STRING, defaultValue: "default" },
+
     }
 )
 
@@ -87,6 +96,8 @@ const BoxTask = sequelize.define(
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         taskId: { type: DataTypes.INTEGER, defaultValue: 0 },
+        numberBox_inTask: { type: DataTypes.INTEGER, allowNull: false },
+    
     }
 )
 
@@ -98,8 +109,11 @@ const Tovar_for_boxTask = sequelize.define(
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         boxTaskId: { type: DataTypes.INTEGER, defaultValue: 0 },
         taskId: { type: DataTypes.INTEGER, defaultValue: 0 },
-        tovarForTaskId: { type: DataTypes.INTEGER, defaultValue: 0 },
-        quantityTovar:{ type: DataTypes.INTEGER, defaultValue: 0 },
+        quantityTovar: { type: DataTypes.INTEGER, defaultValue: 0 },
+
+
+        // так же имееются поля ===> 
+        // tovarForTaskId: { type: DataTypes.INTEGER, defaultValue: 0 },
     }
 )
 
@@ -114,7 +128,7 @@ const Sticker = sequelize.define(
         barcode: { type: DataTypes.STRING, allowNull: false },
         shop_name: { type: DataTypes.STRING, allowNull: false },
         warehouse_ID: { type: DataTypes.STRING, allowNull: false },
-        
+
     }
 )
 
@@ -128,7 +142,7 @@ const Tovar_For_Warehouse = sequelize.define(
         name: { type: DataTypes.STRING, allowNull: false },
         quantity: { type: DataTypes.INTEGER, defaultValue: 0 },
         garbage: { type: DataTypes.INTEGER, defaultValue: 0 },
-        reserve: {type: DataTypes.INTEGER, defaultValue: 0 },
+        reserve: { type: DataTypes.INTEGER, defaultValue: 0 },
     }
 )
 
@@ -150,26 +164,94 @@ User.belongsToMany(Role, { through: Roles_User })
 User.hasMany(Task)
 Task.belongsTo(User)
 
-Task.hasMany(Tovar_For_Task);
-// Tovar_For_Task.belongsTo(Task);
 
+// +
+// В поставку могут входить многие товары для поставки
+Task.hasMany(Tovar_For_Task, {onDelete: "cascade"});
+Tovar_For_Task.belongsTo(Task);
+
+// +
+// Из данных товаров склада, формируются товары входящие в поставку
+// соответственно многие товары из поставки могут относиться 
+// к одному из товаров склада
 Tovar_For_Warehouse.hasMany(Tovar_For_Task);
 Tovar_For_Task.belongsTo(Tovar_For_Warehouse);
 
-Tovar_For_Warehouse.hasMany(Sticker);
-// Sticker.belongsTo(Tovar_For_Warehouse);
+// +
+// Товар на складе может иметь несколько стикеров 
+// для разных магазинов-заказчиков
+Tovar_For_Warehouse.hasMany(Sticker, {onDelete: "cascade"});
+Sticker.belongsTo(Tovar_For_Warehouse);
 
+// +
+// Товары в таске могут быть одинаковыми в следствие их 
+// повторного добавления при необходимости
+// соответственно и стикера у них будут одинаковы 
+// соответственно один стикер может принадлежать ко многим(одинаковым) товарам одной поставки
 Sticker.hasMany(Tovar_For_Task)
 Tovar_For_Task.belongsTo(Sticker);
 
-Photo_For_Tovar.belongsTo(Tovar_For_Warehouse);
+
+// +
+// Множество фото товара может принадлежать одному из товаров
+Tovar_For_Warehouse.hasMany(Photo_For_Tovar, {onDelete: "cascade"});
+Photo_For_Tovar.belongsTo(Tovar_For_Warehouse)
+
+// +
+// Фото коробов товаров в отдельной таблице, для их получения после фото самого товара
+// Множество фото КОРОБА товара может принадлежать одному из товаров
+Tovar_For_Warehouse.hasMany(Photo_For_Box, {onDelete: "cascade"});
 Photo_For_Box.belongsTo(Tovar_For_Warehouse)
 
-Tovar_For_Warehouse.hasMany(Photo_For_Box);
-Tovar_For_Warehouse.hasMany(Photo_For_Tovar);
-
+// Здесь короб с часть одного из товаров конкретной поставки
+// может содержать несколько разных товаров поставки при условии их малого количества
+// для полного заполнения короба если это разрешено
 BoxTask.hasMany(Tovar_for_boxTask);
-// Tovar_for_boxTask.hasOne(Tovar_For_Task);
+
+// К товару поставки могут относиться многие части этого самого товара
+// то есть один товар паставки может быть упакован в несколько коробов
+Tovar_For_Task.hasMany(Tovar_for_boxTask, {onDelete: "cascade"});
+Tovar_for_boxTask.belongsTo(Tovar_For_Task)
+
+// Товар поставки может иметь множество статусов
+Tovar_For_Task.hasMany(TovarTask_statuses, {onDelete: "cascade"});
+TovarTask_statuses.belongsTo(Tovar_For_Task)
+
+
+// - вообще не фак
+// Photo_For_Box.belongsTo(Tovar_for_boxTask)
+
+// ===============================БАЗА - начало===========================
+
+// // У поставки - много товаров для поставки
+// Task.hasMany(Tovar_For_Task);
+// // Tovar_For_Task.belongsTo(Task);
+
+// Tovar_For_Warehouse.hasMany(Tovar_For_Task);
+// Tovar_For_Task.belongsTo(Tovar_For_Warehouse);
+
+// Tovar_For_Warehouse.hasMany(Sticker);
+// // Sticker.belongsTo(Tovar_For_Warehouse);
+
+// Sticker.hasMany(Tovar_For_Task)
+// Tovar_For_Task.belongsTo(Sticker);
+
+// Photo_For_Tovar.belongsTo(Tovar_For_Warehouse);
+// Photo_For_Box.belongsTo(Tovar_For_Warehouse)
+
+// Tovar_For_Warehouse.hasMany(Photo_For_Box);
+// Tovar_For_Warehouse.hasMany(Photo_For_Tovar);
+
+// BoxTask.hasMany(Tovar_for_boxTask);
+
+// Tovar_For_Task.hasMany(Tovar_for_boxTask);
+// Tovar_for_boxTask.belongsTo(Tovar_For_Task)
+
+// Photo_For_Box.belongsTo(Tovar_for_boxTask)
+
+// ===============================БАЗА - конец===========================
+
+
 
 
 module.exports = {
@@ -185,7 +267,8 @@ module.exports = {
     Tovar_for_boxTask,
 
     Photo_For_Box,
-    Sticker
+    Sticker,
+    TovarTask_statuses
 
 
 }

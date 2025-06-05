@@ -5,7 +5,12 @@ import styles_typeFile from "./light_neon_input_typeFile.module.css"
 import { checkInput_for_allowNumbers } from "../../../../utils/helpers";
 
 
-// props ---> forTypeValue={number}
+
+// Пропс определяющий тип допустимых данных для ввода в поле 
+// -> forTypeValue="number" или "text"
+
+// Пропс определяющий доп.класс стилей для значений placeholder 
+// -> className_placeholder='placeholder_text_center'
 
 const Light_neon_input = (props) => {
 

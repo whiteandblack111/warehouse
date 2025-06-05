@@ -10,6 +10,8 @@ import Order_store from './store/Order_store';
 import Interface_store from './store/Interface_store';
 import BoxTask_store from './store/BoxTask_store';
 import Bot_messages_store from './store/Bot_messages_store';
+import { StrictMode } from 'react';
+import { enableStaticRendering } from 'mobx-react-lite';
 
 
 
@@ -41,7 +43,8 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <Context.Provider value={
+  <Context.Provider StrictMode={{ enableStaticRendering: false }} value={
+
     {
       user_store,
       task_store,
@@ -54,6 +57,9 @@ root.render(
       bot_messages_store
     }
   }>
-    <App />
+
+      <App />
+
+
   </Context.Provider>
 );

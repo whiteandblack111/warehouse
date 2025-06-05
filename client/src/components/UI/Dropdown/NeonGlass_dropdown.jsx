@@ -9,7 +9,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const NeonGlass_dropdown = (props) => {
-    // console.log("props.selectsData---> ", props.selectsData)
+
+
     const { user_store } = useContext(Context);
 
     return (

@@ -25,18 +25,31 @@ const ChangeStatus_tovarTask = (props) => {
     const [isOpen_green_blockBtns, setIsOpen_green_blockBtns] = useState(false);
     const [isOpen_red_blockBtns, setIsOpen_red_blockBtns] = useState(false);
 
-    const [all_task_boxes, setAll_task_boxes] = useState([]);
 
-    const [boxNumber, setboxNumber] = useState("new");
+    const [numberBox_inTask, setNumberBox_inTask] = useState("new");
+
     const [quantityTovar_forBox, setQuantityTovar_forBox] = useState(0);
-
     const [stopReason, setStopReason] = useState("");
+
+    const [boxes_for_task, setBoxes_for_task] = useState([])
+
 
     const { tovar_forTask_store } = useContext(Context);
     const { interface_store } = useContext(Context);
     const { task_store } = useContext(Context);
     const { boxTask_store } = useContext(Context);
 
+
+
+    useEffect(() => {
+        getAllBoxes_for_currentTask()
+    }, [])
+
+
+    useEffect(() => {
+        getAllBoxes_for_currentTask()
+        boxTask_store.setIsChahge(false)
+    }, [boxTask_store.isChahge])
 
 
 
@@ -49,14 +62,27 @@ const ChangeStatus_tovarTask = (props) => {
 
     }, [interface_store.isMobile])
 
+    const getAllBoxes_for_currentTask = async () => {
+        // ЧИСТО ДЛЯ ТЕСТОВ
+        const boxes = await boxTask_store.getAllBoxes_for_currentTask(props.tovar_task.taskId);
+
+        setBoxes_for_task(boxes)
+
+        console.log("ChangeStatus_tovarTask boxes_for_task ===> ", boxTask_store.boxes_for_task)
+
+    }
 
     const handleSelect_boxNumber = (evt) => {
-        setboxNumber(evt)
+   
+        setNumberBox_inTask(evt)
 
-        console.log(boxNumber)
+        console.log(numberBox_inTask)
     }
 
     const handleSelect_quantityTovar = (value) => {
+        console.log("handleSelect_quantityTovar-=-=-=> ", value)
+        console.log("handleSelect_quantityTovar-=-=-=> ", typeof value)
+        
         if (props.tovar_task.changed_cartons_required === 0) {
             if (value > props.tovar_task.cartons_required) {
                 setQuantityTovar_forBox(props.tovar_task.cartons_required)
@@ -100,25 +126,47 @@ const ChangeStatus_tovarTask = (props) => {
 
     const update_quantityBoxes_tovarTask = async () => {
         let formData = {
-            boxNumber: boxNumber,
-            taskId: props.tovar_task.id,
-            tovarForWarehouseId: props.tovar_task.tovarForWarehouseId,
-            quantityTovar: quantityTovar_forBox
+            boxTaskId: 0,
+            numberBox_inTask: 0,
+            taskId: props.tovar_task.taskId,
+            quantityTovar: quantityTovar_forBox,
+            tovarForTaskId: props.tovar_task.id,
         }
 
-        // console.log("props=========> ", props)
-        // console.log("boxNumber-new=========> ", boxNumber === "new")
-
-        if (boxNumber === "new") {
-            formData.boxNumber = all_task_boxes.length + 1
+        console.log("numberBox_inTask--------------------> ", numberBox_inTask)
+        if (numberBox_inTask === "new") {
+            formData.numberBox_inTask = boxes_for_task.length + 1
+            formData.boxTaskId = boxes_for_task.length + 1
         }
 
+        if (numberBox_inTask !== "new") {
+            formData.numberBox_inTask = Number(numberBox_inTask)
+
+            console.log(numberBox_inTask !== "new")
+            boxes_for_task.map((box, index) => {
+                if (Number(numberBox_inTask) === box.numberBox_inTask) {
+
+                    formData.boxTaskId = box.id
+                }
+            })
+        }
+
+        console.log("boxes_for_task=========> ", boxes_for_task)
 
         console.log("formData=========> ", formData)
 
         const boxTask = await boxTask_store.addTovar_boxTask(formData);
-
+        boxTask_store.setIsChahge(true)
         console.log("boxTask=========> ", boxTask)
+
+
+
+
+
+
+
+
+
 
         // const tovar_task = await tovar_forTask_store.update_tovar_forTask(formData)
 
@@ -228,6 +276,9 @@ const ChangeStatus_tovarTask = (props) => {
                 ></Close_btn>
             </div>
 
+
+            {/* форма для - для положить товар в  коробку */}
+
             <div className={isOpen_green_blockBtns
                 ?
                 `${styles.popup_blockBtns} ${styles.isOpen_blockBtns}`
@@ -235,13 +286,11 @@ const ChangeStatus_tovarTask = (props) => {
                 `${styles.popup_blockBtns} ${styles.isClose_blockBtns}`
             }
             >
-
-
                 <NeonGlass_dropdown
                     title="Выберите короб"
-                    selectsData={all_task_boxes}
-                    selectId="id"
-                    selectName="boxNumber"
+                    selectsData={boxes_for_task}
+                    selectId="numberBox_inTask"
+                    selectName="numberBox_inTask"
                     onSelect={(eventKey) => handleSelect_boxNumber(eventKey)}
 
                 />

@@ -1,7 +1,7 @@
 
 const { where } = require('sequelize');
 const { model, models } = require('../db');
-const { Task, Tovar_For_Task, Sticker, User, Tovar_For_Warehouse, Photo_For_Tovar } = require('../models/models');
+const { Task, Tovar_For_Task, Sticker, TovarTask_statuses, User, Tovar_For_Warehouse, Photo_For_Tovar } = require('../models/models');
 
 
 class Task_Service {
@@ -18,7 +18,7 @@ class Task_Service {
         let task = await Task.findOne({
             where: { id: id },
             include: [
-               
+
                 {
                     model: User, as: "user"
                 }
@@ -41,10 +41,13 @@ class Task_Service {
                         { model: Photo_For_Tovar, as: 'photo_for_tovars' }
                     ]
                 },
+                {
+                    model: TovarTask_statuses, as: "tovarTask_statuses",
+                },
             ]
 
         })
-        
+
         await task.tovar_for_tasks.push(tovars_for_task)
 
         if (task.tovar_for_tasks.length !== 0) {
@@ -84,7 +87,10 @@ class Task_Service {
                 {
                     model: Tovar_For_Task, as: "tovar_for_tasks"
 
-                }
+                },
+                {
+                    model: TovarTask_statuses, as: "tovarTask_statuses",
+                },
             ]
 
         })
@@ -111,6 +117,9 @@ class Task_Service {
                                 include: [
                                     { model: Photo_For_Tovar, as: 'photo_for_tovars' }
                                 ]
+                            },
+                            {
+                                model: TovarTask_statuses, as: "tovarTask_statuses",
                             },
                         ]
 
@@ -139,7 +148,10 @@ class Task_Service {
                     {
                         model: Tovar_For_Task, as: "tovar_for_task"
 
-                    }
+                    },
+                    {
+                        model: TovarTask_statuses, as: "tovarTask_statuses",
+                    },
                 ]
             }
         )

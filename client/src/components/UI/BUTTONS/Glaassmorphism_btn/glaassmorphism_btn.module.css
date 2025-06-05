@@ -8,6 +8,7 @@
     margin: 20px;
     cursor: pointer;
     background: transparent;
+    z-index: 100;
 }
 
 .a_text {

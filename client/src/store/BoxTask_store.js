@@ -8,6 +8,7 @@ import Help_Service from "../services/Help_Service";
 export default class BoxTask_store {
 
     _isCreate = false;
+    _isChahge = false;
     _isLoading = false;
     _boxes_for_task = [];
 
@@ -21,6 +22,13 @@ export default class BoxTask_store {
     }
     get boxes_for_task() {
         return this._boxes_for_task;
+    }
+    // >>>>>>>>>>>>>>>>>>>>>>>
+    setIsChahge(bool) {
+        this._isChahge = bool;
+    }
+    get isChahge() {
+        return this._isChahge;
     }
 
 // >>>>>>>>>>>>>>>>>>>>>>>
@@ -46,10 +54,15 @@ export default class BoxTask_store {
             const response = await BoxTask_Service.getAllBoxes_for_currentTask(taskId);
 
             const boxes_for_task = response.data;
+            
             this.setBoxes_for_task(boxes_for_task)
+
+       
+            //   console.log("BoxTask_store this.boxes_for_task ===> ", this.boxes_for_task)
 
             this.setIsLoading(false);
 
+            return boxes_for_task
             
         } catch (error) {
             console.log(error.response?.data?.message);
@@ -61,10 +74,10 @@ export default class BoxTask_store {
     async addTovar_boxTask(formData) {
         try {
 
-            console.log("BoxTask_store_formData====>", formData)
+            // console.log("BoxTask_store_formData====>", formData)
             
             this.setIsLoading(true);
-            const response = await BoxTask_Service.addTovars_boxtask(formData);
+            const response = await BoxTask_Service.addTovars_boxTask(formData);
             const tovars = response.data;
 
             this.setIsLoading(false);

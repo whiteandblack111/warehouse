@@ -1,0 +1,107 @@
+.container {
+    min-height: 230px;
+    border: 1px solid rgb(124, 168, 168);
+    border-radius: 10px;
+   
+
+    display: flex;
+    align-items: center;
+    
+
+    margin: 6px;
+    backdrop-filter: blur(90px);
+
+    background: rgb(114, 5, 105, 0.05);
+    border: 2px solid #7c7c7c;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
+
+}
+
+
+.box_number {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    padding: 10px 5px;
+    border: 1px solid aqua;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 5px;
+    min-width: 70px;
+}
+
+.box_number p {
+    margin: 0;
+}
+
+.box_icon {
+    color: aqua;
+    font-size: 30px;
+}
+.wrapper_box{
+   display: flex;
+   flex-wrap: wrap;
+   
+}
+
+.tovar_card {
+    width: 170px;
+    height: 206px;
+    border: 1px solid aqua;
+    margin: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 5px;
+    padding-bottom: 7px;
+
+    font-family: MOSCOW, Arial, serif;
+    
+}
+
+
+
+.photo_for_tovars {
+    width: 55%;
+    height: auto;
+
+}
+
+
+.tovar_card p span:nth-child(1) {
+    margin-right: 5px;
+
+}
+
+.tovar_quantity {
+    margin: 6px 0;
+
+}
+
+.tovar_quantity span:nth-child(1) {
+    letter-spacing: 2px;
+}
+
+.tovar_barcode {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.barcode_text {
+    letter-spacing: 1px;
+    margin: 0 !important;
+    font-weight: 400 !important;
+    font-size: 18px;
+    /* color: #fb1fb9; */
+    color: transparent;
+        background-clip: text;
+    background-image: linear-gradient(180deg, #FFFFFF 21.75%, #1A3031 100%);
+
+}

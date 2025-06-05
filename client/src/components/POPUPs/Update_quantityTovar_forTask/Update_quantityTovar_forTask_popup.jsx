@@ -33,7 +33,7 @@ const Update_quantityTovar_popup = (props) => {
     //Назначение начального значение количества 
     //при открытие окна с полем ввода
     const initialValue_forQuantity = () => {
-      
+
         //И если изменяющее количество = 0
         // 10 <> 0
         if (props.tovar_task.changed_cartons_required === 0) {
@@ -89,35 +89,22 @@ const Update_quantityTovar_popup = (props) => {
     }
 
     const update_quantity_tovar = async () => {
-        if (props.warehouse_or_task === "task") {
-            const formData = {
-                task_id: props.task_id,
-                tovar_task_id: props.tovar_task.id,
-                changed_cartons_required: quantity,
-                status: statuses_tovar_for_task.quantity_has_been_changed.value
-            }
-
-            await tovar_forTask_store.update_tovar_forTask(formData)
-
-            await task_store.get_all_tasks();
-
+        const formData = {
+            task_id: props.task_id,
+            tovar_task_id: props.tovar_task.id,
+            changed_cartons_required: quantity,
+            status: statuses_tovar_for_task.quantity_has_been_changed.value
         }
 
-        if (props.warehouse_or_task === "warehouse") {
-            const formData = {
-                id: props.tovar.id,
-                quantity: quantity
-            }
+        await tovar_forTask_store.update_tovar_forTask(formData)
 
-            await tovar_store.update_tovar_warehouse(formData)
-            console.log(formData)
-        }
+        await task_store.get_all_tasks();
 
     }
 
-    
+
     const hendlerInputQuantity = (e) => {
-        
+
         checkInput_for_allowNumbers(e)
 
         setQuantity(e.target.value)

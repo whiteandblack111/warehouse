@@ -1,24 +1,22 @@
+
+
 .container {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-around; */
     align-items: center;
 
     width: 96%;
     max-width: 99%;
     height: 90vh;
-    /* padding: 30px 20px; */
+    min-height: 90vh;
     background: rgb(114, 5, 105, 0.05);
 
     border: 2px solid #7c7c7c;
-    border-radius: 20px;
+    border-radius: 10px;
     /* backdrop-filter: blur(80px); */
     /* cursor: pointer; */
     margin-top: 200px;
-
-    /* -webkit-box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
-    box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000, 8px 31px 13px 23px rgba(124, 124, 124, 0);
-    margin: 6px 2px; */
+    box-sizing: border-box;
 
     position: relative;
 }
@@ -106,7 +104,7 @@
 }
 
 .container_tasks {
-    padding-top: 6px;
+  
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -118,6 +116,8 @@
     /* margin-bottom: 150px; */
     /* padding-top: 150px; */
     overflow-x:hidden;
+    /* position: relative; */
+      /* padding-bottom: 12px; */
 }
 
 .heading {
@@ -127,7 +127,8 @@
     max-width: 1700px;
     margin: 0 auto;
 
-    height: 80px;
+    height: var(--task_heading-line_height);
+    min-height: var(--task_heading-line_height);
     border-bottom: 2px solid #7c7c7c;
     border-radius: 20px 20px 0 0;
 
@@ -216,7 +217,7 @@
     width: 8%;
     font-size: 14px;
     border: 1px solid #7c7c7c;
-    border-radius: 0px 20px 0 0;
+    border-radius: 0px 10px 0 0;
 }
 
 .quantity {
@@ -276,11 +277,14 @@
     width: 1px;
 }
 
-
-
 .task_id_value {
     width: 5%;
     font-family: MOSCOW, Arial, serif;
     color: #08b5ff;
     font-size: 32px;
+}
+.absolute_block{
+    position: absolute;
+    right: 0;
+    top: -100px;
 }

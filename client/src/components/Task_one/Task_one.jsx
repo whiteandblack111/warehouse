@@ -7,38 +7,46 @@ import Update_executor_popup from '../POPUPs/Update_executor/Update_executor_pop
 import Tovar_task from '../Tovar_task/Tovar_task';
 import Snake_border_btn from '../UI/BUTTONS/Snake_border_btn/Snake_border_btn';
 import ROLE_VERIFICATION from '../PAGE_COMPONENTS/ROLE_VERIFICATION/ROLE_VERIFICATION';
+import Task_checklist from '../Task_checklist/Task_checklist';
+import Glaassmorphism_btn from '../UI/BUTTONS/Glaassmorphism_btn/Glaassmorphism_btn';
 
 
 
 
 const Task_one = ({ task }) => {
-    const [styles, setStyles] = useState("")
-    const [executor, setExecutor] = useState("")
-    const [isOpen_update_executor_popup, setIsOpen_update_executor_popup] = useState(false)
+    // const { sticker_store } = useContext(Context);
+    // const { task_store } = useContext(Context);
+    // const { tovar_forTask_store } = useContext(Context);
 
-
-
-    const { sticker_store } = useContext(Context);
-    const { task_store } = useContext(Context);
-    const { tovar_forTask_store } = useContext(Context);
     const { user_store } = useContext(Context);
     const { interface_store } = useContext(Context);
 
+    
+
+
+    const [styles, setStyles] = useState("")
+    const [executor, setExecutor] = useState("")
+    const [isOpen_update_executor_popup, setIsOpen_update_executor_popup] = useState(false)
+    const [isOpen_checkList, setIsOpen_checkList] = useState(false)
 
     const executor_ref = useRef(null);
     const executor_popup_ref = useRef(null);
 
 
+
+
     useEffect(() => {
         setExecutor(task.executor)
-
         setStyles(styles_desctop)
+
 
         if (interface_store.isMobile) {
             setStyles(styles_mobile)
         }
 
     }, [interface_store.isMobile])
+
+
 
 
 
@@ -61,24 +69,37 @@ const Task_one = ({ task }) => {
         setIsOpen_update_executor_popup(true)
     }
 
+    const open_checkList = () => {
+        setIsOpen_checkList(!isOpen_checkList)
+    }
+
 
 
 
     return (
 
         <div className={styles.container}>
+            <div className={styles.absolute_block}>
+                <Glaassmorphism_btn
+                onClick={open_checkList}
+                >
+                    Чек-лист
+                </Glaassmorphism_btn>
+            </div>
 
 
             <div className={styles.task_name_container}>
-
                 <div className={`${styles.headingItem} ${styles.task_name}`}>
                     Название поставки
                 </div>
+
                 <div className={`${styles.headingItem_value} ${styles.task_name_value}`}>
                     {task.task_name}
                 </div>
             </div>
 
+
+            {/* ================================================ */}
             <div className={styles.heading}
             >
                 <div className={`${styles.headingItem} ${styles.task_id_head}`}>№</div>
@@ -103,6 +124,7 @@ const Task_one = ({ task }) => {
             </div>
 
 
+            {/* ================================================ */}
             <div className={styles.heading}>
                 <div className={`${styles.headingItem_value} ${styles.task_id_value}`}>{task.id}</div>
                 <div className={styles.line} ></div>
@@ -174,9 +196,6 @@ const Task_one = ({ task }) => {
                     </div>
                 }
 
-
-
-
                 <div className={styles.line} ></div>
 
                 {
@@ -196,26 +215,47 @@ const Task_one = ({ task }) => {
                         0
                     }
                 </div>
+
             </div>
 
+
+            {/* ================================================ */}
             <div className={styles.container_tasks}>
 
-                {
-                    task.tovar_for_tasks.map((tovar_task, index) => { 
-                       
+                {isOpen_checkList
+                    ?
+                    <Task_checklist
+                        task={task}
+
+                    ></Task_checklist>
+                    :
+                    null
+
+                }
+
+
+
+
+                {!isOpen_checkList
+                    ?
+                    task.tovar_for_tasks.map((tovar_task, index) => {
+
 
                         return (<Tovar_task
-
                             key={tovar_task.id}
                             tovar_task={tovar_task}
                             index={index}
                         ></Tovar_task>
                         )
                     })
-
+                    :
+                    null
                 }
 
             </div>
+
+
+
         </div>
     )
 }

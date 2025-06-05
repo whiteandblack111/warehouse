@@ -15,9 +15,12 @@ import { MdDeleteForever } from "react-icons/md";
 import { statuses_tovar_for_task } from "./../../utils/entity_statuses";
 import CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT from '../PAGE_COMPONENTS/CHECKIHG_ACCESS/CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT';
 import { HiLockClosed } from "react-icons/hi";
+import Box_for_task from '../Box_for_task/Box_for_task';
 
 
-const Tovar_task = ({ tovar_task, index}) => {
+const Tovar_task = ({ tovar_task, index }) => {
+
+    console.log("tovarTask_statuses-=-=-=-> ", tovar_task.tovarTask_statuses)
 
     const { user_store } = useContext(Context);
     const { sticker_store } = useContext(Context);
@@ -29,23 +32,56 @@ const Tovar_task = ({ tovar_task, index}) => {
     const [current_URL, setCurrent_URL] = useState('');
     const [isOpen_сhangeStatus_tovarTask_popup, setIsOpen_сhangeStatus_tovarTask_popup] = useState(false);
     const [statusAllowedToDelete, setStatusAllowedToDelete] = useState(() => { return false });
+    const [status_quantity_changed, setStatus_quantity_changed] = useState(() => { return false });
+
+    const [tovarTask_statuses, setTovarTask_statuses] = useState([])
+    const [aaaa, setAAAA] = useState(["quantity_has_been_changed", "AAAAA", "FfFfFf"])
+
+
+    useEffect(() => {
+        get_current_host_url()
+        // setTovarTask_statuses(tovar_task.tovarTask_statuses)
+        setTovarTask_statuses(() => { return tovar_task.tovarTask_statuses })
+
+        checking_tovarForTask_statuses(tovar_task.tovarTask_statuses)
+
+        // console.log("Tovar_task tovar_task-=-=-=-> ", tovar_task)
+        // console.log("Tovar_task tovar_task includes -=-=-=-> ", tovar_task.tovarTask_statuses.includes("quantity_has_been_changed"))
+        // console.log("Tovar_task aaaa includes -=-=-=-> ", aaaa.includes("quantity_has_been_changed"))
+        // console.log("Tovar_task tovarTask_statuses-=-=-=-> ", tovarTask_statuses)
+
+
+        // console.log("Tovar_task tovar_task.id ===> ", tovar_task.id)
+        // console.log("Tovar_task boxes_for_task ===> ", boxes_for_task)
+    }, [])
 
 
     useEffect(() => {
 
-        if (tovar_task.status === statuses_tovar_for_task.must_be_deleted.value) {
+        if (tovarTask_statuses.includes(statuses_tovar_for_task.must_be_deleted.value)) {
             setStatusAllowedToDelete((pre) => {
                 pre = true
                 return pre
             })
         }
 
+        // if (tovar_task.status === statuses_tovar_for_task.must_be_deleted.value) {
+        //     setStatusAllowedToDelete((pre) => {
+        //         pre = true
+        //         return pre
+        //     })
+        // }
+
+
     }, [statusAllowedToDelete])
 
-    useEffect(() => {
-        get_current_host_url()
-    }, [])
-
+    const checking_tovarForTask_statuses = (statuses) => {
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.quantity_has_been_changed.value) {
+                setStatus_quantity_changed(true)
+            }
+        })
+    }
 
     const get_current_host_url = () => {
 
@@ -152,186 +188,183 @@ const Tovar_task = ({ tovar_task, index}) => {
     }
 
     return (
-        <div
-            key={tovar_task.id}
-            className={tovar_task.status === statuses_tovar_for_task.tovar_is_packed.value ?
-                `${styles.tovar_task_container} ${styles.tovar_task_container_done}`
-                : tovar_task.status === statuses_tovar_for_task.must_be_deleted.value ?
-                    `${styles.tovar_task_container} ${styles.tovar_task_must_be_deleted}`
-                    : tovar_task.status === statuses_tovar_for_task.tovar_packaging_is_suspended.value ?
-                        `${styles.tovar_task_container} ${styles.tovar_packaging_is_suspended}`
-                        : tovar_task.status === statuses_tovar_for_task.this_tovar_added_for_delivery.value ?
-                            `${styles.tovar_task_container} ${styles.this_tovar_added_for_delivery}`
-                            : styles.tovar_task_container
+        <div className={styles.card} >
+            <div
+                key={tovar_task.id}
+                className={tovar_task.status === statuses_tovar_for_task.tovar_is_packed.value ?
+                    `${styles.tovar_task_container} ${styles.tovar_task_container_done}`
+                    : tovar_task.status === statuses_tovar_for_task.must_be_deleted.value ?
+                        `${styles.tovar_task_container} ${styles.tovar_task_must_be_deleted}`
+                        : tovar_task.status === statuses_tovar_for_task.tovar_packaging_is_suspended.value ?
+                            `${styles.tovar_task_container} ${styles.tovar_packaging_is_suspended}`
+                            : tovar_task.status === statuses_tovar_for_task.this_tovar_added_for_delivery.value ?
+                                `${styles.tovar_task_container} ${styles.this_tovar_added_for_delivery}`
+                                : styles.tovar_task_container
 
-            }
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-        >
+                }
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
 
-            <div className={`${styles.item} ${styles.task_id_value} ${styles.clip_text}`}>
-                <div className={styles.tovar_number_flexBox}>
+                <div className={`${styles.item} ${styles.task_id_value} ${styles.clip_text}`}>
+                    <div className={styles.tovar_number_flexBox}>
 
-                    <div className={styles.tovar_number}>
-                        {index + 1}
-                    </div>
+                        <div className={styles.tovar_number}>
+                            {index + 1}
+                        </div>
 
-                    {user_store.isAdmin && !statusAllowedToDelete ?
-                        <Red_btn
-                            style={{ width: "50px", height: "50px" }}
-                            onClick={deleteTovar_fromTask}
-                        >
-                            <MdDeleteForever />
-                        </Red_btn>
-                        : user_store.isWorker && statusAllowedToDelete ?
-
+                        {user_store.isAdmin && !statusAllowedToDelete ?
                             <Red_btn
                                 style={{ width: "50px", height: "50px" }}
                                 onClick={deleteTovar_fromTask}
                             >
                                 <MdDeleteForever />
                             </Red_btn>
+                            : user_store.isWorker && statusAllowedToDelete ?
 
-                            :
-                            <></>
+                                <Red_btn
+                                    style={{ width: "50px", height: "50px" }}
+                                    onClick={deleteTovar_fromTask}
+                                >
+                                    <MdDeleteForever />
+                                </Red_btn>
+
+                                :
+                                <></>
+
+                        }
+
+
+                    </div>
+                </div>
+
+                <div className={styles.line} ></div>
+
+                <div className={`${styles.item} ${styles.itemFoto}`}>
+
+                    {current_URL && tovar_task.tovar_for_warehouse?.photo_for_tovars[0]?.img_name
+                        ?
+                        <img
+                            className={styles.photo_for_tovars}
+                            src={`${current_URL}${tovar_task.tovar_for_warehouse.photo_for_tovars[0].img_name}`}
+                            alt="Фото товара"
+                        />
+                        :
+                        <></>
 
                     }
-
-
                 </div>
-            </div>
 
-            <div className={styles.line} ></div>
+                <div className={styles.line} ></div>
 
-            <div className={`${styles.item} ${styles.itemFoto}`}>
-
-                {current_URL && tovar_task.tovar_for_warehouse?.photo_for_tovars[0]?.img_name
-                    ?
-                    <img
-                        className={styles.photo_for_tovars}
-                        src={`${current_URL}${tovar_task.tovar_for_warehouse.photo_for_tovars[0].img_name}`}
-                        alt="Фото товара"
-                    />
-                    :
-                    <></>
-
-                }
-            </div>
-
-            <div className={styles.line} ></div>
-
-            {/* <div className={`${styles.item} ${styles.warehouse_ID} ${styles.clip_text}`}>
+                {/* <div className={`${styles.item} ${styles.warehouse_ID} ${styles.clip_text}`}>
                                         {tovar_task.warehouse_ID}
                                     </div>
                                     <div className={styles.line} ></div> */}
 
-            <div className={`${styles.item} ${styles.tovar_name} ${styles.clip_text}`}>
-                {tovar_task.name}
-            </div>
-            <div className={styles.line} ></div>
+                <div className={`${styles.item} ${styles.tovar_name} ${styles.clip_text}`}>
+                    {tovar_task.name}
+                </div>
+                <div className={styles.line} ></div>
 
-            <div className={`${styles.item} ${styles.barcode_info}`}>
-                <div className={styles.barcode_box}>
+                <div className={`${styles.item} ${styles.barcode_info}`}>
+                    <div className={styles.barcode_box}>
 
-                    <Sticker_warehouse className={styles.sticker} sticker={tovar_task.sticker} />
+                        <Sticker_warehouse className={styles.sticker} sticker={tovar_task.sticker} />
 
-                    {/* <div className={`${styles.item} ${styles.barcode_text} ${styles.clip_text}`}>
+                        {/* <div className={`${styles.item} ${styles.barcode_text} ${styles.clip_text}`}>
                                                 {tovar_task.barcode}
                                             </div> */}
 
+                    </div>
+
+                    <div className={styles.line_mini} ></div>
+
+                    <div className={styles.barcode_download_box}>
+                        <button className={`${styles.barcode_download_btn} `}
+                            onClick={() => print_sticker()}
+                        >
+                            <TiPrinter />
+                        </button>
+                    </div>
                 </div>
 
-                <div className={styles.line_mini} ></div>
-
-                <div className={styles.barcode_download_box}>
-                    <button className={`${styles.barcode_download_btn} `}
-                        onClick={() => print_sticker()}
-                    >
-                        <TiPrinter />
-                    </button>
-                </div>
-            </div>
-
-            <div className={styles.line} ></div>
+                <div className={styles.line} ></div>
 
 
-            {/* блок изменения количества товара  для сборки */}
-            <Cartons_required_box
-                className={
-                    tovar_task.status === statuses_tovar_for_task.quantity_has_been_changed.value
-                        ? `${styles.quantity_has_been_changed}`
+                {/* блок изменения количества товара  для сборки */}
+                <Cartons_required_box
+                    className={ status_quantity_changed
+                        ?
+                        `${styles.quantity_has_been_changed}`
                         :
                         null
-                }
-                tovar_task_status={tovar_task.status}
-                key={tovar_task.id}
-                task_id={tovar_task.taskId}
-                tovar_task={tovar_task}
-            ></Cartons_required_box>
-
-
-
-
-
-
-            <div className={styles.line} ></div>
-
-
-            <div className={styles.box_number}>
-                <div
-                    className={
-                        tovar_task.status === statuses_tovar_for_task.tovar_is_packed.value
-                            ? `${styles.BsFillBoxSeamFill} ${styles.green}`
-
-
-
-                            : `${styles.BsFillBoxSeamFill} `
                     }
+                    tovar_task_status={tovar_task.status}
+                    key={tovar_task.id}
+                    task_id={tovar_task.taskId}
+                    tovar_task={tovar_task}
+                ></Cartons_required_box>
 
-                    onClick={сhangeStatus_tovarTask_OPENpopup}
-                >
-                    {
-                        tovar_task.quantityBoxes == "0"
-                            ? <BsFillBoxSeamFill />
-                            : tovar_task.status === statuses_tovar_for_task.must_be_deleted.value
-                                ?
-                                <div className={styles.wrapper_number}>
-                                    <HiLockClosed />
-                                    <div
-                                        className={styles.number}
-                                    >
-                                        {tovar_task.quantityBoxes}
+                <div className={styles.line} ></div>
+
+                <div className={styles.box_number}>
+                    <div
+                        className={
+                            tovar_task.status === statuses_tovar_for_task.tovar_is_packed.value
+                                ? `${styles.BsFillBoxSeamFill} ${styles.green}`
+                                : `${styles.BsFillBoxSeamFill} `
+                        }
+                        onClick={сhangeStatus_tovarTask_OPENpopup}
+                    >
+                        {
+                            tovar_task.quantityBoxes == "0"
+                                ? <BsFillBoxSeamFill />
+                                : tovar_task.status === statuses_tovar_for_task.must_be_deleted.value
+                                    ?
+                                    <div className={styles.wrapper_number}>
+                                        <HiLockClosed />
+                                        <div
+                                            className={styles.number}
+                                        >
+                                            {tovar_task.quantityBoxes}
+                                        </div>
                                     </div>
-                                </div>
-                                :
-                                <div className={styles.wrapper_number}>
-                                    <BsFillBox2Fill />
-                                    <div
-                                        className={styles.number}
-                                    >
-                                        {tovar_task.quantityBoxes}
+                                    :
+                                    <div className={styles.wrapper_number}>
+                                        <BsFillBox2Fill />
+                                        <div
+                                            className={styles.number}
+                                        >
+                                            {tovar_task.quantityBoxes}
+                                        </div>
                                     </div>
-                                </div>
-                    }
+                        }
+                    </div>
+
+                    <CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT
+                        variable_for_check={tovar_task.status === statuses_tovar_for_task.must_be_deleted.value}
+                    >
+                        <ChangeStatus_tovarTask
+                            tovar_task_status={tovar_task.status}
+                            tovar_task={tovar_task}
+                            isOpen={isOpen_сhangeStatus_tovarTask_popup}
+                            setIsOpen={setIsOpen_сhangeStatus_tovarTask_popup}
+                        ></ChangeStatus_tovarTask>
+                    </CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT>
+
+
+
+
+
                 </div>
-
-                <CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT
-                    variable_for_check={tovar_task.status === statuses_tovar_for_task.must_be_deleted.value}
-                >
-                    <ChangeStatus_tovarTask
-                        tovar_task_status={tovar_task.status}
-                        tovar_task={tovar_task}
-                        isOpen={isOpen_сhangeStatus_tovarTask_popup}
-                        setIsOpen={setIsOpen_сhangeStatus_tovarTask_popup}
-                    ></ChangeStatus_tovarTask>
-                </CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT>
+            </div >
 
 
 
 
+        </div>
 
-            </div>
-        </div >
     )
 
 }

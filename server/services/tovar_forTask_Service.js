@@ -1,5 +1,5 @@
 
-const { Tovar_For_Warehouse, Photo_For_Tovar, Tovar_For_Task, Sticker } = require('../models/models');
+const { Tovar_For_Warehouse, Photo_For_Tovar, Tovar_For_Task, Sticker, TovarTask_statuses } = require('../models/models');
 
 
 class Tovar_forTask_Service {
@@ -21,6 +21,22 @@ class Tovar_forTask_Service {
                 status: formdata.status
             }
         )
+
+        const isExist_updateStatus = await TovarTask_statuses.findOne({
+            where: {
+                id: formdata.tovar_task_id,
+                value: formdata.status
+            }
+        })
+
+        if (!isExist_updateStatus) {
+            await TovarTask_statuses.create({
+                tovarForTaskId: formdata.tovar_task_id,
+                value: formdata.status
+            })
+        }
+
+
         await tovar.save();
         return tovar
     }
@@ -138,10 +154,10 @@ class Tovar_forTask_Service {
 
     async deleteTovar_fromTask(formdata) {
 
-      
+
         console.log("Tovar_forTask_Service formdata.tovar_task_id====> ", formdata.tovar_task_id)
         const tovar_task = await Tovar_For_Task.findOne({
-            where:{id: formdata.tovar_task_id}
+            where: { id: formdata.tovar_task_id }
         });
 
         if (formdata.role === "ADMIN") {
@@ -150,6 +166,23 @@ class Tovar_forTask_Service {
                     status: formdata.new_status_for_tovar
                 }
             )
+
+
+            const isExist_updateStatus = await TovarTask_statuses.findOne({
+                where: {
+                    id: formdata.tovar_task_id,
+                    value: formdata.new_status_for_tovar
+                }
+            })
+            
+            if (!isExist_updateStatus) {
+                await TovarTask_statuses.create({
+                    tovarForTaskId: formdata.tovar_task_id,
+                    value: formdata.new_status_for_tovar
+                })
+            }
+
+
             await tovar_task.save();
             return tovar_task
         }
@@ -162,6 +195,13 @@ class Tovar_forTask_Service {
         }
 
 
+    }
+
+    async getById(id) {
+        const tovar_task = await Tovar_For_Task.findOne({
+            where: { id: id }
+        });
+        return tovar_task
     }
 
 

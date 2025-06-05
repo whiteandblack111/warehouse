@@ -11,7 +11,11 @@ import Header from './components/PAGE_COMPONENTS/Header/Header';
 import './App.css'
 import LOGIN_PAGE from './pages/guests/login/LOGIN_PAGE';
 
+
+
 const App = () => {
+
+
   const { user_store } = useContext(Context);
   const { interface_store } = useContext(Context);
 

@@ -14,20 +14,19 @@ const TASKS_PAGE = () => {
 
     const { task_store } = useContext(Context);
     const { tovar_forTask_store } = useContext(Context);
+    const { boxTask_store } = useContext(Context);
 
 
     useEffect(() => {
         get_all_tasks();
-    }, [task_store.task])
+    }, [])
 
 
-    async function get_all_tasks() {
+    const get_all_tasks = async () => {
+
         await task_store.get_all_tasks();
 
-        // task_store.setIsLoading(true)
-        // setTimeout(() => {
-        //     task_store.setIsLoading(false)
-        // }, 500);
+
     }
 
 

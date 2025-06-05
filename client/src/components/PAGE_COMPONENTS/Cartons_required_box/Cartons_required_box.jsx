@@ -25,6 +25,8 @@ const Cartons_required_box = (props) => {
     })
 
     useEffect(() => {
+
+
         setData_modified_quantity(() => {
 
             const result = {
@@ -125,7 +127,7 @@ const Cartons_required_box = (props) => {
 
                     }
                 >
-                    {/* =========== */}
+                
                     <div>
                         {
                             props.tovar_task.changed_cartons_required !== 0 && data_modified_quantity.statusText === "УМЕНЬШИТЬ" ?
