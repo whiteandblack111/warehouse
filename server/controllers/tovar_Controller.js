@@ -7,15 +7,18 @@ class tovar_Controller {
     async create_tovar_for_warehouse(req, res, next) {
         try {
             console.log("create_tovar_for_warehouse====>", req.body)
-            const tovarData = {
+            const formData = {
                 manufacturer_ID: req.body.manufacturer_ID,
                 name: req.body.name,
-                quantity: req.body.quantity
+                quantity: req.body.quantity,
+                width: req.body.width,
+                height: req.body.height,
+                long: req.body.long,
             }
 
             const { tovar_photo } = req.files
 
-            const tovar = await Tovar_Service.create_for_warehouse(tovarData)
+            const tovar = await Tovar_Service.create_for_warehouse(formData)
 
             const filePath = createPath();
             const fileName = uploadFile(filePath, tovar_photo);

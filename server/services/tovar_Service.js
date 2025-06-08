@@ -4,13 +4,13 @@ const { Tovar_For_Warehouse, Photo_For_Tovar, Tovar_For_Task, Sticker } = requir
 
 class Tovar_Service {
 
-    async create_for_warehouse(tovarData) {
-        const tovar = await Tovar_For_Warehouse.create(tovarData)
+    async create_for_warehouse(formData) {
+        const tovar = await Tovar_For_Warehouse.create(formData)
         return tovar
     }
 
-    async create_for_task(tovarData) {
-        const tovar = await Tovar_For_Task.create(tovarData)
+    async create_for_task(formData) {
+        const tovar = await Tovar_For_Task.create(formData)
         return tovar
     }
 

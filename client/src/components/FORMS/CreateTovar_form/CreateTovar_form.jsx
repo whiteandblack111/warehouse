@@ -18,6 +18,10 @@ const CreateTovar_form = () => {
     const [name, setName] = useState('');
     const [manufacturer_ID, setManufacturer_ID] = useState('');
     const [quantity, setQuantity] = useState('');
+    const [tovar_width, setTovar_width] = useState('');
+    const [tovar_height, setTovar_height] = useState('');
+    const [tovar_long, setTovar_long] = useState('');
+
     const { tovar_store } = useContext(Context);
 
 
@@ -41,6 +45,9 @@ const CreateTovar_form = () => {
         form_data.append("name", name);
         form_data.append("manufacturer_ID", manufacturer_ID);
         form_data.append("quantity", quantity);
+        form_data.append("width", tovar_width);
+        form_data.append("height", tovar_height);
+        form_data.append("long", tovar_long);
 
         const tovar = await tovar_store.create_tovar_warehouse(form_data);
 
@@ -178,7 +185,7 @@ const CreateTovar_form = () => {
                     {/* ==========  quantity  ============== */}
                     <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`}>
                         <Light_neon_input
-                        forTypeValue={"number"}
+                            forTypeValue={"number"}
                             ref={input_quantity_ref}
                             forKey="quantity"
                             type="text"
@@ -189,23 +196,47 @@ const CreateTovar_form = () => {
                         ></Light_neon_input>
                     </Form.Group>
 
+                    <div className={`${styles.rower} ${styles.width}`}>
+                        <Light_neon_input
+                            className={styles.margin_for__w_h_l}
+                            forTypeValue={"number"}
+                            ref={input_quantity_ref}
+                            forKey="width"
+                            type="text"
+                            placeholder="ширина ММ"
+                            onChange={setTovar_width}
+                            onKeyUp={handler_keyUp_quantity}
+                            value={tovar_width}
+                        ></Light_neon_input>
+
+                        <Light_neon_input
+                        className={styles.margin_for__w_h_l}
+                            forTypeValue={"number"}
+                            ref={input_quantity_ref}
+                            forKey="long"
+                            type="text"
+                            placeholder="высота ММ"
+                            onChange={setTovar_long}
+                            onKeyUp={handler_keyUp_quantity}
+                            value={tovar_long}
+                        ></Light_neon_input>
+
+                         <Light_neon_input
+                        className={styles.margin_for__w_h_l}
+                            forTypeValue={"number"}
+                            ref={input_quantity_ref}
+                            forKey="height"
+                            type="text"
+                            placeholder="длинна ММ"
+                            onChange={setTovar_height}
+                            onKeyUp={handler_keyUp_quantity}
+                            value={tovar_height}
+                        ></Light_neon_input>
+                    </div>
+
 
                     {/* ==========  BUTTON  ============== */}
                     <Form.Group className="mb-3" >
-
-                        {/* <Button
-                            ref={input_submit_ref}
-                            className={styles.submit_btn}
-                            onClick={() => {
-                                create_tovar_warehouse(
-                                    tovar_photo,
-                                    name,
-                                    manufacturer_ID,
-                                    quantity,
-                                )
-                            }}
-                            variant="outline-success">Создать
-                        </Button> */}
 
                         <Glaassmorphism_btn
                             ref={input_submit_ref}

@@ -304,3 +304,15 @@ a {
 .custom_file_inputLabelinput:hover:before {
   left: 100%;
 }
+
+.rower{
+  display: flex;
+}
+
+.width{
+  width: 63%;
+}
+
+.margin_for__w_h_l{
+  margin: 0 2px;
+}

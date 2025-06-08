@@ -24,6 +24,6 @@ async function recreateDatabase() {
   }
 }
 
-recreateDatabase();
+// recreateDatabase();
 
 module.exports = sequelize

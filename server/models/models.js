@@ -141,6 +141,10 @@ const Tovar_For_Warehouse = sequelize.define(
         quantity: { type: DataTypes.INTEGER, defaultValue: 0 },
         garbage: { type: DataTypes.INTEGER, defaultValue: 0 },
         reserve: { type: DataTypes.INTEGER, defaultValue: 0 },
+        width: { type: DataTypes.INTEGER, defaultValue: 0 },
+        height: { type: DataTypes.INTEGER, defaultValue: 0 },
+        long: { type: DataTypes.INTEGER, defaultValue: 0 },
+
     }
 )
 

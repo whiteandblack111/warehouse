@@ -40,7 +40,7 @@
 
     letter-spacing: 2px;
     transition: 0.5s;
-
+    white-space: nowrap;
 }
 
 .input:valid~span,
@@ -55,12 +55,6 @@
     letter-spacing: 2px;
     border-radius: 4px;
 }
-
-
-
-
-
-
 
 .span::before {
     content: none;
