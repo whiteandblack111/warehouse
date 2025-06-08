@@ -9,6 +9,7 @@
 }
 :root{
   --task_heading-line_height: 80px;
+  --header_height: 170px;
 }
 
 body {

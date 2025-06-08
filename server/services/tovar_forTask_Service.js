@@ -4,37 +4,76 @@ const { Tovar_For_Warehouse, Photo_For_Tovar, Tovar_For_Task, Sticker, TovarTask
 
 class Tovar_forTask_Service {
 
-    async create(tovarData) {
-        const tovar = await Tovar_For_Task.create(tovarData)
-        console.log("Tovar_For_Task.create;;;; ", formdata)
-        return tovar
-    }
+    async create(formdata) {
 
-    async update_quantity(formdata) {
-        console.log("formdata;;;; ", formdata)
-        const tovar = await Tovar_For_Task.findOne({
-            where: { id: formdata.tovar_task_id }
-        })
-        await tovar.update(
-            {
-                changed_cartons_required: formdata.changed_cartons_required,
-                status: formdata.status
-            }
-        )
-
-        const isExist_updateStatus = await TovarTask_statuses.findOne({
+        
+        const tovar = await Tovar_For_Task.create(formdata);
+        
+        // Проверка наличия статуса данного товара
+        const isExist_status = await TovarTask_statuses.findOne({
             where: {
-                id: formdata.tovar_task_id,
+                tovarForTaskId: tovar.id,
                 value: formdata.status
             }
         })
 
-        if (!isExist_updateStatus) {
+        // Если статус отсутствует, то создаём его, 
+        // если же он имеется то нет смысла его перезаписывать
+        if (!isExist_status) {
+            console.log("Статус для товара ещё не существует, создаю")
+            await TovarTask_statuses.create({
+                tovarForTaskId: tovar.id,
+                value: formdata.status
+            })
+        }
+
+
+        console.log("Tovar_For_Task.create;;;; ", formdata)
+        return tovar
+    }
+
+
+
+
+    async update_quantity(formdata) {
+        console.log("formdata;;;; ", formdata)
+
+        // Поиск товара для поставки 
+        // которому требуется изменить количенство 
+        const tovar = await Tovar_For_Task.findOne({
+            where: { id: formdata.tovar_task_id }
+        })
+
+        // Указываем изменённое количество товара
+        await tovar.update(
+            {
+                changed_cartons_required: formdata.changed_cartons_required,
+            }
+        )
+
+        // Проверка наличия статуса об изменении данного товара
+        const isExist_status = await TovarTask_statuses.findOne({
+            where: {
+                tovarForTaskId: formdata.tovar_task_id,
+                value: formdata.status
+            }
+        })
+
+        // Если статус отсутствует, то создаём его, 
+        // если же он имеется то нет смысла его перезаписывать
+        if (!isExist_status) {
+            console.log("Статус изменения для товара ещё не существует, создаю")
             await TovarTask_statuses.create({
                 tovarForTaskId: formdata.tovar_task_id,
                 value: formdata.status
             })
         }
+
+        if (isExist_status) {
+            console.log("Статус изменения для товара существует, вот он -=-=-=->>> ", isExist_status)
+        }
+
+
 
 
         await tovar.save();
@@ -156,26 +195,27 @@ class Tovar_forTask_Service {
 
 
         console.log("Tovar_forTask_Service formdata.tovar_task_id====> ", formdata.tovar_task_id)
+
+        // Поиск товара требуемый для удаления из списка поставки
         const tovar_task = await Tovar_For_Task.findOne({
             where: { id: formdata.tovar_task_id }
         });
 
+        // Проверка наличия статуса о ПРИКАЗЕ к удалению этого товара
+        const isExist_status = await TovarTask_statuses.findOne({
+            where: {
+                tovarForTaskId: formdata.tovar_task_id,
+                value: formdata.new_status_for_tovar
+            }
+        })
+
+
+        //Если запрос идёт от админа
         if (formdata.role === "ADMIN") {
-            await tovar_task.update(
-                {
-                    status: formdata.new_status_for_tovar
-                }
-            )
 
-
-            const isExist_updateStatus = await TovarTask_statuses.findOne({
-                where: {
-                    id: formdata.tovar_task_id,
-                    value: formdata.new_status_for_tovar
-                }
-            })
-            
-            if (!isExist_updateStatus) {
+            // Если статус приказа на удаление отсутствует, 
+            // создаём его
+            if (!isExist_status) {
                 await TovarTask_statuses.create({
                     tovarForTaskId: formdata.tovar_task_id,
                     value: formdata.new_status_for_tovar
@@ -187,11 +227,20 @@ class Tovar_forTask_Service {
             return tovar_task
         }
 
+        //Если запрос идёт от работника
         if (formdata.role === "WORKER") {
-            const result = await Tovar_For_Task.destroy({
-                where: { id: formdata.tovar_task_id }
-            })
-            return result
+            console.log("запрос идёт от работника")
+
+            // Если статус приказа на удаление товара имеется, 
+            if (isExist_status) {
+                console.log("статус приказа на удаление товара имеется")
+                //Удаляем товар
+                const result = await Tovar_For_Task.destroy({
+                    where: { id: formdata.tovar_task_id }
+                })
+                return result
+            }
+            console.log("статус приказа на удаление товара ОТСУТСТВУЕТ")
         }
 
 

@@ -22,6 +22,36 @@ const Update_quantityTovar_popup = (props) => {
     const { task_store } = useContext(Context);
     const { tovar_store } = useContext(Context);
 
+    //все статусы относящиеся к данному товару
+    const [tovarTask_statuses, setTovarTask_statuses] = useState([])
+    //статусы товара по отдельности
+    const [status_quantity_changed, setStatus_quantity_changed] = useState(() => { return false });
+    const [status_must_be_deleted, setStatus_must_be_deleted] = useState(() => { return false });
+    const [status_tovar_is_packed, setStatus_tovar_is_packed] = useState(() => { return false });
+
+
+    const checking_tovarForTask_statuses = (statuses) => {
+
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.must_be_deleted.value) {
+                setStatus_must_be_deleted(true)
+            }
+        })
+
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.quantity_has_been_changed.value) {
+                setStatus_quantity_changed(true)
+            }
+        })
+
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.tovar_is_packed.value) {
+                setStatus_tovar_is_packed(true)
+            }
+        })
+
+    }
+    
 
     useEffect(() => {
         {
@@ -96,7 +126,9 @@ const Update_quantityTovar_popup = (props) => {
             status: statuses_tovar_for_task.quantity_has_been_changed.value
         }
 
-        await tovar_forTask_store.update_tovar_forTask(formData)
+        const tovar_updated = await tovar_forTask_store.update_tovar_forTask(formData);
+
+
 
         await task_store.get_all_tasks();
 

@@ -16,6 +16,7 @@
     position: relative;
     z-index: 100;
     /* padding: 10px 0px; */
+    height: var(--header_height);
 }
 
 .nav_panel {
@@ -28,7 +29,7 @@
 
 }
 
-.routActive{
+.routActive {
     background: red;
     color: red;
 }
@@ -96,4 +97,30 @@
     padding: 0px 10px;
     padding-right: 20px;
     margin: 10px;
+
+
+}
+
+.user_name {
+     text-shadow:
+        -1px -1px rgba(208, 21, 65, 0.7),
+        0 1px 0 #fb1fb9;
+    color: #1A1A1A;
+    transition: all 1s;
+    font-family: MARSKE;
+    font-weight: 700;
+    letter-spacing: 3px;
+
+    font-size: 46px;
+    line-height: normal;
+    margin-right: 20px;
+}
+
+.user_name:hover {
+
+    text-shadow:
+        -1px -1px rgb(0, 229, 255),
+        0 1px 0 rgb(251, 31, 185);
+    color: #1A1A1A;
+   
 }

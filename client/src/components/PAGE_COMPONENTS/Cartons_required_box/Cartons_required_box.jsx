@@ -13,9 +13,18 @@ import CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT from '../CHECKIHG_ACCESS/CHEC
 
 
 const Cartons_required_box = (props) => {
+    // console.log(`Cartons_required_box props.tovar_task(${props.tovar_task.id})-=-=-=-=-=->`, props.tovar_task)
 
     const { user_store } = useContext(Context)
     const { bot_messages_store } = useContext(Context)
+
+    //все статусы относящиеся к данному товару
+    const [tovarTask_statuses, setTovarTask_statuses] = useState([])
+
+    //статусы товара по отдельности
+    const [status_quantity_changed, setStatus_quantity_changed] = useState(() => { return false });
+    const [status_must_be_deleted, setStatus_must_be_deleted] = useState(() => { return false });
+    const [status_tovar_is_packed, setStatus_tovar_is_packed] = useState(() => { return false });
 
     const [data_modified_quantity, setData_modified_quantity] = useState({
         past_value: 0,
@@ -24,8 +33,12 @@ const Cartons_required_box = (props) => {
         statusText: "",
     })
 
+
+
     useEffect(() => {
 
+
+        setTovarTask_statuses(() => { return props.tovar_task.tovarTask_statuses })
 
         setData_modified_quantity(() => {
 
@@ -44,7 +57,7 @@ const Cartons_required_box = (props) => {
                 return result
             }
 
-            if (props.tovar_task.changed_cartons_required < props.tovar_task.cartons_required) {
+            if (props.tovar_task.changed_cartons_required <= props.tovar_task.cartons_required) {
                 result.past_value = props.tovar_task.cartons_required;
                 result.difference = props.tovar_task.cartons_required - props.tovar_task.changed_cartons_required;
                 result.total_number = props.tovar_task.changed_cartons_required
@@ -52,15 +65,46 @@ const Cartons_required_box = (props) => {
                 return result
             }
 
+            if (props.tovar_task.changed_cartons_required === 0) {
+                result.total_number = props.tovar_task.cartons_required
+                return result
+            }
+
         })
+        checking_tovarForTask_statuses(tovarTask_statuses)
+
+        // console.log("Cartons_required_box data_modified_quantity-=-=-=-=-=->", data_modified_quantity)
 
     }, []);
+
+
+    const checking_tovarForTask_statuses = (statuses) => {
+
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.must_be_deleted.value) {
+                setStatus_must_be_deleted(true)
+            }
+        })
+
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.quantity_has_been_changed.value) {
+                setStatus_quantity_changed(true)
+            }
+        })
+
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.tovar_is_packed.value) {
+                setStatus_tovar_is_packed(true)
+            }
+        })
+
+    }
 
     // открытие диалогового окна сообщения бота и запись в него 
     // соответствующее статусу товара сообщение
     const handleMouseEnter = () => {
         // Количество товара для сборки было изменено
-        if (props.tovar_task_status === statuses_tovar_for_task.quantity_has_been_changed.value) {
+        if (status_quantity_changed) {
             const data_message = data_modified_quantity
             const bot_message = `
             ${statuses_tovar_for_task.quantity_has_been_changed.message}, требуется
@@ -84,11 +128,14 @@ const Cartons_required_box = (props) => {
     const [isOpen_update_quantity_popup, setIsOpen_update_quantity_popup] = useState(false);
     const open_close_quantity_update_popup = () => {
 
-        if (isOpen_update_quantity_popup) {
-            setIsOpen_update_quantity_popup(false);
-            return
+        if (!status_must_be_deleted) {
+            if (isOpen_update_quantity_popup) {
+                setIsOpen_update_quantity_popup(false);
+                return
+            }
+            setIsOpen_update_quantity_popup(true)
         }
-        setIsOpen_update_quantity_popup(true)
+
 
     }
 
@@ -121,13 +168,13 @@ const Cartons_required_box = (props) => {
                 </p>
                 <div
                     className={
-                        props.tovar_task.status === 'changed'
+                        status_quantity_changed
                             ? `${styles.cartons_required}  ${styles.clip_text}`
                             : `${styles.cartons_required}  ${styles.clip_text}`
 
                     }
                 >
-                
+
                     <div>
                         {
                             props.tovar_task.changed_cartons_required !== 0 && data_modified_quantity.statusText === "УМЕНЬШИТЬ" ?
@@ -151,6 +198,18 @@ const Cartons_required_box = (props) => {
                     </div>
 
                 </div>
+                <div className={styles.required_vs_found}>
+                    {props.tovar_task.changed_cartons_required !== 0
+                        ?
+                        <p className={styles.required_number}>{data_modified_quantity.total_number}</p>
+                        :
+                        <p className={styles.required_number}>{props.tovar_task.cartons_required}</p>
+                    }
+
+                    /
+                    <p className={styles.found_number}>{props.tovar_task.cartons_found}</p>
+
+                </div>
             </div>
 
             <div className={styles.line_mini} ></div>
@@ -167,8 +226,9 @@ const Cartons_required_box = (props) => {
             {user_store.isAdmin
                 ?
                 <>
+
                     <CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT
-                        variable_for_check={props.tovar_task_status === statuses_tovar_for_task.must_be_deleted.value}
+                        variable_for_check={status_must_be_deleted}
                     >
                         <Update_quantityTovarTask_popup
 

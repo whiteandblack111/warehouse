@@ -1,8 +1,8 @@
-const { default: User_Service } = require('../../client/src/services/User_Service');
 const ApiError = require('../error/ApiError');
 const { User, Tovar_For_Task } = require('../models/models');
 const sticker_Service = require('../services/sticker_Service');
 const Task_Service = require('../services/task_Service');
+const tovar_forTask_Service = require('../services/tovar_forTask_Service');
 const Tovar_Service = require('./../services/tovar_Service');
 
 class Task_Controller {
@@ -14,7 +14,6 @@ class Task_Controller {
             shop_name: req.body.shop_name,
             userId: req.body.userId
         }
-        // const user = await User_Service.getOne(req.body.userId);
         const task = await Task_Service.create(taskData);
         console.log("1 task.isNewRecord---------------------------> ", task.id)
 
@@ -32,13 +31,14 @@ class Task_Controller {
                 ...tovar,
                 taskId: task.id,
                 stickerId:sticker.id,
-                tovarForWarehouseId: sticker.tovarForWarehouseId
+                tovarForWarehouseId: sticker.tovarForWarehouseId,
+                status: "default"
             }
 
             console.log("mutateTovar-----> ",mutateTovar )
 
 
-            await Tovar_For_Task.create(mutateTovar);
+            await tovar_forTask_Service.create(mutateTovar);
         })
 
         

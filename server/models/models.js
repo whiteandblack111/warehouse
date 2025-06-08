@@ -75,9 +75,7 @@ const Tovar_For_Task = sequelize.define(
         cartons_found: { type: DataTypes.INTEGER, defaultValue: 0 },
         // additional_information: { type: DataTypes.STRING, },
         stopReason: { type: DataTypes.STRING, defaultValue: "no" },
-        status: { type: DataTypes.STRING, defaultValue: "default" },
-        changed_cartons_required: { type: DataTypes.INTEGER, defaultValue: 0 },
-        completion_status: { type: DataTypes.STRING, defaultValue: "default" }
+        changed_cartons_required: { type: DataTypes.INTEGER, defaultValue: 0 }
 
     }
 )

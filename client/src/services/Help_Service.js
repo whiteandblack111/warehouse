@@ -38,8 +38,8 @@ class Help_Service {
     }
 
 
-    async sortData_for_upDown(array, fieldName) {
-        array.sort((a, b) => a[fieldName] < b[fieldName] ? 1 : -1);
+    async sortData_for_upDown(array, key) {
+        return array.sort((a, b) => a[key] < b[key] ? 1 : -1);
     }
 
    

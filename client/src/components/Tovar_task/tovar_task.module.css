@@ -99,6 +99,30 @@
 
 }
 
+.this_tovar_added_for_delivery_AND_must_be_deleted {
+
+    backdrop-filter: blur(10px);
+    box-shadow:
+        1px 3px 7px 0px rgb(137, 47, 255),
+        inset 4px 4px 7px 0px rgb(137, 47, 255),
+        inset 0px 0px 123px 20px rgba(255, 47, 47, 0.3);
+
+}
+
+.tovar_task_container_done_AND_must_be_deleted {
+    backdrop-filter: blur(10px);
+    box-shadow:
+        1px 3px 7px 0px rgb(47, 255, 78),
+        inset 4px 4px 7px 0px rgb(47, 255, 78),
+        inset 0px 0px 123px 20px rgba(255, 47, 47, 0.3);
+}
+.this_tovar_added_for_delivery_AND_tovar_is_packed{
+    backdrop-filter: blur(10px);
+    box-shadow:
+        1px 3px 7px 0px rgb(137, 47, 255),
+        inset 4px 4px 7px 0px rgb(137, 47, 255),
+        inset 0px 0px 123px 20px rgba(47, 255, 78, 0.3);
+}
 
 .item {
     height: 100%;
@@ -157,6 +181,11 @@
     box-sizing: border-box;
     width: 15%;
     cursor: auto;
+
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(180deg, #FFFFFF 21.75%, #1A3031 100%);
 }
 
 .barcode_info {

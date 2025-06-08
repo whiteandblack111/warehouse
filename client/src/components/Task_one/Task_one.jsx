@@ -9,7 +9,7 @@ import Snake_border_btn from '../UI/BUTTONS/Snake_border_btn/Snake_border_btn';
 import ROLE_VERIFICATION from '../PAGE_COMPONENTS/ROLE_VERIFICATION/ROLE_VERIFICATION';
 import Task_checklist from '../Task_checklist/Task_checklist';
 import Glaassmorphism_btn from '../UI/BUTTONS/Glaassmorphism_btn/Glaassmorphism_btn';
-
+import Help_Service from '../../services/Help_Service';
 
 
 
@@ -21,18 +21,24 @@ const Task_one = ({ task }) => {
     const { user_store } = useContext(Context);
     const { interface_store } = useContext(Context);
 
-    
+
 
 
     const [styles, setStyles] = useState("")
     const [executor, setExecutor] = useState("")
     const [isOpen_update_executor_popup, setIsOpen_update_executor_popup] = useState(false)
     const [isOpen_checkList, setIsOpen_checkList] = useState(false)
+    const [tovars_for_task, setTovars_for_task] = useState([])
 
     const executor_ref = useRef(null);
     const executor_popup_ref = useRef(null);
 
 
+    useEffect(() => {
+
+        Help_Service.sortData_for_upDown(task.tovar_for_tasks, "id")
+
+    }, [])
 
 
     useEffect(() => {
@@ -81,7 +87,7 @@ const Task_one = ({ task }) => {
         <div className={styles.container}>
             <div className={styles.absolute_block}>
                 <Glaassmorphism_btn
-                onClick={open_checkList}
+                    onClick={open_checkList}
                 >
                     Чек-лист
                 </Glaassmorphism_btn>

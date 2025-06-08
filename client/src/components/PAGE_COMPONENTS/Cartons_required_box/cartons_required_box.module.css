@@ -90,3 +90,13 @@
     height: 74%;
     width: 1px;
 }
+
+.required_vs_found {
+    display: flex;
+
+    margin-top: 10px;
+}
+.required_vs_found p{
+    margin: 0 5px;
+
+}

@@ -45,12 +45,29 @@ const CreateTask_form = () => {
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
         let mutateTovar = jsonData.map((tovar) => {
-            let newTovar = {
-                warehouse_ID: tovar["артикул"],
-                barcode: tovar["штрихкод"],
-                name: tovar["имя (необязательно)"],
-                cartons_required: tovar["количество"],
+            let newTovar = {}
+
+            //ozon
+            if (tovar["ozon id"]) {
+                newTovar = {
+                    warehouse_ID: tovar["артикул"],
+                    barcode: tovar["штрихкод"],
+                    name: tovar["имя (необязательно)"],
+                    cartons_required: tovar["количество"],
+                }
             }
+
+            //WB
+            if (tovar["Бренд"]) {
+                newTovar = {
+                    warehouse_ID: "не задан",
+                    barcode: tovar["Баркод"],
+                    name: tovar["Предмет"],
+                    cartons_required: tovar["Количество, шт."],
+                }
+            }
+
+
             return newTovar
         })
         setTovars_from_task(mutateTovar)

@@ -20,7 +20,7 @@ import Box_for_task from '../Box_for_task/Box_for_task';
 
 const Tovar_task = ({ tovar_task, index }) => {
 
-    console.log("tovarTask_statuses-=-=-=-> ", tovar_task.tovarTask_statuses)
+    // console.log(`tovarTask_statuses-=-=-=->${tovar_task.id} `, tovar_task.tovarTask_statuses)
 
     const { user_store } = useContext(Context);
     const { sticker_store } = useContext(Context);
@@ -31,54 +31,69 @@ const Tovar_task = ({ tovar_task, index }) => {
 
     const [current_URL, setCurrent_URL] = useState('');
     const [isOpen_сhangeStatus_tovarTask_popup, setIsOpen_сhangeStatus_tovarTask_popup] = useState(false);
-    const [statusAllowedToDelete, setStatusAllowedToDelete] = useState(() => { return false });
-    const [status_quantity_changed, setStatus_quantity_changed] = useState(() => { return false });
 
+
+    //все статусы относящиеся к данному товару
     const [tovarTask_statuses, setTovarTask_statuses] = useState([])
-    const [aaaa, setAAAA] = useState(["quantity_has_been_changed", "AAAAA", "FfFfFf"])
+
+    //статусы товара по отдельности
+    const [status_must_be_deleted, setStatus_must_be_deleted] = useState(() => { return false });
+    const [status_quantity_changed, setStatus_quantity_changed] = useState(() => { return false });
+    const [status_this_tovar_added_for_delivery, setStatus_this_tovar_added_for_delivery] = useState(() => { return false });
+    const [status_tovar_is_packed, setStatus_tovar_is_packed] = useState(() => { return false });
+
+
 
 
     useEffect(() => {
         get_current_host_url()
-        // setTovarTask_statuses(tovar_task.tovarTask_statuses)
+
+
         setTovarTask_statuses(() => { return tovar_task.tovarTask_statuses })
 
+        //определяем имеющиеся у товара статусы, 
+        //для дальнейшей отрисовки компонента согласно им
         checking_tovarForTask_statuses(tovar_task.tovarTask_statuses)
 
-        // console.log("Tovar_task tovar_task-=-=-=-> ", tovar_task)
-        // console.log("Tovar_task tovar_task includes -=-=-=-> ", tovar_task.tovarTask_statuses.includes("quantity_has_been_changed"))
-        // console.log("Tovar_task aaaa includes -=-=-=-> ", aaaa.includes("quantity_has_been_changed"))
-        // console.log("Tovar_task tovarTask_statuses-=-=-=-> ", tovarTask_statuses)
+        console.log("tovar_task-=-=> ", tovar_task)
 
-
-        // console.log("Tovar_task tovar_task.id ===> ", tovar_task.id)
-        // console.log("Tovar_task boxes_for_task ===> ", boxes_for_task)
     }, [])
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (tovarTask_statuses.includes(statuses_tovar_for_task.must_be_deleted.value)) {
-            setStatusAllowedToDelete((pre) => {
-                pre = true
-                return pre
-            })
-        }
-
-        // if (tovar_task.status === statuses_tovar_for_task.must_be_deleted.value) {
-        //     setStatusAllowedToDelete((pre) => {
-        //         pre = true
-        //         return pre
-        //     })
-        // }
+    //     if (tovarTask_statuses.includes(statuses_tovar_for_task.must_be_deleted.value)) {
+    //         setStatus_must_be_deleted((pre) => {
+    //             pre = true
+    //             return pre
+    //         })
+    //     }
 
 
-    }, [statusAllowedToDelete])
+    // }, [status_must_be_deleted])
 
     const checking_tovarForTask_statuses = (statuses) => {
         statuses.map((tovar_status) => {
             if (tovar_status.value === statuses_tovar_for_task.quantity_has_been_changed.value) {
                 setStatus_quantity_changed(true)
+            }
+        })
+
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.must_be_deleted.value) {
+                setStatus_must_be_deleted(true)
+            }
+        })
+
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.this_tovar_added_for_delivery.value) {
+                setStatus_this_tovar_added_for_delivery(true)
+            }
+        })
+
+        statuses.map((tovar_status) => {
+            if (tovar_status.value === statuses_tovar_for_task.tovar_is_packed.value) {
+                setStatus_tovar_is_packed(true)
             }
         })
     }
@@ -112,7 +127,10 @@ const Tovar_task = ({ tovar_task, index }) => {
 
     const сhangeStatus_tovarTask_OPENpopup = () => {
 
-        setIsOpen_сhangeStatus_tovarTask_popup(true)
+        if (!status_must_be_deleted && !status_tovar_is_packed) {
+            setIsOpen_сhangeStatus_tovarTask_popup(true)
+        }
+
     }
 
     // функция для удаления товара из поставки, 
@@ -152,7 +170,7 @@ const Tovar_task = ({ tovar_task, index }) => {
             fomData = {
                 role: "WORKER",
                 tovar_task_id: tovar_task.id,
-                new_status_for_tovar: statuses_tovar_for_task.tovar_successfully_removed_from_delivery_list.value
+                new_status_for_tovar: statuses_tovar_for_task.must_be_deleted.value
             }
 
             const result = await tovar_forTask_store.deleteTovar_fromTask(fomData);
@@ -164,17 +182,43 @@ const Tovar_task = ({ tovar_task, index }) => {
     // соответствующее статусу товара сообщение
     const handleMouseEnter = () => {
 
+        // Этот товар собран
+        if (status_tovar_is_packed) {
+            bot_messages_store.set_Open_Bot(true)
+            bot_messages_store.set_Bot_Message(statuses_tovar_for_task.tovar_is_packed.message)
+        }
+
         // Необходимо удалить этот товар из списка поставки
-        if (tovar_task.status === statuses_tovar_for_task.must_be_deleted.value) {
+        if (status_must_be_deleted && !status_this_tovar_added_for_delivery) {
             bot_messages_store.set_Open_Bot(true)
             bot_messages_store.set_Bot_Message(statuses_tovar_for_task.must_be_deleted.message)
         }
 
         // Этот товар добавлен для сборки в поставку
-        if (tovar_task.status === statuses_tovar_for_task.this_tovar_added_for_delivery.value) {
+        if (status_this_tovar_added_for_delivery && !status_must_be_deleted) {
             bot_messages_store.set_Open_Bot(true)
             bot_messages_store.set_Bot_Message(statuses_tovar_for_task.this_tovar_added_for_delivery.message)
         }
+
+        // Этот товар добавлен для сборки в поставку НО назначен на удаление
+        if (status_this_tovar_added_for_delivery && status_must_be_deleted) {
+            bot_messages_store.set_Open_Bot(true)
+            bot_messages_store.set_Bot_Message(statuses_tovar_for_task.this_tovar_added_for_delivery_AND_must_be_deleted.message)
+        }
+
+        // Эта позиция была упакована, НО назначена на удаление из списка, необходимо распаковать и вернуть на склад
+        if (status_tovar_is_packed && status_must_be_deleted) {
+            bot_messages_store.set_Open_Bot(true)
+            bot_messages_store.set_Bot_Message(statuses_tovar_for_task.this_tovar_task_container_done_AND_must_be_deleted.message)
+        }
+
+        // Этот позиция была добавлена для сборки в поставку, и упакована
+        if (status_this_tovar_added_for_delivery && status_tovar_is_packed) {
+            bot_messages_store.set_Open_Bot(true)
+            bot_messages_store.set_Bot_Message(statuses_tovar_for_task.this_tovar_added_for_delivery_AND_tovar_is_packed.message)
+        }
+
+
     }
 
     // закрытие диалогового окна бота
@@ -191,16 +235,41 @@ const Tovar_task = ({ tovar_task, index }) => {
         <div className={styles.card} >
             <div
                 key={tovar_task.id}
-                className={tovar_task.status === statuses_tovar_for_task.tovar_is_packed.value ?
+                // Если товар имеет статус - "УПАКОВАН" и не назначен на удаление
+                className={status_tovar_is_packed && !status_must_be_deleted && !status_this_tovar_added_for_delivery ?
                     `${styles.tovar_task_container} ${styles.tovar_task_container_done}`
-                    : tovar_task.status === statuses_tovar_for_task.must_be_deleted.value ?
-                        `${styles.tovar_task_container} ${styles.tovar_task_must_be_deleted}`
-                        : tovar_task.status === statuses_tovar_for_task.tovar_packaging_is_suspended.value ?
-                            `${styles.tovar_task_container} ${styles.tovar_packaging_is_suspended}`
-                            : tovar_task.status === statuses_tovar_for_task.this_tovar_added_for_delivery.value ?
-                                `${styles.tovar_task_container} ${styles.this_tovar_added_for_delivery}`
-                                : styles.tovar_task_container
 
+                    // Если товар имеет статус - "УПАКОВАН" НО назначен НА УДАЛЕНИЕ
+                    : status_tovar_is_packed && status_must_be_deleted ?
+                        `${styles.tovar_task_container} ${styles.tovar_task_container_done_AND_must_be_deleted}`
+
+                        //Необходимо удалить эту позицию из списка поставки
+                        // (если товар добавлен из загруженного файла)
+                        : status_must_be_deleted && !status_this_tovar_added_for_delivery ?
+                            `${styles.tovar_task_container} ${styles.tovar_task_must_be_deleted}`
+
+                            //Это новая позиция добавленая в поставку для сборки, 
+                            // в начальном списке её не было (и она не упакована)
+                            : status_this_tovar_added_for_delivery && !status_must_be_deleted && !status_tovar_is_packed ?
+                                `${styles.tovar_task_container} ${styles.status_this_tovar_added_for_delivery}`
+
+                                //Эта позиция была добавлена в поставку для сборки,
+                                // в данный момент она упакована
+                                : status_this_tovar_added_for_delivery && status_tovar_is_packed ?
+                                    `${styles.tovar_task_container} ${styles.this_tovar_added_for_delivery_AND_tovar_is_packed}`
+
+                                    : tovar_task.status === statuses_tovar_for_task.tovar_packaging_is_suspended.value ?
+                                        `${styles.tovar_task_container} ${styles.tovar_packaging_is_suspended}`
+
+                                        //Это новая позиция добавленая в поставку для сборки. Но принято решение её удалить.
+                                        : status_this_tovar_added_for_delivery && status_must_be_deleted ?
+                                            `${styles.tovar_task_container} ${styles.this_tovar_added_for_delivery_AND_must_be_deleted}`
+
+                                            //Это новая позиция добавленая в поставку для сборки.
+                                            : status_this_tovar_added_for_delivery && !status_must_be_deleted ?
+                                                `${styles.tovar_task_container} ${styles.this_tovar_added_for_delivery}`
+                                                : styles.tovar_task_container
+                    // status_this_tovar_added_for_delivery
                 }
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -213,14 +282,14 @@ const Tovar_task = ({ tovar_task, index }) => {
                             {index + 1}
                         </div>
 
-                        {user_store.isAdmin && !statusAllowedToDelete ?
+                        {user_store.isAdmin && !status_must_be_deleted ?
                             <Red_btn
                                 style={{ width: "50px", height: "50px" }}
                                 onClick={deleteTovar_fromTask}
                             >
                                 <MdDeleteForever />
                             </Red_btn>
-                            : user_store.isWorker && statusAllowedToDelete ?
+                            : user_store.isWorker && status_must_be_deleted ?
 
                                 <Red_btn
                                     style={{ width: "50px", height: "50px" }}
@@ -294,7 +363,7 @@ const Tovar_task = ({ tovar_task, index }) => {
 
                 {/* блок изменения количества товара  для сборки */}
                 <Cartons_required_box
-                    className={ status_quantity_changed
+                    className={status_quantity_changed
                         ?
                         `${styles.quantity_has_been_changed}`
                         :
@@ -311,7 +380,7 @@ const Tovar_task = ({ tovar_task, index }) => {
                 <div className={styles.box_number}>
                     <div
                         className={
-                            tovar_task.status === statuses_tovar_for_task.tovar_is_packed.value
+                            status_tovar_is_packed
                                 ? `${styles.BsFillBoxSeamFill} ${styles.green}`
                                 : `${styles.BsFillBoxSeamFill} `
                         }
@@ -320,7 +389,7 @@ const Tovar_task = ({ tovar_task, index }) => {
                         {
                             tovar_task.quantityBoxes == "0"
                                 ? <BsFillBoxSeamFill />
-                                : tovar_task.status === statuses_tovar_for_task.must_be_deleted.value
+                                : status_must_be_deleted
                                     ?
                                     <div className={styles.wrapper_number}>
                                         <HiLockClosed />
@@ -343,14 +412,19 @@ const Tovar_task = ({ tovar_task, index }) => {
                     </div>
 
                     <CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT
-                        variable_for_check={tovar_task.status === statuses_tovar_for_task.must_be_deleted.value}
+                        variable_for_check={!user_store.isWorker}
                     >
-                        <ChangeStatus_tovarTask
-                            tovar_task_status={tovar_task.status}
-                            tovar_task={tovar_task}
-                            isOpen={isOpen_сhangeStatus_tovarTask_popup}
-                            setIsOpen={setIsOpen_сhangeStatus_tovarTask_popup}
-                        ></ChangeStatus_tovarTask>
+
+                        <CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT
+                            variable_for_check={status_must_be_deleted}
+                        >
+                            <ChangeStatus_tovarTask
+                                tovar_task_status={tovar_task.status}
+                                tovar_task={tovar_task}
+                                isOpen={isOpen_сhangeStatus_tovarTask_popup}
+                                setIsOpen={setIsOpen_сhangeStatus_tovarTask_popup}
+                            ></ChangeStatus_tovarTask>
+                        </CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT>
                     </CHECKIHG_ACCESS_FOR_FUNCTIONALITY_COMPONENT>
 
 
@@ -363,7 +437,7 @@ const Tovar_task = ({ tovar_task, index }) => {
 
 
 
-        </div>
+        </div >
 
     )
 

@@ -24,6 +24,9 @@ const Header = () => {
     const { user_store } = useContext(Context);
 
 
+    useEffect(()=>{
+        console.log("user_store.user-=-=-=-> ", user_store.user)
+    },[])
 
 
 
@@ -64,16 +67,20 @@ const Header = () => {
                 <Header_btn path={WAREHOUSE_PATH}>Склад</Header_btn>
 
             </nav>
+            {!user_store.isAuth ?
+                <div className={styles.auth_box}>
 
-            <div className={styles.auth_box}>
-                {!user_store.isAuth ?
                     <Login_btn path={LOGIN_PATH}>Войти</Login_btn>
-                    :
+
+                </div>
+                :
+                <div className={styles.auth_box}>
+                    <div className={styles.user_name}>{user_store.user.firstname}</div>
                     <Login_btn path={LOGIN_PATH}>Выйти</Login_btn>
-                }
 
+                </div>
+            }
 
-            </div>
         </header>
     )
 }

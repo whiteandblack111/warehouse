@@ -30,7 +30,7 @@ const TASKS_PAGE = () => {
     }
 
 
-    if (task_store.isLoading || tovar_forTask_store.isLoading) {
+    if (task_store.isLoading || tovar_forTask_store.isLoading || boxTask_store.isChahge) {
         return <Loader></Loader>
     }
 

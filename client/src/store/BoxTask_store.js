@@ -3,6 +3,7 @@ import BoxTask_Service from "../services/boxTask_Service";
 import axios from "axios";
 import { API_URL } from "../http";
 import Help_Service from "../services/Help_Service";
+import Task_Service from "../services/Task_Service";
 
 
 export default class BoxTask_store {
@@ -76,11 +77,11 @@ export default class BoxTask_store {
 
             // console.log("BoxTask_store_formData====>", formData)
             
-            this.setIsLoading(true);
+            this.setIsChahge(true);
             const response = await BoxTask_Service.addTovars_boxTask(formData);
             const tovars = response.data;
 
-            this.setIsLoading(false);
+            this.setIsChahge(false);
 
             return tovars
 

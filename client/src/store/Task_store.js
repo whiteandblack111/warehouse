@@ -65,34 +65,21 @@ export default class Task_store {
     async create_task(taskData) {
         try {
 
-            this.setIsCreate(true)
+            this.setIsLoading(true)
             const response = await Task_Service.create_task(taskData);
 
 
 
             const task = response.data
+            this.get_all_tasks()
 
-            // console.log("task===============>  ", task);
-            // let mutate_allTasks = [ task, ...this.allTasks];
-
-           
-
-            // // mutate_allTasks.unshift(task);
-            // console.log("task=====================>>>> ", task)
-            // console.log("mutate_allTasks=====================>>>> ", mutate_allTasks)
-
-
-            // this.setAllTasks(mutate_allTasks);
-            // console.log("task====>", task)
-            this.setTask(task);
-            this.setIsCreate(false);
-
+            this.setIsLoading(false);
             return task
 
         } catch (e) {
             console.log(e.response?.data?.message);
         } finally{
-            this.setIsCreate(false)
+            this.setIsLoading(false)
         }
     }
 
@@ -102,13 +89,15 @@ export default class Task_store {
             this.setIsLoading(true)
             const response = await Task_Service.getall_tasks();
 
-            const tasks = response.data
+            const tasks = response.data.rows
 
-            // console.log("tasks = response.data ===================================> ",tasks)
+            // console.log("tasks = response.data 1 ===================================> ",tasks)
         
-            await Help_Service.sortData_for_upDown(tasks.rows, "id")
+            await Help_Service.sortData_for_upDown(tasks, "id")
 
-            this.setAllTasks(tasks.rows);
+            // console.log("tasks = response.data 2 ===================================> ",tasks)
+
+            this.setAllTasks(tasks);
             
             this.setIsLoading(false);
 

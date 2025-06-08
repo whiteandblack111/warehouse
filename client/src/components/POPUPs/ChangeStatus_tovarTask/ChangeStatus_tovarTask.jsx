@@ -15,6 +15,7 @@ import Close_btn from "../../UI/BUTTONS/Close_btn/Close_btn"
 import { ImBoxAdd } from "react-icons/im";
 import NeonGlass_dropdown from "../../UI/Dropdown/NeonGlass_dropdown";
 import Light_neon_input from "../../UI/INPUTS/Light_neon_input/Light_neon_input";
+import { statuses_tovar_for_task } from "../../../utils/entity_statuses";
 
 
 
@@ -68,24 +69,26 @@ const ChangeStatus_tovarTask = (props) => {
 
         setBoxes_for_task(boxes)
 
-        console.log("ChangeStatus_tovarTask boxes_for_task ===> ", boxTask_store.boxes_for_task)
+        // console.log("ChangeStatus_tovarTask boxes_for_task ===> ", boxTask_store.boxes_for_task)
 
     }
 
     const handleSelect_boxNumber = (evt) => {
-   
+
         setNumberBox_inTask(evt)
 
         console.log(numberBox_inTask)
     }
 
     const handleSelect_quantityTovar = (value) => {
-        console.log("handleSelect_quantityTovar-=-=-=> ", value)
-        console.log("handleSelect_quantityTovar-=-=-=> ", typeof value)
-        
+        // console.log("handleSelect_quantityTovar-=-=-=> ", value)
+        // console.log("handleSelect_quantityTovar-=-=-=> ", typeof value)
+
+        //Если количество не изменяли
         if (props.tovar_task.changed_cartons_required === 0) {
+            let max_quantity = props.tovar_task.cartons_required - props.tovar_task.cartons_found
             if (value > props.tovar_task.cartons_required) {
-                setQuantityTovar_forBox(props.tovar_task.cartons_required)
+                setQuantityTovar_forBox(max_quantity)
             } else {
                 setQuantityTovar_forBox(value)
             }
@@ -95,8 +98,8 @@ const ChangeStatus_tovarTask = (props) => {
         //Если УВЕЛИЧИЛИ изменяющее количество больше изначального
         // 10 <> 20
         if (props.tovar_task.changed_cartons_required > props.tovar_task.cartons_required) {
-            // Количество будет равно изменяющему количество цифре
-            let max_quantity = props.tovar_task.changed_cartons_required
+            // Количество будет равно изменяющему количество цифре (минус) упакованное количество
+            let max_quantity = props.tovar_task.changed_cartons_required - props.tovar_task.cartons_found
             if (value > max_quantity) {
                 setQuantityTovar_forBox(max_quantity)
             } else {
@@ -109,11 +112,12 @@ const ChangeStatus_tovarTask = (props) => {
         //Если УМЕНЬШИЛИ изменяющее количество МЕНЬШЕ изначального
         // 10 <> 7
         if (props.tovar_task.changed_cartons_required < props.tovar_task.cartons_required) {
-            let max_quantity = props.tovar_task.changed_cartons_required
+
+            let max_quantity = props.tovar_task.changed_cartons_required - props.tovar_task.cartons_found
             if (value > max_quantity) {
-                setQuantityTovar_forBox(max_quantity)
+                setQuantityTovar_forBox(Number(max_quantity))
             } else {
-                setQuantityTovar_forBox(value)
+                setQuantityTovar_forBox(Number(value))
             }
             return
         }
@@ -129,11 +133,44 @@ const ChangeStatus_tovarTask = (props) => {
             boxTaskId: 0,
             numberBox_inTask: 0,
             taskId: props.tovar_task.taskId,
-            quantityTovar: quantityTovar_forBox,
+            quantityTovar: Number(quantityTovar_forBox),
             tovarForTaskId: props.tovar_task.id,
+            status: statuses_tovar_for_task.the_tovar_in_process_of_packaging.value
+            
         }
 
-        console.log("numberBox_inTask--------------------> ", numberBox_inTask)
+        // если сумма упаковываемого товара равна 
+        // требуемому учитывая изменяемое количество
+        const setCartons_max = async () => {
+            let result
+            if (props.tovar_task.changed_cartons_required <= props.tovar_task.cartons_required 
+                && 
+                props.tovar_task.changed_cartons_required !== 0) {
+
+                result = props.tovar_task.changed_cartons_required
+                console.log("cartons_max===> 1 ", result)
+            }
+
+            if (props.tovar_task.changed_cartons_required >= props.tovar_task.cartons_required) {
+                result = props.tovar_task.changed_cartons_required
+                console.log("cartons_max===> 2 ", result)
+            }
+
+            if (props.tovar_task.changed_cartons_required === 0) {
+                result = props.tovar_task.cartons_required
+                console.log("cartons_max===> 3 ", result)
+            }
+
+            return result
+        }
+        let cartons_max = await setCartons_max()
+
+        if (props.tovar_task.cartons_found + quantityTovar_forBox === cartons_max) {
+            // устанавливаем статус готовности
+
+            formData.status = statuses_tovar_for_task.tovar_is_packed.value
+        }
+
         if (numberBox_inTask === "new") {
             formData.numberBox_inTask = boxes_for_task.length + 1
             formData.boxTaskId = boxes_for_task.length + 1
@@ -151,13 +188,16 @@ const ChangeStatus_tovarTask = (props) => {
             })
         }
 
-        console.log("boxes_for_task=========> ", boxes_for_task)
 
-        console.log("formData=========> ", formData)
+        console.log("formData=========>1 ", formData)
+        if (quantityTovar_forBox !== 0) {
+            // boxTask_store.setIsChahge(true)
+            const boxTask = await boxTask_store.addTovar_boxTask(formData);
+            // boxTask_store.setIsChahge(false)
+            console.log("boxTask=========>2 ", boxTask)
+        }
 
-        const boxTask = await boxTask_store.addTovar_boxTask(formData);
-        boxTask_store.setIsChahge(true)
-        console.log("boxTask=========> ", boxTask)
+        
 
 
 

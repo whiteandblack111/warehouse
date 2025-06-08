@@ -4,6 +4,7 @@ import styles from './task_checklist.module.css';
 import Box_for_task from "./../Box_for_task/Box_for_task";
 import { Context } from "../../index";
 import { action } from 'mobx';
+import Help_Service from '../../services/Help_Service';
 
 
 
@@ -28,8 +29,9 @@ const Task_checklist = (props) => {
         // ЧИСТО ДЛЯ ТЕСТОВ
         const boxes = await boxTask_store.getAllBoxes_for_currentTask(props.task.id);
       
+        const boxes_sort = await Help_Service.sortData_for_upDown(boxes, "numberBox_inTask")
 
-        setBoxes_for_task(boxes)
+        setBoxes_for_task(boxes_sort)
         if (boxTask_store.boxes_for_task) {
             // console.log("Task_id ===> ", props.task.id)
             // console.log("Task_checklist boxes_for_task111 ===> ", boxTask_store.boxes_for_task)
@@ -43,11 +45,12 @@ const Task_checklist = (props) => {
         <div className={styles.checklist}>
             {
                 boxes_for_task.map((box, index) => {
+                    console.log(box)
 
                     return (
                         <Box_for_task
                             box={box}
-                            box_number={index + 1}
+                            box_number={box.numberBox_inTask}
                         ></Box_for_task>
                     )
                 })
