@@ -14,9 +14,9 @@ const createPath = () => {
         __dirname,
         '..',
         'files',
-        
+
     );
-   
+
 
 
     if (!fs.existsSync(filePath)) {
@@ -38,8 +38,29 @@ const uploadFile = (filePath, file) => {
     return fileName
 }
 
+const deleteFile = (fileName) => {
+
+    const filePath = path.join(
+        __dirname,
+        '..',
+        'files',
+        
+    );
+
+    // console.log("deleteFile-=-=-=>>> ", filePath)
+
+    const path_to_file = path.resolve(filePath, fileName)
+    // fs.rm(filePath)
+
+    fs.unlink(path_to_file, (err) => {
+        if (err) throw err;
+        console.log('Файл удален');
+    });
+}
+
 
 module.exports = {
     createPath,
-    uploadFile
+    uploadFile,
+    deleteFile
 }

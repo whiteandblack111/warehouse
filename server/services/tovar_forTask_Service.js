@@ -251,6 +251,8 @@ class Tovar_forTask_Service {
                 const result = await Tovar_For_Task.destroy({
                     where: { id: formdata.tovar_task_id }
                 })
+
+                
                 return result
             }
             console.log("статус приказа на удаление товара ОТСУТСТВУЕТ")

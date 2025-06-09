@@ -1,3 +1,5 @@
+const fs = require('fs');
+const { deleteFile } = require('../services/FotoUploader');
 
 const { Tovar_For_Warehouse, Photo_For_Tovar, Tovar_For_Task, Sticker } = require('../models/models');
 
@@ -33,7 +35,7 @@ class Tovar_Service {
         await tovar.save();
         return tovar
 
-       
+
     }
 
 
@@ -80,10 +82,26 @@ class Tovar_Service {
         return tovars
     }
 
-    async delete_tovar_warehouse(id){
-        const result = await Tovar_For_Warehouse.destroy({
-            where:{id:id}
+    async delete_tovar_warehouse(id) {
+
+        // получаем товар требуемый для удаления
+        const tovar_for_delete = await Tovar_For_Warehouse.findOne({
+            where: { id: id },
+            include: [
+                { model: Photo_For_Tovar, as: 'photo_for_tovars' },
+            ]
         })
+
+        console.log("tovar_for_delete-=-=-=>>> ", tovar_for_delete)
+
+        // Удаляем изображение товара из файловой системы
+        await tovar_for_delete.photo_for_tovars.map((photo) => {
+              deleteFile(photo.img_name)
+        })
+
+        // Удаляем запись товара из базы
+        const result = await tovar_for_delete.destroy()
+
 
         return result
     }
