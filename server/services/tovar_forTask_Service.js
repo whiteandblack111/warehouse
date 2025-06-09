@@ -6,9 +6,9 @@ class Tovar_forTask_Service {
 
     async create(formdata) {
 
-        
+
         const tovar = await Tovar_For_Task.create(formdata);
-        
+
         // Проверка наличия статуса данного товара
         const isExist_status = await TovarTask_statuses.findOne({
             where: {
@@ -234,6 +234,19 @@ class Tovar_forTask_Service {
             // Если статус приказа на удаление товара имеется, 
             if (isExist_status) {
                 console.log("статус приказа на удаление товара имеется")
+
+                //Возвращаем упакованное количество товара на склад
+                const tovar_warehouse = await Tovar_For_Warehouse.findOne({
+                    where: { id: tovar_task.tovarForWarehouseId }
+                })
+                const restored_quantity = tovar_warehouse.quantity + tovar_task.cartons_found
+                await tovar_warehouse.update(
+                    {
+                        quantity: restored_quantity
+                    }
+                )
+                await tovar_warehouse.save()
+
                 //Удаляем товар
                 const result = await Tovar_For_Task.destroy({
                     where: { id: formdata.tovar_task_id }

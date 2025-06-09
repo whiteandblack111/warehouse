@@ -23,7 +23,7 @@ class Tovar_Service {
     }
 
     async update_quantity_tovar_for_warehouse(formData) {
-        console.log("update_quantity_tovar_for_warehouse+++++++>>>>>>> ", formData)
+
         const tovar = await Tovar_For_Warehouse.findOne(
             { where: { id: formData.id } }
         )
@@ -38,7 +38,7 @@ class Tovar_Service {
 
 
     async getOneFromWarehouseById(id) {
-        console.log("getOneFromWarehouseById+++++++>>>>>>> ", id)
+
         const tovar = await Tovar_For_Warehouse.findOne({
             where: { id: id },
             include: [
@@ -48,7 +48,6 @@ class Tovar_Service {
 
         })
 
-        console.log("tovar+++++++>>>>>>> ", tovar)
         return tovar
     }
 

@@ -6,9 +6,9 @@ const PhotoService = require('../services/photo_Service');
 class tovar_Controller {
     async create_tovar_for_warehouse(req, res, next) {
         try {
-            console.log("create_tovar_for_warehouse====>", req.body)
             const formData = {
                 manufacturer_ID: req.body.manufacturer_ID,
+                ownerId: req.body.tovar_ownerId,
                 name: req.body.name,
                 quantity: req.body.quantity,
                 width: req.body.width,
@@ -23,12 +23,7 @@ class tovar_Controller {
             const filePath = createPath();
             const fileName = uploadFile(filePath, tovar_photo);
             await PhotoService.create(filePath, fileName, tovar.id);
-
-
             const dataTovar = await Tovar_Service.getOneFromWarehouseById(tovar.id);
-            console.log("tovar>>>", tovar)
-            console.log("dataTovar>>>", dataTovar)
-
 
             return res.json(dataTovar);
 
@@ -81,7 +76,7 @@ class tovar_Controller {
 
     async update(req, res, next) {
         try {
-            console.log("updateupdateupdate==== ", req.body)
+
             const tovarData = await Tovar_Service.update_quantity_tovar_for_warehouse(req.body)
             return res.json(tovarData)
         } catch (error) {
@@ -99,7 +94,7 @@ class tovar_Controller {
 
 
     async getOne(req, res) {
-        console.log("req.body.id++++++ ========= ", req.body.id)
+
         const tovarData = await Tovar_Service.getOneFromWarehouseById(req.body.id)
         console.log(tovarData)
         return res.json(tovarData)

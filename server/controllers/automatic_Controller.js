@@ -12,6 +12,7 @@ class automatic_Controller {
                 role2: "ADMIN",
                 role3: "WORKER",
                 role4: "USER",
+                role5: "OWNER_TOVARS",
             }
             let isRole;
 
@@ -35,7 +36,7 @@ class automatic_Controller {
                 twoname: "Freelancer",
                 email: "ztavruz@yandex.ru",
                 password: "123123",
-                role: "SUPERADMIN"
+                roles: ["SUPERADMIN"]
             }
 
             let isUser = await UserService.check_exist_registration_byEmail(formData.email);
@@ -48,7 +49,7 @@ class automatic_Controller {
                     formData.twoname,
                     formData.email,
                     formData.password,
-                    formData.role,
+                    formData.roles,
                 );
                  user = newUser.user
                 await UserService.auto_activate(user.email);
@@ -61,7 +62,7 @@ class automatic_Controller {
                 twoname: "Worker",
                 email: "worker1@yandex.ru",
                 password: "321321",
-                role: "WORKER"
+                roles: ["WORKER"]
             }
             isUser = await UserService.check_exist_registration_byEmail(formData.email);
             if (!isUser) {
@@ -70,7 +71,7 @@ class automatic_Controller {
                     formData.twoname,
                     formData.email,
                     formData.password,
-                    formData.role,
+                    formData.roles,
                 );
                 user = newUser.user
                 await UserService.auto_activate(user.email);
@@ -83,7 +84,7 @@ class automatic_Controller {
                 twoname: "Worker",
                 email: "worker2@yandex.ru",
                 password: "123123",
-                role: "WORKER"
+                roles: ["WORKER"]
             }
             isUser = await UserService.check_exist_registration_byEmail(formData.email);
             if (!isUser) {
@@ -92,7 +93,7 @@ class automatic_Controller {
                     formData.twoname,
                     formData.email,
                     formData.password,
-                    formData.role,
+                    formData.roles,
                 );
                 user = newUser.user
                 await UserService.auto_activate(user.email);
@@ -104,7 +105,7 @@ class automatic_Controller {
                 twoname: "Admin",
                 email: "admin1@yandex.ru",
                 password: "123123",
-                role: "ADMIN"
+                roles: ["ADMIN", "OWNER_TOVARS"]
             }
             isUser = await UserService.check_exist_registration_byEmail(formData.email);
             if (!isUser) {
@@ -113,7 +114,7 @@ class automatic_Controller {
                     formData.twoname,
                     formData.email,
                     formData.password,
-                    formData.role,
+                    formData.roles,
                 );
                 user = newUser.user
                 await UserService.auto_activate(user.email);
@@ -124,7 +125,7 @@ class automatic_Controller {
                 twoname: "Admin",
                 email: "admin2@yandex.ru",
                 password: "123123",
-                role: "ADMIN"
+                roles: ["ADMIN", "OWNER_TOVARS"]
             }
 
             isUser = await UserService.check_exist_registration_byEmail(formData.email);
@@ -134,7 +135,7 @@ class automatic_Controller {
                     formData.twoname,
                     formData.email,
                     formData.password,
-                    formData.role,
+                    formData.roles,
                 );
                 user = newUser.user
                 await UserService.auto_activate(user.email);

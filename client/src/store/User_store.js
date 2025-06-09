@@ -13,9 +13,17 @@ export default class Store {
     _isAdmin = false;
     _isWorker = false;
     _allWorkers = [];
+    _allOwners = [];
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setAllOwners(users) {
+        this._allOwners = users;
+    }
+    get allOwners(){
+        return this._allOwners
     }
 
     setAllWorkers(users) {
@@ -136,8 +144,6 @@ export default class Store {
         }
     }
 
-
-
     async checkAuth() {
         this.setIsLoading(true)
         try {
@@ -174,35 +180,24 @@ export default class Store {
         }
     }
 
-    async checkAuth() {
+    async getAll_tovarOwners() {
         this.setIsLoading(true)
         try {
-            const response = await axios.get(`${API_URL}/users/refresh`, { withCredentials: true });
+            this.setIsLoading(true)
+            const response = await User_Service.getUsers();
 
-            localStorage.setItem('token', response.data.accessToken);
-            this.setIsAuth(true);
-            this.setUser(response.data.user);
-
-            // console.log("response.data.user=====>>>", response.data.user)
-
-            await response.data.user.roles.map((role) => {
-
-                if (role.name === "SUPERADMIN" || role.name === "ADMIN") {
-                    this.setIsAuth(true);
-                    this.setIsAdmin(true)
-
-                    return
-                }
-                if (role.name === "WORKER") {
-                    this.setIsAuth(true);
-                    this.setIsWorker(true)
-                    return
-                }
+            const users = response.data
+            let owners = []
+            await users.map((user) => {
+                user.roles.map((role) => {
+                    if(role.name === "OWNER_TOVARS"){
+                        owners.push(user)
+                    }
+                })
             })
 
-
-
-
+            this.setAllOwners(owners);
+            this.setIsLoading(false);
         } catch (e) {
             console.log(e.response?.data?.message);
         } finally {

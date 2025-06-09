@@ -23,11 +23,22 @@ const NeonGlass_dropdown = (props) => {
                 id="dropdown-basic-button"
                 title={props.title}
             >
-                <Dropdown.Item
-                    eventKey={"new"}
-                    className={styles.selectItem}
-                >{"Новый"}
-                </Dropdown.Item>
+                {!props.firstField ?
+                    < Dropdown.Item
+                        eventKey={"new"}
+                        className={styles.selectItem}
+                    >{"Новый"}
+                    </Dropdown.Item>
+                    : props.firstField !== "disabled" ?
+                    < Dropdown.Item
+                        eventKey={props.firstField}
+                        className={styles.selectItem}
+                    >{props.firstField}
+                    </Dropdown.Item>
+                    :
+                    null
+                }
+
                 {props.selectsData
                     ?
                     props.selectsData.map((select) => {
@@ -45,7 +56,7 @@ const NeonGlass_dropdown = (props) => {
                 }
 
             </DropdownButton>
-        </Form.Group>
+        </Form.Group >
     )
 }
 

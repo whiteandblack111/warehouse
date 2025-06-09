@@ -10,10 +10,12 @@ import Neon_wrapper from '../../UI/EFFECTS/Neon_wrapper/Neon_wrapper';
 import Glaassmorphism_btn from '../../UI/BUTTONS/Glaassmorphism_btn/Glaassmorphism_btn';
 import Light_neon_input from '../../UI/INPUTS/Light_neon_input/Light_neon_input';
 import Close_btn from '../../UI/BUTTONS/Close_btn/Close_btn';
+import NeonGlass_dropdown from '../../UI/Dropdown/NeonGlass_dropdown';
 
 
 const CreateTovar_form = () => {
 
+    const [tovar_ownerId, setTovar_ownerId] = useState(null);
     const [tovar_photo, setTovar_img] = useState('');
     const [name, setName] = useState('');
     const [manufacturer_ID, setManufacturer_ID] = useState('');
@@ -22,15 +24,22 @@ const CreateTovar_form = () => {
     const [tovar_height, setTovar_height] = useState('');
     const [tovar_long, setTovar_long] = useState('');
 
+    const { user_store } = useContext(Context);
     const { tovar_store } = useContext(Context);
 
 
     useEffect(() => {
         window.addEventListener("keydown", handler_keyUp_form);
+        getAll_tovarOwners()
         return () => {
             window.removeEventListener("keydown", handler_keyUp_form);
         };
+
     }, []);
+
+    const getAll_tovarOwners = async () => {
+        await user_store.getAll_tovarOwners();
+    }
 
 
     const create_tovar_warehouse = async (
@@ -42,12 +51,14 @@ const CreateTovar_form = () => {
         let form_data = new FormData();
 
         form_data.append("tovar_photo", tovar_photo);
+        form_data.append("tovar_ownerId", tovar_ownerId);
         form_data.append("name", name);
         form_data.append("manufacturer_ID", manufacturer_ID);
         form_data.append("quantity", quantity);
         form_data.append("width", tovar_width);
         form_data.append("height", tovar_height);
         form_data.append("long", tovar_long);
+
 
         const tovar = await tovar_store.create_tovar_warehouse(form_data);
 
@@ -101,6 +112,10 @@ const CreateTovar_form = () => {
         tovar_store.setIsCreate(false)
     }
 
+    const handleSelect_tovarOwner = (evt) => {
+        setTovar_ownerId(evt)
+    }
+
     return (
         <Popup_fon>
             <Neon_wrapper className={styles.Neon_wrapper}>
@@ -109,6 +124,7 @@ const CreateTovar_form = () => {
                     <Close_btn
                         onClick={close_createTovar_form}
                     ></Close_btn>
+
 
                     {/* ========== Изображение товара ============== */}
                     <Form.Group className={`${'mb-3'} ${styles.wrapperInput} ${styles.btnBox}`} >
@@ -150,19 +166,28 @@ const CreateTovar_form = () => {
                     </Form.Group>
 
 
+                    {/* ========== Владелец товара ============== */}
+                    <NeonGlass_dropdown
+                        title="Назначьте владельца"
+                        firstField="disabled"
+                        selectsData={user_store.allOwners}
+                        selectId="id"
+                        selectName="firstname"
+                        onSelect={(eventKey) => handleSelect_tovarOwner(eventKey)}
+                    />
 
                     {/* ==========  name  ============== */}
                     <Form.Group className={`${'mb-3'} ${styles.wrapperInput}`} >
                         <Form.Label
                             className={styles.inputLabel}
-                        >Название товара</Form.Label>
+                        ></Form.Label>
                         <Form.Control
                             as="textarea" rows={4}
                             ref={input_name_ref}
                             className={`${styles.input} ${styles.textarea}`}
                             key="name"
                             type="text"
-                            placeholder="Name"
+                            placeholder="Введите название товара"
                             onChange={e => setName(e.target.value)}
                             onKeyUp={handler_keyUp_input_name}
                             value={name}
@@ -210,7 +235,7 @@ const CreateTovar_form = () => {
                         ></Light_neon_input>
 
                         <Light_neon_input
-                        className={styles.margin_for__w_h_l}
+                            className={styles.margin_for__w_h_l}
                             forTypeValue={"number"}
                             ref={input_quantity_ref}
                             forKey="long"
@@ -221,8 +246,8 @@ const CreateTovar_form = () => {
                             value={tovar_long}
                         ></Light_neon_input>
 
-                         <Light_neon_input
-                        className={styles.margin_for__w_h_l}
+                        <Light_neon_input
+                            className={styles.margin_for__w_h_l}
                             forTypeValue={"number"}
                             ref={input_quantity_ref}
                             forKey="height"

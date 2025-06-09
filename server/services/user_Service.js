@@ -11,7 +11,7 @@ const Role_Service = require("./role_Service");
 
 class User_Service {
 
-    async registration(firstname, twoname, email, password, role_for_user = "USER", phone) {
+    async registration(firstname, twoname, email, password, roles = ["USER"], phone) {
 
         const candidate = await User.findOne({ where: { email: email } });
 
@@ -31,8 +31,15 @@ class User_Service {
             phone
         });
 
-        const role = await Role_Service.getOne(role_for_user);
-        await newUser.addRole(role)
+        // перебрать полученные роли и установить их
+        const setRoles = async () => {
+            roles.map(async (role) => {
+                const current_role = await Role_Service.getOne(role);
+                await newUser.addRole(current_role)
+            })
+        }
+        setRoles()
+
 
         const user = await User.findOne({
             where: { id: newUser.id },
@@ -73,13 +80,13 @@ class User_Service {
         await user.save();
     }
 
-    
+
 
     async login(email, password) {
 
         const user = await User.findOne({
             where: { email: email },
-            include: {all: true}
+            include: { all: true }
         });
         if (!user) {
             throw ApiError.bad_Request(`Введен не верный логин или пароль`);
@@ -123,9 +130,10 @@ class User_Service {
             throw ApiError.unauthorized_Request();
         }
 
-        const user = await User.findOne({ where: { id: userData.id }, 
+        const user = await User.findOne({
+            where: { id: userData.id },
             include: [
-                {model:Role, as: 'roles'}
+                { model: Role, as: 'roles' }
             ]
         });
         const userDto = new UserDTO(user);

@@ -67,17 +67,13 @@ export default class Tovar_store {
         try {
 
             const response = await Tovar_Service.create_tovar_warehouse(formData);
-
             const tovar = response.data
-
-            // console.log("1 tovar-----------------> ", tovar)
 
             let new_allTovars = [
                 ...this._allTovars
             ]
             new_allTovars.unshift(tovar);
 
-            // console.log("2 new_allTovars-----------------> ", new_allTovars)
 
             this.setAllTovars(new_allTovars);
             this.setIsCreate(false);

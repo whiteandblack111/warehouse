@@ -7,6 +7,7 @@ const { where } = require('sequelize');
 class Role_Service {
 
     async create(name) {
+        console.log()
         const role = await Role.create({name})
         return role
     }

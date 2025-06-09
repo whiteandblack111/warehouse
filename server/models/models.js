@@ -144,6 +144,8 @@ const Tovar_For_Warehouse = sequelize.define(
         width: { type: DataTypes.INTEGER, defaultValue: 0 },
         height: { type: DataTypes.INTEGER, defaultValue: 0 },
         long: { type: DataTypes.INTEGER, defaultValue: 0 },
+        ownerId: { type: DataTypes.INTEGER, allowNull: false },
+        
 
     }
 )

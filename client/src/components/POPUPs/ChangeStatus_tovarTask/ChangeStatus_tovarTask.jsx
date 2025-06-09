@@ -74,9 +74,7 @@ const ChangeStatus_tovarTask = (props) => {
     }
 
     const handleSelect_boxNumber = (evt) => {
-
         setNumberBox_inTask(evt)
-
         console.log(numberBox_inTask)
     }
 
