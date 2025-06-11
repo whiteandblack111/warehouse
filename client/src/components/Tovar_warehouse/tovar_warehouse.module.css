@@ -153,8 +153,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 200px;
+    /* justify-content: center; */
+    /* height: 200px; */
+    height: 100%;
     padding: 1px;
     width: 70%;
 
