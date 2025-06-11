@@ -331,8 +331,10 @@ const Tovar_task = ({ tovar_task, index }) => {
                                     </div>
                                     <div className={styles.line} ></div> */}
 
+
+                {/* имя товара в таске */}
                 <div className={`${styles.item} ${styles.tovar_name} ${styles.clip_text}`}>
-                    {tovar_task.name}
+                    {tovar_task.tovar_for_warehouse.name}
                 </div>
                 <div className={styles.line} ></div>
 
