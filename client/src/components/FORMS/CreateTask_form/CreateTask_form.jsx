@@ -5,7 +5,6 @@ import *  as  XLSX from "xlsx";
 import { Context } from '../../../index';
 
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import { observer } from 'mobx-react-lite';
 
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -20,11 +19,16 @@ import Glaassmorphism_btn from '../../UI/BUTTONS/Glaassmorphism_btn/Glaassmorphi
 
 const CreateTask_form = () => {
     const { user_store } = useContext(Context);
-    // console.log("user_store>>>> ", user_store.user);
+    const { task_store } = useContext(Context);
+    const { bot_messages_store } = useContext(Context);
+
+
 
     const [task_name, setTask_name] = useState('');
     const [tovars_for_task, setTovars_from_task] = useState([]);
     const [shop_name, setShop_name] = useState('Магазин получатель');
+
+
 
     useEffect(() => {
         window.addEventListener("keydown", handler_keyUp_form);
@@ -79,10 +83,9 @@ const CreateTask_form = () => {
     }
 
 
-    const { task_store } = useContext(Context);
+
 
     const create_task = async () => {
-        const creator_id = user_store.user.id;
         let mutateTovar = tovars_for_task.map((tovar) => {
             let newTovar = {
                 ...tovar,
@@ -99,9 +102,41 @@ const CreateTask_form = () => {
             shop_name,
             tovars_for_task: mutateTovar
         }
-        console.log("dataTask====>", dataTask);
 
-        await task_store.create_task(dataTask)
+        const result = await task_store.create_task(dataTask)
+
+        console.log("create_task result ====>", result);
+
+        if (!result.errors) {
+            const message = "Список поставки создан!"
+            const allTasks = [...task_store.allTasks, result]
+            task_store.setAllTasks(allTasks)
+
+            bot_messages_store.set_Bot_Message(message)
+            bot_messages_store.set_Open_Bot(true)
+        }
+
+        if (result.errors) {
+
+            let message = await result.errors.map((error) => {
+                return (
+                    <div>
+                        
+                        <p>В базе не зарегистрирован стикер с баркодом -  
+                            <span className='error_barcode_span'> {error.barcode}</span>
+                        </p>
+                        <br></br>
+                    </div>
+                )
+            })
+
+            bot_messages_store.set_isErrors(true)
+            bot_messages_store.set_Bot_Message(message)
+            bot_messages_store.set_Open_Bot(true)
+
+        }
+
+
     }
 
     const handler_keyUp_form = (e) => {
@@ -195,9 +230,6 @@ const CreateTask_form = () => {
                     </Form.Group>
                 </Form>
             </Neon_wrapper>
-
-
-
         </Popup_fon >
 
     );

@@ -118,10 +118,7 @@ const Header_btn = (props) => {
                 {props.children}
             </NavLink>
             <div className={styles.dropdown_content}>
-                <a
-                    className={styles.dropdown_a}
-                    onClick={() => { isAll() }}
-                >Список</a>
+
 
                 <a
                     className={styles.dropdown_a}
@@ -133,6 +130,12 @@ const Header_btn = (props) => {
                     className={styles.dropdown_a}
                     onClick={() => { isSearch() }}
                 >Поиск</a>
+
+                <a
+                    className={styles.dropdown_a}
+                    onClick={() => { isSearch() }}
+                >Архив</a>
+
             </div>
         </div>
     )

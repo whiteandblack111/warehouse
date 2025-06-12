@@ -69,16 +69,16 @@ export default class Task_store {
             const response = await Task_Service.create_task(taskData);
 
 
-
             const task = response.data
-            this.get_all_tasks()
+
+            // this.get_all_tasks()
 
             this.setIsLoading(false);
             return task
 
         } catch (e) {
             console.log(e.response?.data?.message);
-        } finally{
+        } finally {
             this.setIsLoading(false)
         }
     }
@@ -92,13 +92,13 @@ export default class Task_store {
             const tasks = response.data.rows
 
             // console.log("tasks = response.data 1 ===================================> ",tasks)
-        
+
             await Help_Service.sortData_for_upDown(tasks, "id")
 
             // console.log("tasks = response.data 2 ===================================> ",tasks)
 
             this.setAllTasks(tasks);
-            
+
             this.setIsLoading(false);
 
         } catch (e) {
@@ -111,7 +111,7 @@ export default class Task_store {
     async get_one(task_id) {
         try {
             const response = await Task_Service.get_one(task_id);
-           
+
             console.log("task_id::: ", response.data)
             const task = response.data
 
@@ -136,32 +136,32 @@ export default class Task_store {
         }
     }
 
-    async set_executor(task_id, worker_id){
+    async set_executor(task_id, worker_id) {
         try {
             this.setIsLoading(true)
-        
+
             const response = await Task_Service.set_executor(task_id, worker_id);
-            
+
             const updated_task = response.data
 
             let arrForMutate = [... this._allTasks]
-    
+
             arrForMutate.map((task, index) => {
-                if(task.id === updated_task.id){
+                if (task.id === updated_task.id) {
                     arrForMutate[index] = updated_task
                 }
             })
 
             this.setAllTasks(arrForMutate)
-    
+
             this.setIsLoading(false)
-            
+
         } catch (e) {
             console.log(e.response?.data?.message);
-        }finally{
+        } finally {
             this.setIsLoading(false)
         }
-       
+
 
 
     }

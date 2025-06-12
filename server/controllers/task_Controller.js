@@ -7,51 +7,68 @@ const Tovar_Service = require('./../services/tovar_Service');
 
 class Task_Controller {
     async create(req, res) {
-    
-
-        const taskData = {
-            task_name: req.body.task_name,
-            shop_name: req.body.shop_name,
-            userId: req.body.userId
-        }
-        const task = await Task_Service.create(taskData);
-        console.log("1 task.isNewRecord---------------------------> ", task.id)
-
 
         const tovars = req.body.tovars_for_task
 
-        await tovars.map(async (tovar) => {
-        
 
-            const sticker = await sticker_Service.get_by_barcode(tovar.barcode);
-            console.log("sticker-----> ",sticker )
 
-    
-            let mutateTovar = {
-                ...tovar,
-                taskId: task.id,
-                stickerId:sticker.id,
-                tovarForWarehouseId: sticker.tovarForWarehouseId,
-                status: "default"
+        // Проверка существования стикеров 
+        let errors = []
+        for (let i = 0; i < tovars.length; i++) {
+            let error = {
+                message: "",
             }
 
-            console.log("mutateTovar-----> ",mutateTovar )
+            let sticker = await sticker_Service.get_by_barcode(tovars[i].barcode);
+            if (!sticker) {
+                error.barcode = tovars[i].barcode
+                errors = [...errors, error]
+            }
+        }
 
+        // Если все стикера имеются, значит массив с ошибками пуст 
+        if (errors.length === 0) {
 
-            await tovar_forTask_Service.create(mutateTovar);
-        })
+            // Cоздавать таску
+            const taskData = {
+                task_name: req.body.task_name,
+                shop_name: req.body.shop_name,
+                userId: req.body.userId
+            }
+            const task = await Task_Service.create(taskData);
 
-        
-        const task_with_goods = await Task_Service.getOne(task.id);
+            // Cоздавать товары для таски
+            await tovars.map(async (tovar) => {
 
-        return res.json(task_with_goods)
+                const sticker = await sticker_Service.get_by_barcode(tovar.barcode);
+
+                let mutateTovar = {
+                    ...tovar,
+                    taskId: task.id,
+                    stickerId: sticker.id,
+                    tovarForWarehouseId: sticker.tovarForWarehouseId,
+                    status: "default"
+                }
+
+                await tovar_forTask_Service.create(mutateTovar);
+            })
+
+            // Вернуть созданную таску с созданными для неё товарами
+            const task_with_goods = await Task_Service.getOne(task.id);
+            return res.json(task_with_goods)
+        }
+
+        // Если хотя бы один стикер отсутствует, возвращаем массив с ошибками 
+        // и сообщениями  об отсутствующих стикерах
+        return res.json({ errors: errors })
+
     }
 
 
     async getOne(req, res) {
-        console.log("req.bodyreq.body req.body===========>",req.body)
+        console.log("req.bodyreq.body req.body===========>", req.body)
         const { id, task_number } = req.body;
-        
+
         let task;
         if (id) {
             task = await Task_Service.getOne(id);

@@ -8,8 +8,17 @@ export default class Bot_messages_store {
 
     _bot_Message = ""
 
+    _isErrors = false;
+
     constructor() {
         makeAutoObservable(this);
+    }
+
+    set_isErrors(bool) {
+        this._isErrors = bool;
+    }
+    get isErrors() {
+        return this._isErrors;
     }
 
     set_Bot_Message(message) {

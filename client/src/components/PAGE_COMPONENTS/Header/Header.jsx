@@ -8,7 +8,7 @@ import { LOGIN_PATH, TASKS_PATH, WAREHOUSE_PATH, ORDERS_PATH } from "../../../ut
 import Login_btn from '../../UI/BUTTONS/Login_btn/Login_btn';
 
 import { Context } from './../../../index';
-import Bot_comment_cloud from '../../UI/ALERTS/Bot_messages_cloud/Bot_messages_cloud';
+import Bot_messages_cloud from '../../UI/ALERTS/Bot_messages_cloud/Bot_messages_cloud';
 import Bot_shadow_notification from '../../UI/EFFECTS/Bot_shadow_notification/Bot_shadow_notification';
 
 const Header = () => {
@@ -24,9 +24,9 @@ const Header = () => {
     const { user_store } = useContext(Context);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("user_store.user-=-=-=-> ", user_store.user)
-    },[])
+    }, [])
 
 
 
@@ -51,8 +51,8 @@ const Header = () => {
                 </div>
             </NavLink>
 
-            <Bot_comment_cloud>
-            </Bot_comment_cloud>
+            <Bot_messages_cloud>
+            </Bot_messages_cloud>
 
 
             <nav className={`${styles.nav_panel}`}>

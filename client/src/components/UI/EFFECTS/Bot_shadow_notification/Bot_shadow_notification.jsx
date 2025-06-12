@@ -10,9 +10,12 @@ const Bot_shadow_notification = (props) => {
     const { bot_messages_store } = useContext(Context);
 
     useEffect(() => {
-        
-        if (bot_messages_store.is_Open_Bot === true) {
+
+        if (bot_messages_store.is_Open_Bot === true && !bot_messages_store.isErrors) {
             setBoxClassName(`${styles.point_light} ${styles.srart_pulsate}`);
+        }
+        if (bot_messages_store.is_Open_Bot === true && bot_messages_store.isErrors) {
+            setBoxClassName(`${styles.point_light} ${styles.srart_pulsate_error}`);
         }
 
         if (bot_messages_store.is_Open_Bot === false) {
@@ -22,7 +25,12 @@ const Bot_shadow_notification = (props) => {
     }, [bot_messages_store.is_Open_Bot])
 
     return (
-        <div className={boxClassName}>
+        <div className={bot_messages_store.isErrors === false ?
+            boxClassName
+            :
+            `${boxClassName} ${styles.isErrors}`
+        }
+        >
 
         </div>
     )

@@ -29,3 +29,21 @@
         box-shadow: 0px 0px 35px 45px rgba(82, 246, 241, 0.99);
     }
 }
+
+.isErrors{
+
+
+}
+
+.srart_pulsate_error {
+    animation: pulsate_error 1.5s linear infinite;
+}
+
+@keyframes pulsate_error {
+    50% {
+
+        -webkit-box-shadow: 0px 0px 35px 45px rgba(246, 82, 82, 0.99);
+        -moz-box-shadow: 0px 0px 35px 45px rgba(246, 82, 82, 0.99);
+        box-shadow: 0px 0px 35px 45px rgba(246, 82, 82, 0.99);
+    }
+}
